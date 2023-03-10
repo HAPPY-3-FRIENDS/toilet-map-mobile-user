@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "875327965926",
+    "project_id": "toilet-map-phone-firebase",
+    "storage_bucket": "toilet-map-phone-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875327965926:android:778ab8690fadc3aeb0c927",
+        "android_client_info": {
+          "package_name": "com.example.toiletmap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875327965926-qslr305k7rnastmsg91tjbm2i9a40u56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQkBQ0VXKGt3YQudAoQYSnt7YyfT0RMvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875327965926-qslr305k7rnastmsg91tjbm2i9a40u56.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
