@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:toiletmap/app/ui/home/widgets/panel_widget.dart';
+import 'package:toiletmap/app/ui/home/widgets/payment_frame.dart';
+import 'package:toiletmap/app/ui/home/widgets/qr_code_button.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../utils/constants.dart';
-import '../../utils/extensions.dart';
 
 class HomeMainScreen extends StatefulWidget {
   const HomeMainScreen({Key? key}) : super(key: key);
@@ -14,32 +16,50 @@ class HomeMainScreen extends StatefulWidget {
 class _HomeMainScreenState extends State<HomeMainScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      body: Center(
-        child: InkWell(
-          onTap: () => {},
-          child: Container(
-            height: 200,
-            width: 200,
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: AppColor.primaryColor1,
-              borderRadius: BorderRadius.circular(20.0),
-              boxShadow: [
-                BoxShadow(offset: Offset(0.0, 20.0), blurRadius: 30.0, color: Colors.black12),
-              ],
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                Icon(Icons.qr_code_2,size: 150, color: Colors.white),
-                Text('Tạo mã', style: TextStyle(fontSize: 30, color: Colors.white),)
-              ],
-            ),
+    return SafeArea(
+      top: true,
+      bottom: true,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColor.primaryColor1,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20.0),
+                  bottomRight: Radius.circular(20.0))
           ),
+          elevation: 10,
+          titleSpacing: 0,
+
+
+          leading: Icon(Icons.person),
+          title: Text('Xin chào Thúy Phượng', style: TextStyle(fontSize: 16),),
+          actions: [Icon(Icons.history), Padding(padding: EdgeInsets.only(right: 5))],
+
+
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(150),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const[
+                    PaymentFrame(),
+                    QRCodeButton(),
+                  ],
+                ),
+                const SizedBox(height: 20,)
+              ],
+            )
+          ),
+        ),
+        body: SlidingUpPanel(
+          body: Container(
+            color: Colors.white,
+          ),
+          panelBuilder: (controller) =>
+              PanelWidget(
+                  controller: controller
+              ),
         )
       ),
     );

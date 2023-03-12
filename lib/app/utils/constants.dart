@@ -6,7 +6,7 @@ class UIConstant {
 
 class AppColor {
   static const Color primaryColor1 = Color(0xFF0B79D9);
-  static const Color primaryColor2 = Color.fromARGB(1, 216, 223, 249);
+  static const Color primaryColor2 = Color(0xFFD8E9F9);
 }
 
 class AppString {
@@ -19,4 +19,11 @@ class AppText {
       fontSize: 26,
       fontStyle: FontStyle.normal,
       color: AppColor.primaryColor1);
+
+  static const alertText = TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: 16,
+      fontStyle: FontStyle.normal,
+      color: Colors.black,
+  );
 }

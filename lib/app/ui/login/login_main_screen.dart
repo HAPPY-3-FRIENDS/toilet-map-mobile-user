@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:toiletmap/app/utils/constants.dart';
 
 import '../../utils/routes.dart';
 
@@ -34,7 +35,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/img1.png',
+                'assets/Toilet_map_logo.png',
                 width: 150,
                 height: 150,
               ),
@@ -108,7 +109,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
                 height: 45,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.green.shade600,
+                        primary: AppColor.primaryColor1,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                     onPressed: () async {
