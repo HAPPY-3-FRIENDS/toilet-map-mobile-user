@@ -11,7 +11,10 @@ class PanelWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: const BoxDecoration(
-          color: AppColor.primaryColor1,
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[AppColor.gradientColor2, AppColor.gradientColor1]),
           borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
         ),
         child: ListView(

@@ -21,7 +21,6 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
       bottom: true,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColor.primaryColor1,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(20.0),
@@ -34,6 +33,18 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
           leading: Icon(Icons.person),
           title: Text('Xin chào Thúy Phượng', style: TextStyle(fontSize: 16),),
           actions: [Icon(Icons.history), Padding(padding: EdgeInsets.only(right: 5))],
+
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20.0),
+                  bottomRight: Radius.circular(20.0)),
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: <Color>[AppColor.gradientColor1, AppColor.gradientColor2]),
+            ),
+          ),
 
 
           bottom: PreferredSize(
