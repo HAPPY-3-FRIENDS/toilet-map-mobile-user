@@ -35,7 +35,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/Toilet_map_logo.png',
+                'assets/logo.png',
                 width: 150,
                 height: 150,
               ),

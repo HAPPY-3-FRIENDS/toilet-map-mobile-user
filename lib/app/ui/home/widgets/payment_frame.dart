@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../try_map.dart';
+
 class PaymentFrame extends StatelessWidget {
   const PaymentFrame({Key? key}) : super(key: key);
 
@@ -34,7 +36,12 @@ class PaymentFrame extends StatelessWidget {
                 SizedBox(
                   height: 30,
                   child: ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FullScreenMap())
+                      )
+                    },
                     icon: Icon(Icons.login, size: 15,),
                     label: Text("Nạp số dư"),
                   ),
