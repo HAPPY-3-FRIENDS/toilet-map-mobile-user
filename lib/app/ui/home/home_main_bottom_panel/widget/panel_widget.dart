@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:toiletmap/app/ui/home/home_main_bottom_panel/widget/toilet_in_list_frame.dart';
 
-import '../../../utils/constants.dart';
+import '../../../../utils/constants.dart';
 
 class PanelWidget extends StatelessWidget {
   final ScrollController controller;
@@ -10,13 +11,7 @@ class PanelWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[AppColor.gradientColor2, AppColor.gradientColor1]),
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        ),
+        decoration: AppBoxDecoration.boxDecorationWithGradient2,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -34,6 +29,7 @@ class PanelWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Hiển thị danh sách nhà vệ sinh', style: TextStyle(color: Colors.white, fontSize: 20)),
+          //ToiletInListFrame(),
         ],
       ),
     );

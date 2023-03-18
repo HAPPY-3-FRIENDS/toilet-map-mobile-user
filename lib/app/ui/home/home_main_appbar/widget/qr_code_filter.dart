@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toiletmap/app/ui/home/widgets/qr_code_builder.dart';
+import 'package:toiletmap/app/ui/home/home_main_appbar/widget/qr_code_builder.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 class QRCodeFilter extends StatefulWidget {
