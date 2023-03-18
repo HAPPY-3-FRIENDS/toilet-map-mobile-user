@@ -15,14 +15,48 @@ class HomeMainBottomPanel extends StatefulWidget {
 class _HomeMainBottomPanelState extends State<HomeMainBottomPanel> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SlidingUpPanel(
-        color: Colors.transparent,
-        panelBuilder: (controller) =>
-            PanelWidget(
-                controller: controller
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        child: SlidingUpPanel(
+          minHeight: AppNumber.h15,
+          color: Colors.transparent,
+          backdropEnabled: true,
+          panel: PanelWidget(),
+          collapsed: Container(
+            height: 40,
+            decoration: AppBoxDecoration.boxDecorationWithGradient2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: AppNumber.h200,
+                  width: AppSize.widthScreen / 3,
+                  decoration: AppBoxDecoration.boxDecoration2
+                ),
+                Center(
+                  child: Text('Hiển thị danh sách nhà vệ sinh gần đây', style: AppText.titleText1,),
+                ),
+              ],
             ),
+          ),
+        ),
       ),
     );
+    /*Container(
+      child: SlidingUpPanel(
+        color: Colors.transparent,
+        //backdropEnabled: true,
+        panel: PanelWidget(),
+        collapsed: Container(
+          height: 20,
+          decoration: AppBoxDecoration.boxDecorationWithGradient2,
+          child: Center(
+            child: Text('Slide to more features'),
+          ),
+        ),
+      ),
+    );*/
   }
 }

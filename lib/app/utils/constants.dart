@@ -17,6 +17,7 @@ class AppColor {
 //App string
 class AppString {
   static const String appName = "Toilet Map - Nhà Vệ Sinh Công Cộng";
+  static const String appDomain = "https://toilet-map.azurewebsites.net";
   static const String loginSuccessfully = "Đăng nhập thành công";
 }
 
@@ -24,6 +25,27 @@ class AppString {
 class AppBoxDecoration {
   static var boxDecoration1 = BoxDecoration(
     borderRadius: BorderRadius.all(Radius.circular(AppSize.heightScreen / 80)),
+    color: Colors.white,
+  );
+
+  static var boxDecoration2 = BoxDecoration(
+    borderRadius: BorderRadius.all(Radius.circular(AppSize.heightScreen / 80)),
+    color: AppColor.primaryColor2,
+  );
+
+  static var boxDecoration3 = BoxDecoration(
+    borderRadius: BorderRadius.only(
+        topRight: Radius.circular(AppSize.heightScreen / 60),
+        topLeft: Radius.circular(AppSize.heightScreen / 60)
+    ),
+    color: AppColor.primaryColor2,
+  );
+
+  static var boxDecoration4 = BoxDecoration(
+    borderRadius: BorderRadius.only(
+        topRight: Radius.circular(AppSize.heightScreen / 60),
+        topLeft: Radius.circular(AppSize.heightScreen / 60)
+    ),
     color: Colors.white,
   );
 
@@ -97,10 +119,25 @@ class AppText {
     fontStyle: FontStyle.normal,
     color: Colors.black,
   );
+
+  static var titleText1 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: AppNumber.h40,
+    fontStyle: FontStyle.normal,
+    color: Colors.white,
+  );
+
+  static var titleText2 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: AppNumber.h40,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
+  );
 }
 
 //App number
 class AppNumber {
+  static double h15 = AppSize.heightScreen / 10;
   static double h35 = AppSize.heightScreen / 35;
   static double h40 = AppSize.heightScreen / 40;
   static double h45 = AppSize.heightScreen / 45;
