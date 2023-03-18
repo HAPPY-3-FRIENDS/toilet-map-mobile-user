@@ -138,6 +138,7 @@ class AppText {
 //App number
 class AppNumber {
   static double h15 = AppSize.heightScreen / 10;
+  static double h20 = AppSize.heightScreen / 20;
   static double h35 = AppSize.heightScreen / 35;
   static double h40 = AppSize.heightScreen / 40;
   static double h45 = AppSize.heightScreen / 45;

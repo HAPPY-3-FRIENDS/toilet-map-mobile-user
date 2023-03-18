@@ -68,14 +68,72 @@ class _HomeMainMapState extends State<HomeMainMap> {
                 if (snapshot.hasData) {
                   _initialCameraPosition =
                       CameraPosition(target: LatLng(sharedPreferences.getDouble('latitude')!, sharedPreferences.getDouble('longtitude')!));
-                  return MapboxMap(
-                    accessToken: 'pk.eyJ1Ijoiam5vb2xqb29sIiwiYSI6ImNsZjl1YTlseDB0ZWozeG8xNWlkc2UyazMifQ.fNwINfQKuqfP2daikOu8bw',
-                    initialCameraPosition: _initialCameraPosition,
-                    onMapCreated: _onMapCreated,
-                    onStyleLoadedCallback: _onStyleLoadedCallback,
-                    myLocationEnabled: true,
-                    myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
-                    minMaxZoomPreference: const MinMaxZoomPreference(14, 17),
+                  return Stack(
+                    children: [
+                      MapboxMap(
+                        accessToken: 'pk.eyJ1Ijoiam5vb2xqb29sIiwiYSI6ImNsZjl1YTlseDB0ZWozeG8xNWlkc2UyazMifQ.fNwINfQKuqfP2daikOu8bw',
+                        initialCameraPosition: _initialCameraPosition,
+                        onMapCreated: _onMapCreated,
+                        onStyleLoadedCallback: _onStyleLoadedCallback,
+                        myLocationEnabled: true,
+                        myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
+                        minMaxZoomPreference: const MinMaxZoomPreference(14, 17),
+                      ),
+
+                      Positioned(
+                        top: AppSize.heightScreen * 0.53,
+                        left: AppSize.widthScreen * 0.8,
+                        child:  FloatingActionButton(
+                            child: Icon(Icons.my_location),
+                            onPressed: () {
+                              controller.animateCamera(
+                                  CameraUpdate.newCameraPosition(_initialCameraPosition));}
+                        ),
+                      ),
+
+                      Padding(
+                          padding: EdgeInsets.only(
+                              left: AppSize.widthScreen / 50,
+                          right: AppSize.widthScreen / 50,
+                          top: AppSize.heightScreen / 40,),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(
+                              width: AppSize.widthScreen / 1.4,
+                              height: AppNumber.h20,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.zero,
+                                  isDense: true,
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(AppNumber.h35),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  hintText: "Tìm kiếm địa chỉ",
+                                  prefixIcon: Icon(Icons.search),
+                                  prefixIconColor: AppColor.primaryColor1,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: AppNumber.h20,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: AppColor.primaryColor1,
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppNumber.h45)),
+                                ),
+                                onPressed: () {},
+                                child: Text('Khẩn cấp', style: AppText.titleText1),
+                              ),
+                            )
+                          ],
+                        )
+                      ),
+                    ],
                   );
                 } else {
                   return Container(
