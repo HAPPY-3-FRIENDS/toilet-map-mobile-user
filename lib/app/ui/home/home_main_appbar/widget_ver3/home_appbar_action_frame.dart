@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 import '../../../../utils/routes.dart';
-import '../widget/payment_method_changing.dart';
+import 'payment_method_changing.dart';
 import 'home_appbar_qr_code_frame.dart';
 
 class ActionFrame extends StatefulWidget {
@@ -37,7 +37,10 @@ class _ActionFrameState extends State<ActionFrame> {
                       children: [
                         Text('Thanh toán bằng số lượt (Mặc định)', style: AppText.appbarText1,),
                         GestureDetector(
-                            onTap: () {},
+                            onTap: () => showDialog(
+                            context: context,
+                            builder: (_) => PaymentMethodChanging()
+                        ),
                             child: Icon(Icons.compare_arrows_sharp, color: Colors.black, size: AppNumber.h40,)
                         ),
                       ],

@@ -171,6 +171,27 @@ class AppText {
     fontStyle: FontStyle.normal,
     color: Colors.white,
   );
+
+  static var appbarTitleText1 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: AppNumber.h30,
+    fontStyle: FontStyle.normal,
+    color: Colors.white,
+  );
+
+  static var bankingInfoText1 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: AppNumber.h40,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
+  );
+
+  static var bankingInfoText2 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: AppNumber.h45,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
+  );
 }
 
 //App number

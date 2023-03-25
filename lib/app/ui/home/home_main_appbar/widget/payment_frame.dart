@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toiletmap/app/ui/home/home_main_appbar/widget/payment_method_changing.dart';
+import 'package:toiletmap/app/ui/home/home_main_appbar/widget_ver3/payment_method_changing.dart';
 
 import '../../../../utils/routes.dart';
 

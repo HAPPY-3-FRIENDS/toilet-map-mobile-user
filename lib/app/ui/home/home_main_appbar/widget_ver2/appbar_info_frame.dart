@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../utils/constants.dart';
-import '../widget/payment_method_changing.dart';
+import '../widget_ver3/payment_method_changing.dart';
 
 class AppbarInfoFrame extends StatelessWidget {
   const AppbarInfoFrame({Key? key}) : super(key: key);

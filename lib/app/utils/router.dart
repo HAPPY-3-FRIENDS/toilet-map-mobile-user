@@ -4,6 +4,8 @@ import 'package:toiletmap/app/ui/login/login_main_screen.dart';
 import 'package:toiletmap/app/ui/login/login_otp_confirmation_screen.dart';
 
 import '../ui/combo/buy_combo_main_screen.dart';
+import '../ui/history/history_main_screen.dart';
+import '../ui/information/information_main_screen.dart';
 import '../ui/money/top_up_money_main_screen.dart';
 
 class Router {
@@ -19,6 +21,10 @@ class Router {
         return MaterialPageRoute(builder: (_) => const TopUpMoneyMainScreen());
       case 'BuyComboMainScreen':
         return MaterialPageRoute(builder: (_) => const BuyComboMainScreen());
+      case 'HistoryMainScreen':
+        return MaterialPageRoute(builder: (_) => const HistoryMainScreen());
+      case 'InformationMainScreen':
+        return MaterialPageRoute(builder: (_) => const InformationMainScreen());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(
