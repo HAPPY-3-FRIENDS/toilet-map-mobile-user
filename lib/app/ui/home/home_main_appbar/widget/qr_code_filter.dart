@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toiletmap/app/ui/home/home_main_appbar/widget/qr_code_builder.dart';
+import 'package:toiletmap/app/ui/home/home_main_appbar/widget_ver3/qr_code_builder.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 class QRCodeFilter extends StatefulWidget {
@@ -71,10 +71,14 @@ class _QRCodeFilterState extends State<QRCodeFilter> {
       actions: [
         Center(
           child: TextButton(
-              onPressed: () {
+              onPressed: () => showDialog(
+                  context: context,
+                  builder: (_) => QRCodeBuilder(data: '1 - ${_service} - ${DateTime.now()}')
+              ),
+              /*()  {
                 Navigator.of(context).pop();
                 showDialog(context: context, builder: (_) => QRCodeBuilder(data: '1 - ${_service} - ${DateTime.now()}'));
-              },
+              },*/
               child: Text("Lấy mã QR", style: AppText.alertText,)),
         )
       ],

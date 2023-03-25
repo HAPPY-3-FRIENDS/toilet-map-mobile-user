@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toiletmap/app/ui/home/home_main_appbar/widget_ver3/qr_code_builder.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 class HomeAppbarQRCodeFrame extends StatelessWidget {
@@ -20,7 +21,10 @@ class HomeAppbarQRCodeFrame extends StatelessWidget {
             child: Column(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () => showDialog(
+                      context: context,
+                      builder: (_) => QRCodeBuilder(data: 'Đi vệ sinh (tiểu tiện)')
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -36,7 +40,10 @@ class HomeAppbarQRCodeFrame extends StatelessWidget {
                   color: AppColor.primaryColor2,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () => showDialog(
+                      context: context,
+                      builder: (_) => QRCodeBuilder(data: 'Đi vệ sinh (đại tiện)')
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -52,7 +59,10 @@ class HomeAppbarQRCodeFrame extends StatelessWidget {
                   color: AppColor.primaryColor2,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () => showDialog(
+                      context: context,
+                      builder: (_) => QRCodeBuilder(data: 'Đi tắm')
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [

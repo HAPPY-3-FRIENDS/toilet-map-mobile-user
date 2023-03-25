@@ -24,7 +24,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
       child: Scaffold(
         body: Stack(
           children: const [
-            HomeMainMap(),
+            //HomeMainMap(),
             HomeMainAppbarVer3(),
             HomeMainBottomPanel(),
           ],

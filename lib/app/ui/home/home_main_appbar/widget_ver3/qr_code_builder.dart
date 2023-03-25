@@ -12,18 +12,18 @@ class QRCodeBuilder extends StatelessWidget {
     return AlertDialog(
       title: Container(
         alignment: Alignment.center,
-          child: Text("QUÉT MÃ NÀY ĐỂ THANH TOÁN"),
-        ),
+        child: Text("Mã thanh toán ${data}", style: AppText.appbarText2,),
+      ),
       titleTextStyle: AppText.alertText,
       elevation: 5,
       alignment: Alignment.center,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppNumber.h60)),
       content: QrImage(
-              data: data,
-              version: QrVersions.auto,
-              gapless: false,
-              size: 220,
-            ),
+        data: '1 - ${data} - ${DateTime.now()}',
+        version: QrVersions.auto,
+        gapless: false,
+        size: AppSize.widthScreen * 0.7,
+      ),
     );
   }
 }
