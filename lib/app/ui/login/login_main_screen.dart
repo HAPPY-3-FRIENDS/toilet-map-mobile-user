@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
+import '../../main.dart';
 import '../../utils/routes.dart';
 
 class LoginMainScreen extends StatefulWidget {
@@ -40,17 +42,10 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
                 height: 150,
               ),
               SizedBox(
-                height: 25,
-              ),
-              Text(
-                "Phone Verification",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
                 height: 10,
               ),
               Text(
-                "We need to register your phone without getting started!",
+                "Đăng nhập / Đăng ký bằng số điện thoại",
                 style: TextStyle(
                   fontSize: 16,
                 ),
@@ -95,7 +90,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
                           keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Phone",
+                            hintText: "Nhập số điện thoại",
                           ),
                         ))
                   ],
@@ -113,12 +108,18 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                     onPressed: () async {
+                      sharedPreferences = await SharedPreferences.getInstance();
                       await FirebaseAuth.instance.verifyPhoneNumber(
                         phoneNumber: '${countryController.text + phone}',
                         verificationCompleted: (PhoneAuthCredential credential) {},
                         verificationFailed: (FirebaseAuthException e) {},
                         codeSent: (String verificationId, int? resendToken) {
                           LoginMainScreen.verify = verificationId;
+                          if (phone[0] != '0') {
+                            phone = '0' + phone;
+                          }
+                          print(phone + 'hihihi');
+                          sharedPreferences.setString('username', phone);
                           Navigator.pushNamed(context, Routes.loginOTPConfirmationScreen);
                         },
                         codeAutoRetrievalTimeout: (String verificationId) {},
@@ -126,7 +127,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
 
                       //Navigator.pushNamed(context, 'verify');
                     },
-                    child: Text("Send the code")),
+                    child: Text("Gửi tin nhắn xác nhận")),
               )
             ],
           ),

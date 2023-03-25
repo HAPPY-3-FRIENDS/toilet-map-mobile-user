@@ -58,9 +58,9 @@ class _HomeMainMapState extends State<HomeMainMap> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(top: AppSize.heightScreen / 4),
+        padding: EdgeInsets.only(top: AppSize.heightScreen / 5),
       child: Container(
-        height: AppSize.heightScreen / 1.5,
+        height: AppSize.heightScreen / 1.3,
         child: SizedBox(
             child: FutureBuilder(
               future: initializeLocationAndSave(),
@@ -81,7 +81,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
                       ),
 
                       Positioned(
-                        top: AppSize.heightScreen * 0.53,
+                        top: AppSize.heightScreen * 0.57,
                         left: AppSize.widthScreen * 0.8,
                         child:  FloatingActionButton(
                             child: Icon(Icons.my_location),
@@ -95,7 +95,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
                           padding: EdgeInsets.only(
                               left: AppSize.widthScreen / 50,
                           right: AppSize.widthScreen / 50,
-                          top: AppSize.heightScreen / 40,),
+                          top: AppNumber.h12,),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -120,6 +120,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
                             ),
                             SizedBox(
                               height: AppNumber.h20,
+                              width: AppSize.widthScreen / 4.5,
                               child: TextButton(
                                 style: TextButton.styleFrom(
                                   backgroundColor: AppColor.primaryColor1,

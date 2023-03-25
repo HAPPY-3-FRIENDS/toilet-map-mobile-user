@@ -19,7 +19,7 @@ class _HomeMainBottomPanelState extends State<HomeMainBottomPanel> {
       alignment: Alignment.bottomCenter,
       child: Container(
         child: SlidingUpPanel(
-          minHeight: AppNumber.h15,
+          minHeight: AppNumber.h10,
           borderRadius: BorderRadius.circular(AppSize.heightScreen / 60),
           color: Colors.transparent,
           backdropEnabled: true,

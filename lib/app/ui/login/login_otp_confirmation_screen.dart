@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toiletmap/app/models/accessToken/access_token.dart';
+import 'package:toiletmap/app/repositories/auth_repository.dart';
 import 'package:toiletmap/app/ui/login/login_main_screen.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
@@ -15,6 +18,7 @@ class LoginOTPConfirmationScreen extends StatefulWidget {
 
 class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final AuthRepository authRepository = AuthRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -75,18 +79,8 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
                 height: 25,
               ),
               Text(
-                "Phone Verification",
+                "Xác nhận Số điện thoại",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "We need to register your phone without getting started!",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
               ),
               SizedBox(
                 height: 30,
@@ -120,30 +114,24 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
 
                         // Sign the user in (or link) with the credential
                         await auth.signInWithCredential(credential);
+
+                        //This is where we want to check user to get access Token
+                        /*final sharedPreferences = await SharedPreferences.getInstance();
+                        String? phone = sharedPreferences.getString('phone');
+                        FutureBuilder<AccessToken?>(
+                          future: authRepository.authPhoneLogin(phone),
+                          builder: (context, snapshot) {
+                            if
+                          },
+                        ),*/
                         Navigator.pushNamedAndRemoveUntil(context, Routes.homeMainScreen, (route) => false);
                       } catch (e) {
                         print("wrong otp");
                       }
 
                     },
-                    child: Text("Verify Phone Number")),
+                    child: Text("Xác nhận")),
               ),
-              Row(
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          'phone',
-                              (route) => false,
-                        );
-                      },
-                      child: Text(
-                        "Edit Phone Number ?",
-                        style: TextStyle(color: Colors.black),
-                      ))
-                ],
-              )
             ],
           ),
         ),

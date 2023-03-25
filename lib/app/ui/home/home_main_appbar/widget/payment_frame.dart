@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:toiletmap/app/ui/home/home_main_appbar/widget/payment_method_changing.dart';
+
+import '../../../../utils/routes.dart';
 
 class PaymentFrame extends StatelessWidget {
   const PaymentFrame({Key? key}) : super(key: key);
@@ -24,7 +27,14 @@ class PaymentFrame extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Thanh toán bằng số lượt (Mặc định)'),
-                Icon(Icons.compare_arrows_sharp, size: 20),
+                SizedBox(
+                  height: 25,
+                  child: IconButton(
+                    onPressed: () => showDialog(
+                        context: context,
+                        builder: (_) => PaymentMethodChanging()),
+                    icon: Icon(Icons.compare_arrows_sharp, size: 20),),
+                ),
               ],
             ),
             const Text('30 lượt', style: TextStyle(fontSize: 30),),
@@ -34,7 +44,9 @@ class PaymentFrame extends StatelessWidget {
                 SizedBox(
                   height: 30,
                   child: ElevatedButton.icon(
-                    onPressed: () => {},
+                    onPressed: () => {
+                      Navigator.pushNamed(context, Routes.topUpMoneyMainScreen)
+                    },
                     icon: Icon(Icons.login, size: 15,),
                     label: Text("Nạp số dư"),
                   ),
@@ -42,7 +54,9 @@ class PaymentFrame extends StatelessWidget {
                 SizedBox(
                   height: 30,
                   child: ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.buyComboMainScreen);
+                    },
                     icon: Icon(Icons.add_shopping_cart, size: 15),
                     label: Text("Mua gói lượt"),
                   ),
