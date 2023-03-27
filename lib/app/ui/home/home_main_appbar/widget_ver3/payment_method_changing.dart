@@ -3,17 +3,23 @@ import 'package:flutter/material.dart';
 import '../../../../utils/constants.dart';
 
 class PaymentMethodChanging extends StatefulWidget {
-  const PaymentMethodChanging({Key? key}) : super(key: key);
+  String methodId;
+  int accountTurn;
+  int accountBalance;
+
+  PaymentMethodChanging({Key? key, required this.methodId, required this.accountTurn, required this.accountBalance}) : super(key: key);
 
   @override
   State<PaymentMethodChanging> createState() => _PaymentMethodChangingState();
 }
 
 class _PaymentMethodChangingState extends State<PaymentMethodChanging> {
-  String _service = '0';
+  late String _service;
 
   @override
   Widget build(BuildContext context) {
+    _service = widget.methodId;
+
     return AlertDialog(
       backgroundColor: AppColor.primaryColor2,
       contentPadding: EdgeInsets.zero,
@@ -42,7 +48,7 @@ class _PaymentMethodChangingState extends State<PaymentMethodChanging> {
                 horizontal: VisualDensity.minimumDensity,
                 vertical: VisualDensity.minimumDensity,
               ),
-              title: Text('Lượt hiện có (30 lượt)', style: AppText.alertText,),
+              title: Text('Lượt hiện có (${widget.accountTurn} lượt)', style: AppText.alertText,),
               value: '0',
               groupValue: _service,
               onChanged: (value) => setService(value),
@@ -52,7 +58,7 @@ class _PaymentMethodChangingState extends State<PaymentMethodChanging> {
                 horizontal: VisualDensity.minimumDensity,
                 vertical: VisualDensity.minimumDensity,
               ),
-              title: Text('Số dư tài khoản (50.000 VND)', style: AppText.alertText,),
+              title: Text('Số dư tài khoản (${widget.accountBalance} VND)', style: AppText.alertText,),
               value: '1',
               groupValue: _service,
               onChanged: (value) => setService(value),

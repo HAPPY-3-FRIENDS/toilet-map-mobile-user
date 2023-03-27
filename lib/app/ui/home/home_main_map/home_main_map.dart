@@ -70,14 +70,18 @@ class _HomeMainMapState extends State<HomeMainMap> {
                       CameraPosition(target: LatLng(sharedPreferences.getDouble('latitude')!, sharedPreferences.getDouble('longtitude')!));
                   return Stack(
                     children: [
-                      MapboxMap(
-                        accessToken: 'pk.eyJ1Ijoiam5vb2xqb29sIiwiYSI6ImNsZjl1YTlseDB0ZWozeG8xNWlkc2UyazMifQ.fNwINfQKuqfP2daikOu8bw',
-                        initialCameraPosition: _initialCameraPosition,
-                        onMapCreated: _onMapCreated,
-                        onStyleLoadedCallback: _onStyleLoadedCallback,
-                        myLocationEnabled: true,
-                        myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
-                        minMaxZoomPreference: const MinMaxZoomPreference(14, 17),
+                      Container(
+                        height: AppSize.heightScreen / 1.3,
+                        width: AppSize.widthScreen,
+                        child: MapboxMap(
+                          accessToken: 'pk.eyJ1Ijoiam5vb2xqb29sIiwiYSI6ImNsZjl1YTlseDB0ZWozeG8xNWlkc2UyazMifQ.fNwINfQKuqfP2daikOu8bw',
+                          initialCameraPosition: _initialCameraPosition,
+                          onMapCreated: _onMapCreated,
+                          onStyleLoadedCallback: _onStyleLoadedCallback,
+                          myLocationEnabled: true,
+                          myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
+                          minMaxZoomPreference: const MinMaxZoomPreference(14, 17),
+                        ),
                       ),
 
                       Positioned(

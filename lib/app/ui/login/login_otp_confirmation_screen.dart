@@ -110,23 +110,38 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
                             borderRadius: BorderRadius.circular(10))),
                     onPressed: () async {
                       try {
-                        PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: LoginMainScreen.verify, smsCode: code);
+                        //PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: LoginMainScreen.verify, smsCode: code);
 
                         // Sign the user in (or link) with the credential
-                        await auth.signInWithCredential(credential);
+                        //await auth.signInWithCredential(credential);
 
-                        //This is where we want to check user to get access Token
-                        /*final sharedPreferences = await SharedPreferences.getInstance();
-                        String? phone = sharedPreferences.getString('phone');
-                        FutureBuilder<AccessToken?>(
-                          future: authRepository.authPhoneLogin(phone),
-                          builder: (context, snapshot) {
-                            if
-                          },
-                        ),*/
-                        Navigator.pushNamedAndRemoveUntil(context, Routes.homeMainScreen, (route) => false);
+                        final prefs = await SharedPreferences.getInstance();
+                        prefs.setString("username", "0849666957");
+
+                        AccessToken? accessToken = await AuthRepository().authPhoneLogin();
+                        if (accessToken == null ) {
+                          Navigator.pushNamed(context, Routes.createAccountScreen);
+                        } else {
+                          Navigator.pushNamed(context, Routes.homeMainScreen);
+                        }
                       } catch (e) {
-                        print("wrong otp");
+                        showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Chú ý'),
+                              content: const Text('Mã xác nhận không khớp'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Xác nhận'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       }
 
                     },

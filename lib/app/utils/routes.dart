@@ -6,4 +6,6 @@ class Routes {
   static const String buyComboMainScreen = 'BuyComboMainScreen';
   static const String historyMainScreen = 'HistoryMainScreen';
   static const String informationMainScreen = 'InformationMainScreen';
+  static const String toiletDetailMainScreen = 'ToiletDetailMainScreen';
+  static const String createAccountScreen = 'CreateAccountScreen';
 }

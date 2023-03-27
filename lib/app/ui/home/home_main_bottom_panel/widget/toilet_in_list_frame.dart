@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
+import '../../../../utils/routes.dart';
+
 class ToiletInListFrame extends StatelessWidget {
   const ToiletInListFrame({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () => {
+        Navigator.pushNamed(context, Routes.toiletDetailMainScreen),
+      },
       child: Column(
         children: [
           Container(

@@ -27,14 +27,14 @@ class PaymentFrame extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Thanh toán bằng số lượt (Mặc định)'),
-                SizedBox(
+                /*SizedBox(
                   height: 25,
                   child: IconButton(
                     onPressed: () => showDialog(
                         context: context,
-                        builder: (_) => PaymentMethodChanging()),
+                        builder: (_) =>()),
                     icon: Icon(Icons.compare_arrows_sharp, size: 20),),
-                ),
+                ),*/
               ],
             ),
             const Text('30 lượt', style: TextStyle(fontSize: 30),),

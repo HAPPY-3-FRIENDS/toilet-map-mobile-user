@@ -6,7 +6,9 @@ import 'package:toiletmap/app/ui/login/login_otp_confirmation_screen.dart';
 import '../ui/combo/buy_combo_main_screen.dart';
 import '../ui/history/history_main_screen.dart';
 import '../ui/information/information_main_screen.dart';
+import '../ui/login/create_account_screen.dart';
 import '../ui/money/top_up_money_main_screen.dart';
+import '../ui/toilet_detail/toilet_detail_main_screen.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -25,6 +27,10 @@ class Router {
         return MaterialPageRoute(builder: (_) => const HistoryMainScreen());
       case 'InformationMainScreen':
         return MaterialPageRoute(builder: (_) => const InformationMainScreen());
+      case 'ToiletDetailMainScreen':
+        return MaterialPageRoute(builder: (_) => const ToiletDetailMainScreen());
+      case 'CreateAccountScreen':
+        return MaterialPageRoute(builder: (_) => const CreateAccountScreen());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(
