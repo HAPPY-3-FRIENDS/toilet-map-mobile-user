@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_appbar/widget_ver3/qr_code_builder.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 class HomeAppbarQRCodeFrame extends StatelessWidget {
-  const HomeAppbarQRCodeFrame({Key? key}) : super(key: key);
+  final int accountId;
+
+  const HomeAppbarQRCodeFrame({Key? key, required this.accountId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class HomeAppbarQRCodeFrame extends StatelessWidget {
                 InkWell(
                   onTap: () => showDialog(
                       context: context,
-                      builder: (_) => QRCodeBuilder(data: 'Đi vệ sinh (tiểu tiện)')
+                      builder: (_) => QRCodeBuilder(accountId: accountId,data: 'Đi vệ sinh (tiểu tiện)')
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,7 +45,7 @@ class HomeAppbarQRCodeFrame extends StatelessWidget {
                 InkWell(
                   onTap: () => showDialog(
                       context: context,
-                      builder: (_) => QRCodeBuilder(data: 'Đi vệ sinh (đại tiện)')
+                      builder: (_) => QRCodeBuilder(accountId: accountId, data: 'Đi vệ sinh (đại tiện)')
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,7 +64,7 @@ class HomeAppbarQRCodeFrame extends StatelessWidget {
                 InkWell(
                   onTap: () => showDialog(
                       context: context,
-                      builder: (_) => QRCodeBuilder(data: 'Đi tắm')
+                      builder: (_) => QRCodeBuilder(accountId: accountId,data: 'Đi tắm')
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,

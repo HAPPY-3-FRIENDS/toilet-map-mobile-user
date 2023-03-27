@@ -4,8 +4,9 @@ import 'package:toiletmap/app/utils/constants.dart';
 
 class QRCodeBuilder extends StatelessWidget {
   final String data;
+  final int accountId;
 
-  const QRCodeBuilder({Key? key, required this.data}) : super(key: key);
+  const QRCodeBuilder({Key? key, required this.data, required this.accountId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class QRCodeBuilder extends StatelessWidget {
       alignment: Alignment.center,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppNumber.h60)),
       content: QrImage(
-        data: '1 - ${data} - ${DateTime.now()}',
+        data: '${accountId} - ${data} - ${DateTime.now()}',
         version: QrVersions.auto,
         gapless: false,
         size: AppSize.widthScreen * 0.7,

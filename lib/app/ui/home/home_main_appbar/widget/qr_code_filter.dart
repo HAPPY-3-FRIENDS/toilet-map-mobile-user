@@ -69,18 +69,18 @@ class _QRCodeFilterState extends State<QRCodeFilter> {
       ),
       
       actions: [
-        Center(
+       /* Center(
           child: TextButton(
               onPressed: () => showDialog(
                   context: context,
                   builder: (_) => QRCodeBuilder(data: '1 - ${_service} - ${DateTime.now()}')
               ),
-              /*()  {
+              *//*()  {
                 Navigator.of(context).pop();
                 showDialog(context: context, builder: (_) => QRCodeBuilder(data: '1 - ${_service} - ${DateTime.now()}'));
-              },*/
+              },*//*
               child: Text("Lấy mã QR", style: AppText.alertText,)),
-        )
+        )*/
       ],
       actionsPadding: EdgeInsets.all(10),
     );

@@ -190,16 +190,31 @@ class _ActionFrameState extends State<ActionFrame> {
             indent: AppSize.widthScreen / 35,
             endIndent: AppSize.widthScreen / 35,
           ),
-          Expanded(
-              flex: 10,
-            child: Padding(
-              padding: EdgeInsets.only(
-                right: AppSize.widthScreen / 100,
-                top: AppSize.widthScreen / 100,
-                bottom: AppSize.widthScreen / 100,),
-              child: HomeAppbarQRCodeFrame(),
-            ),
-          ),
+          FutureBuilder<int?> (
+              future: SharedPreferencesRepository().getAccountId(),
+              builder: (context, snapshot)  {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                      child: CircularProgressIndicator(
+                          color: AppColor.primaryColor1,
+                          strokeWidth: 2.0
+                      )
+                  );
+                }
+                if (snapshot.hasData) {
+                  return Expanded(
+                    flex: 10,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        right: AppSize.widthScreen / 100,
+                        top: AppSize.widthScreen / 100,
+                        bottom: AppSize.widthScreen / 100,),
+                      child: HomeAppbarQRCodeFrame(accountId: snapshot.data!),
+                    ),
+                  );
+                }
+                return Center(child: Text('Lỗi'));
+              }),
         ],
       ),
     );
