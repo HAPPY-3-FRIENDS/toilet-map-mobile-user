@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:toiletmap/app/repositories/user_info_repository.dart';
 
 import '../../../../utils/constants.dart';
+import '../../../../utils/routes.dart';
 
 class PaymentMethodChanging extends StatefulWidget {
   String methodId;
@@ -17,9 +19,14 @@ class _PaymentMethodChangingState extends State<PaymentMethodChanging> {
   late String _service;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     _service = widget.methodId;
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: AppColor.primaryColor2,
       contentPadding: EdgeInsets.zero,
@@ -70,8 +77,11 @@ class _PaymentMethodChangingState extends State<PaymentMethodChanging> {
       actions: [
         Center(
           child: TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
+              onPressed: () async {
+                if (widget.methodId != _service) {
+                  await UserInfoRepository().patchUserInfoChangePaymentMethod();
+                }
+                Navigator.pushNamed(context, Routes.homeMainScreen);
               },
               child: Text("Lưu", style: TextStyle(
                   fontWeight: FontWeight.w500, fontSize: 16

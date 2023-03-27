@@ -34,7 +34,7 @@ class _ActionFrameState extends State<ActionFrame> {
                   top: AppSize.widthScreen / 35,
                   bottom: AppSize.widthScreen / 35,),
                 child: FutureBuilder<UserInfo?> (
-                    future: UserInfoRepository().getUserInfoByAccountId(),
+                    future: UserInfoRepository().getUserInfo(),
                     builder: (context, snapshot)  {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(

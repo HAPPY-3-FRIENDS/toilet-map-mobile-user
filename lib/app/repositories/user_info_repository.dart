@@ -10,7 +10,7 @@ import '../models/baseResponse/base_response.dart';
 import '../models/userInfo/user_info.dart';
 
 class UserInfoRepository {
-  Future<UserInfo?> getUserInfoByAccountId() async {
+  Future<UserInfo?> getUserInfo() async {
     int? accountId = await SharedPreferencesRepository().getAccountId();
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
     print('userinfo' + accountId!.toString());
@@ -31,6 +31,34 @@ class UserInfoRepository {
       print(baseResponse.data);
       UserInfo userInfo = UserInfo.fromJson(baseResponse.data);
       print("user info successfully " + userInfo.fullName);
+      return userInfo;
+    } else {
+      return null;
+    }
+  }
+
+  Future<UserInfo?> patchUserInfoChangePaymentMethod() async {
+    int? accountId = await SharedPreferencesRepository().getAccountId();
+    String? accessToken = await SharedPreferencesRepository().getAccessToken();
+    print('userinfo ' + accountId!.toString() + accessToken.toString());
+
+    final response = await http.patch(
+        Uri.parse('${AppDomain.appDomain1}/api/accounts/$accountId/user-info'),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+          HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+        },
+        body:
+        jsonEncode({
+          "defaultPayment": null,
+        })
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = jsonDecode(response.body);
+      BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
+      UserInfo userInfo = UserInfo.fromJson(baseResponse.data);
+      print("patch user info successfully " + userInfo.fullName);
       return userInfo;
     } else {
       return null;

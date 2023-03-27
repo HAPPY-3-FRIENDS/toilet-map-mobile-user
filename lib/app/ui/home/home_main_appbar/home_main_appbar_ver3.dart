@@ -43,7 +43,7 @@ class HomeMainAppbarVer3 extends StatelessWidget {
 
         titleSpacing: 0,
         title: FutureBuilder<UserInfo?> (
-            future: UserInfoRepository().getUserInfoByAccountId(),
+            future: UserInfoRepository().getUserInfo(),
             builder: (context, snapshot)  {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
