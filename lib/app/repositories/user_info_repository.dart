@@ -33,6 +33,7 @@ class UserInfoRepository {
       print("user info successfully " + userInfo.fullName);
       return userInfo;
     } else {
+      print("user info get failed");
       return null;
     }
   }

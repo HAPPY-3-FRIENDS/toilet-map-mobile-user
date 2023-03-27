@@ -40,7 +40,7 @@ class AuthRepository {
 
   Future<AccessToken> createUserWithPhone(fullName) async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    final phone = sharedPreferences.getString("userName");
+    final phone = sharedPreferences.getString("username");
 
     final response = await http.post(
         Uri.parse('${AppDomain.appDomain1}/api/accounts/user'),

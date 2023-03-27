@@ -74,15 +74,35 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               borderRadius: BorderRadius.circular(AppSize.widthScreen /20))),
                       onPressed: () async {
                         try {
-                          AuthRepository().createUserWithPhone(name);
-                          Navigator.pushNamed(context, Routes.homeMainScreen);
+                          if (name == "") {
+                            showDialog<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Chú ý'),
+                                  content: const Text('Vui lòng nhập tên!'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text('Xác nhận'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            await AuthRepository().createUserWithPhone(name);
+                            await Navigator.pushNamed(context, Routes.homeMainScreen);
+                          }
                         } catch (e) {
                           showDialog<void>(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: const Text('Chú ý'),
-                                content: const Text('Vui lòng nhập tên'),
+                                content: const Text('Đã có lỗi xảy ra!'),
                                 actions: <Widget>[
                                   TextButton(
                                     child: const Text('Xác nhận'),
