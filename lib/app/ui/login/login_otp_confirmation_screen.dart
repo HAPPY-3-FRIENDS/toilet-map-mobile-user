@@ -116,7 +116,7 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
                         //await auth.signInWithCredential(credential);
 
                         final prefs = await SharedPreferences.getInstance();
-                        prefs.setString("username", "6");
+                        prefs.setString("username", "08496669657");
 
                         AccessToken? accessToken = await AuthRepository().authPhoneLogin();
                         if (accessToken == null ) {

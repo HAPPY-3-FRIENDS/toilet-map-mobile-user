@@ -144,6 +144,12 @@ class AppText {
     color: Colors.black,
   );
 
+  static var titleText3 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: AppNumber.h40,
+    fontStyle: FontStyle.normal,
+  );
+
   static var mainButtonText = TextStyle(
     fontWeight: FontWeight.w300,
     fontSize: AppNumber.h52,
@@ -189,6 +195,27 @@ class AppText {
   static var bankingInfoText2 = TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: AppNumber.h45,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
+  );
+
+  static var listText1 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: AppNumber.h60,
+    fontStyle: FontStyle.normal,
+    color: Colors.grey,
+  );
+
+  static var listText2 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: AppNumber.h60,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
+  );
+
+  static var listText3 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: AppNumber.h40,
     fontStyle: FontStyle.normal,
     color: Colors.black,
   );
