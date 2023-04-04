@@ -20,7 +20,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Chờ xác nhận'),
+          title: Text('Nhập họ tên của bạn'),
           titleTextStyle: AppText.appbarTitleText1,
           centerTitle: true,
           toolbarHeight: AppSize.heightScreen / 7,

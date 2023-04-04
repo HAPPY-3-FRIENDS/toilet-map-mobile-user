@@ -27,11 +27,11 @@ class _HistoryMainScreenState extends State<HistoryMainScreen> with TickerProvid
           title: Text('Lịch sử'),
           titleTextStyle: AppText.appbarTitleText1,
           centerTitle: true,
-          toolbarHeight: AppSize.heightScreen / 6,
+          toolbarHeight: AppSize.heightScreen / 10,
           backgroundColor: Colors.transparent,
 
           flexibleSpace: Container(
-            height: AppSize.heightScreen / 6,
+            height: AppSize.heightScreen / 10,
             decoration: AppBoxDecoration.boxDecorationWithGradient1,
           ),
         ),

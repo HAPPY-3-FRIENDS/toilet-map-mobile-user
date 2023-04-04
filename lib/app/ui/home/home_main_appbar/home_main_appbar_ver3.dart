@@ -24,8 +24,8 @@ class HomeMainAppbarVer3 extends StatelessWidget {
 
         leading: InkWell(
           onTap: () async {
-            //cap nhat sau Navigator.pushNamed(context, Routes.informationMainScreen),
-            try {
+            Navigator.pushNamed(context, Routes.informationMainScreen);
+            /*try {
               final prefs = await SharedPreferences.getInstance();
               await prefs.remove('accessToken');
               await prefs.remove('username');
@@ -35,7 +35,7 @@ class HomeMainAppbarVer3 extends StatelessWidget {
                   route) => false);
             } catch (error) {
               print(error);
-            }
+            }*/
           },
           child: Icon(Icons.person, size: AppSize.widthScreen / 15, color: Colors.white,),
         ),
