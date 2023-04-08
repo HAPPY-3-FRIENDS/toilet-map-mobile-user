@@ -35,7 +35,7 @@ class AppBoxDecoration {
   );
 
   static var boxDecoration2 = BoxDecoration(
-    borderRadius: BorderRadius.all(Radius.circular(AppSize.heightScreen / 80)),
+    borderRadius: BorderRadius.all(Radius.circular(AppSize.heightScreen / 60)),
     color: AppColor.primaryColor2,
   );
 
@@ -83,6 +83,14 @@ class AppBoxDecoration {
         colors: <Color>[AppColor.gradientColor2, AppColor.gradientColor1]
     ),
   );
+
+  static const boxDecorationWithGradientNoBorder1 = BoxDecoration(
+    gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: <Color>[AppColor.gradientColor1, AppColor.gradientColor2]
+    ),
+  );
 }
 
 class AppShapeBorder {
@@ -90,6 +98,13 @@ class AppShapeBorder {
       borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(AppSize.heightScreen / 60),
           bottomRight: Radius.circular(AppSize.heightScreen / 60)
+      )
+  );
+
+  static var shapeBorder2 =  RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(AppSize.heightScreen / 60),
+          topRight: Radius.circular(AppSize.heightScreen / 60)
       )
   );
 }
@@ -229,6 +244,20 @@ class AppText {
   );
 
   static var toiletInfoText2 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: AppNumber.h50,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
+  );
+
+  static var bottomSheetToiletInfo1 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: AppNumber.h35,
+    fontStyle: FontStyle.normal,
+    color: AppColor.primaryColor1,
+  );
+
+  static var bottomSheetToiletInfo2 = TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: AppNumber.h50,
     fontStyle: FontStyle.normal,

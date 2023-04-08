@@ -23,7 +23,7 @@ class InformationMainScreen extends StatelessWidget {
 
             flexibleSpace: Container(
               height: AppSize.heightScreen / 10,
-              decoration: AppBoxDecoration.boxDecorationWithGradient1,
+              decoration: AppBoxDecoration.boxDecorationWithGradientNoBorder1,
             ),
           ),
 
@@ -133,9 +133,7 @@ class InformationMainScreen extends StatelessWidget {
                       onPressed: () async {
                         try {
                           final prefs = await SharedPreferences.getInstance();
-                          await prefs.remove('accessToken');
-                          await prefs.remove('username');
-                          await prefs.remove('accountId');
+                          await prefs.clear();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(builder: (context) => const LoginOTPConfirmationScreen()), (
                               route) => false);

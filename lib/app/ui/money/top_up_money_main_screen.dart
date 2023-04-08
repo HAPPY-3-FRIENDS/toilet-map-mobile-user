@@ -19,12 +19,12 @@ class _TopUpMoneyMainScreenState extends State<TopUpMoneyMainScreen> {
             title: Text('Nạp tiền'),
             titleTextStyle: AppText.appbarTitleText1,
             centerTitle: true,
-            toolbarHeight: AppSize.heightScreen / 6,
+            toolbarHeight: AppSize.heightScreen / 12,
             backgroundColor: Colors.transparent,
 
             flexibleSpace: Container(
-              height: AppSize.heightScreen / 6,
-              decoration: AppBoxDecoration.boxDecorationWithGradient1,
+              height: AppSize.heightScreen / 12,
+              decoration: AppBoxDecoration.boxDecorationWithGradientNoBorder1,
             ),
           ),
 

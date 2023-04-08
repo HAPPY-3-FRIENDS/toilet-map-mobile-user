@@ -11,6 +11,14 @@ class SharedPreferencesRepository {
     return sharedPreferences.getString("accessToken");
   }
 
+  Future<List<double?>> getCurrentLatLong() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    return [
+      sharedPreferences.getDouble("latitude"),
+      sharedPreferences.getDouble("longtitude"),
+    ];
+  }
+
   Future<List<String>?> getPayment() async {
     print('test get payment');
     final sharedPreferences = await SharedPreferences.getInstance();

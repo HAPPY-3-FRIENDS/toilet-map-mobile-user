@@ -117,6 +117,7 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
 
                         final prefs = await SharedPreferences.getInstance();
                         prefs.setString("username", "0849666957");
+                        prefs.setString("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNjgwNjg1NzE4LCJleHAiOjE2ODEyOTA1MTgsInVzZXJuYW1lIjoiMDg0OTY2Njk1NyIsInJvbGUiOiJVc2VyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVXNlciJ9XX0.BuL4Ni8BkrIXCK0lO1AgntOsLNYXego3yA8TS6i_YvVDfdKuSABzAuxbCgpNDD_T8AkM4_NZtbPKQ92qoEmKqg");
 
                         AccessToken? accessToken = await AuthRepository().authPhoneLogin();
                         if (accessToken == null ) {

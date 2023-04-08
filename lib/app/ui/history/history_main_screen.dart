@@ -27,23 +27,23 @@ class _HistoryMainScreenState extends State<HistoryMainScreen> with TickerProvid
           title: Text('Lịch sử'),
           titleTextStyle: AppText.appbarTitleText1,
           centerTitle: true,
-          toolbarHeight: AppSize.heightScreen / 10,
+          toolbarHeight: AppSize.heightScreen / 12,
           backgroundColor: Colors.transparent,
 
           flexibleSpace: Container(
-            height: AppSize.heightScreen / 10,
-            decoration: AppBoxDecoration.boxDecorationWithGradient1,
+            height: AppSize.heightScreen / 12,
+            decoration: AppBoxDecoration.boxDecorationWithGradientNoBorder1,
           ),
         ),
 
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: AppNumber.h60,),
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppSize.widthScreen / 15),
               ),
+              margin: EdgeInsets.all(AppSize.widthScreen / 40),
               elevation: 5,
               child: Container(
                 decoration: BoxDecoration(
@@ -51,6 +51,7 @@ class _HistoryMainScreenState extends State<HistoryMainScreen> with TickerProvid
                   borderRadius: BorderRadius.circular(AppSize.widthScreen / 15),
                 ),
                 child: TabBar(
+                  indicatorPadding: EdgeInsets.zero,
                   indicator: BoxDecoration(
                     gradient: const LinearGradient(
                         begin: Alignment.centerLeft,
@@ -61,7 +62,8 @@ class _HistoryMainScreenState extends State<HistoryMainScreen> with TickerProvid
                   ),
                   controller: tabController,
                   isScrollable: true,
-                  labelPadding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 18),
+
+                  labelPadding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 15, vertical: 0),
                   tabs: [
                     Tab(child: Text("Đi vệ sinh",),),
                     Tab(child: Text("Nạp tiền"),),

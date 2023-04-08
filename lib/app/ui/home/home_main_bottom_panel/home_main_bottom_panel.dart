@@ -19,13 +19,16 @@ class _HomeMainBottomPanelState extends State<HomeMainBottomPanel> {
       alignment: Alignment.bottomCenter,
       child: Container(
         child: SlidingUpPanel(
+          panelSnapping: true,
+          renderPanelSheet: true,
+
           minHeight: AppNumber.h10,
           borderRadius: BorderRadius.circular(AppSize.heightScreen / 60),
           color: Colors.transparent,
           backdropEnabled: true,
           panel: PanelWidget(),
           collapsed: Container(
-            height: 40,
+            height: AppSize.heightScreen / 10,
             decoration: AppBoxDecoration.boxDecorationWithGradient2,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

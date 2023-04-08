@@ -16,7 +16,7 @@ class TransactionRepository {
     print('Transaction get start' + accountId!.toString());
 
     final response = await http.get(
-        Uri.parse('${AppDomain.appDomain1}/api/payments/${accountId}'),
+        Uri.parse('${AppDomain.appDomain1}/api/payments/accounts/${accountId}'),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
           HttpHeaders.authorizationHeader: "Bearer ${accessToken}",

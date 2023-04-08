@@ -5,7 +5,21 @@ import 'package:toiletmap/app/utils/constants.dart';
 import '../../../../utils/routes.dart';
 
 class ToiletInListFrame extends StatelessWidget {
-  const ToiletInListFrame({Key? key}) : super(key: key);
+  String toiletImage;
+  String toiletName;
+  String price;
+  String address;
+  double star;
+  String? nearBy;
+
+  ToiletInListFrame({
+    required this.toiletImage,
+    required this.toiletName,
+    required this.price,
+    required this.address,
+    required this.star,
+    required this.nearBy,
+    Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +39,7 @@ class ToiletInListFrame extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(AppSize.heightScreen / 80),
                     child: Image.network(
-                      "https://images.unsplash.com/photo-1556228149-d8f523f77b5a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                      toiletImage,
                       height: AppSize.heightScreen / 6,
                       width: AppSize.heightScreen / 6,
                       fit: BoxFit.cover,
@@ -44,13 +58,13 @@ class ToiletInListFrame extends StatelessWidget {
                           children: [
                             Flexible(child: Container(
                               padding: new EdgeInsets.only(right: AppNumber.w40),
-                              child: Text('Nhà vệ sinh quận 7', overflow: TextOverflow.ellipsis, style: AppText.detailText1,),
+                              child: Text(toiletName, maxLines: 2, overflow: TextOverflow.ellipsis, style: AppText.detailText1,),
                             )),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text('4.8', style: AppText.detailText2,),
+                                Text(star.toString(), style: AppText.detailText2,),
                                 Icon(Icons.star, size: AppNumber.h60,),
                               ],
                             ),
@@ -60,13 +74,19 @@ class ToiletInListFrame extends StatelessWidget {
                           children: [
                             FaIcon(FontAwesomeIcons.moneyBill, size: 8,),
                             SizedBox(width: AppNumber.h400,),
-                            Text('2.000 - 8.000 VND/lượt', style: AppText.detailText4,),
+                            Text(price, style: AppText.detailText4,),
                           ],
                         ),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(Icons.pin_drop, size: 10,),
-                            Text('200m', style: AppText.detailText3),
+                            Expanded(
+                                child: Text(
+                                  address, style: AppText.detailText3,
+                                  maxLines: 2,
+                                ),
+                            ),
                           ],
                         ),
                         Row(
@@ -74,7 +94,9 @@ class ToiletInListFrame extends StatelessWidget {
                             SizedBox(width: AppNumber.h400,),
                             FaIcon(FontAwesomeIcons.locationPin, size: 8,),
                             SizedBox(width: AppNumber.h400,),
-                            Text('Gần Circle K, Phúc Long', style: AppText.detailText3),
+                            Text((nearBy == null)
+                                ? ''
+                                : nearBy!, style: AppText.detailText3),
                           ],
                         ),
                         Row(

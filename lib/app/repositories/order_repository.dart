@@ -15,7 +15,7 @@ class OrderRepository {
     print('checkin get start' + accountId!.toString());
 
     final response = await http.get(
-        Uri.parse('${AppDomain.appDomain1}/api/orders/${accountId}'),
+        Uri.parse('${AppDomain.appDomain1}/api/orders/accounts/${accountId}'),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
           HttpHeaders.authorizationHeader: "Bearer ${accessToken}",

@@ -93,6 +93,7 @@ flutter:
     - assets/logo.png
     - assets/sample1.jpg
     - assets/config/.env
+    - assets/marker.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

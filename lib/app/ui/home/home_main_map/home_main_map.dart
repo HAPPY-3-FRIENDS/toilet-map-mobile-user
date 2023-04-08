@@ -4,7 +4,8 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/main.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:toiletmap/app/repositories/direction_repository.dart';
+import 'package:toiletmap/app/repositories/map_repository.dart';
+import 'package:toiletmap/app/ui/home/home_main_map/widget/bottom_sheet_toilet_info.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 class HomeMainMap extends StatefulWidget {
@@ -18,7 +19,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
   late CameraPosition _initialCameraPosition;
   late MapboxMapController controller;
   late LatLng currentLatLng;
-
+  static int count = 0;
 
   @override
   void initState() {
@@ -56,31 +57,57 @@ class _HomeMainMapState extends State<HomeMainMap> {
   }
 
   _symbolClick(Symbol symbol) async {
-    showDialog<void>(
+    /*showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Chú ý'),
-          content: Text(symbol.data!['id']),
+          content: Text(symbol.data!['id'].toString()),
           actions: <Widget>[
             TextButton(
               child: const Text('Xác nhận'),
               onPressed: () {
+                _createPolyline(symbol.data!['lat'], symbol.data!['long']);
                 Navigator.of(context).pop();
               },
             ),
           ],
         );
       },
+    );*/
+
+    showModalBottomSheet(
+      shape: AppShapeBorder.shapeBorder2,
+        context: context,
+        builder: (BuildContext context) {
+          return BottomSheetToiletInfo(id: symbol.data!['id']);
+        }
     );
   }
 
-  _onStyleLoadedCallback() async {
-    print('current location ' + currentLatLng.latitude.toString() + " " + currentLatLng.longitude.toString());
+  _loadSymbols(double lat, double long, int toiletId) async {
+    await controller.addSymbol(
+        SymbolOptions(
+          //bool - keo tha icon
+          draggable: false,
+          geometry: LatLng(lat, long),
+          iconImage: 'assets/marker.png',
+          iconSize: 1,
+          //fontNames: ['Roboto Regular'],
+        ),
+        {
+          'id': toiletId,
+          'lat': lat,
+          'long': long
+        }
+    );
+  }
 
-    final polyline = await DirectionRepository().getDirection(10.8441359, 106.7988765, 10.8451359, 106.7998765);
+  _createPolyline(double lat, double long) async {
+    count += 1;
+    var polyline = await MapRepository().getDirection(currentLatLng.latitude, currentLatLng.longitude, lat, long);
 
-    final fills = await {
+    var fills = await {
       "type": "FeatureCollection",
       "features": [
         {
@@ -95,68 +122,29 @@ class _HomeMainMapState extends State<HomeMainMap> {
     };
     print("fills: " + fills.toString());
 
-    await controller.addSource("way1", GeojsonSourceProperties(data: fills));
-    await controller.addLineLayer("way1", "line1", LineLayerProperties(
+    await controller.addSource("way${count}", GeojsonSourceProperties(data: fills));
+    await controller.addLineLayer("way${count}", "line${count}", LineLayerProperties(
       lineColor:'#007AFF',
       lineCap: "round",
       lineJoin: "round",
       lineWidth: 3,
     ),);
+  }
 
-    Symbol symbol1 = await controller.addSymbol(
-        const SymbolOptions(
-          //bool - keo tha icon
-          draggable: false,
-          geometry: LatLng(10.8441359, 106.7988765),
-          iconImage: 'assets/logo.png',
-          iconSize: 0.03,
-          //fontNames: ['Roboto Regular'],
-        ),
-      {
-        'id': "1"
-      }
-    );
+  _onStyleLoadedCallback() async {
+    print('current location ' + currentLatLng.latitude.toString() + " " + currentLatLng.longitude.toString());
+
+    final symbols = await MapRepository().getAllPosition();
+
+    symbols!.forEach((element) {
+      _loadSymbols(element.latitude, element.longitude, element.id);
+    });
+    controller.onSymbolTapped.add((argument) {_symbolClick(argument);});
     /*
     update - dung de ghi de len cho symbol (ko phai xoa)
     controller.updateSymbol(symbol1, SymbolOptions(
       geometry: LatLng()
     ));
-    */
-
-    Symbol symbol2 = await controller.addSymbol(
-        const SymbolOptions(
-          //bool - keo tha icon
-          draggable: false,
-          geometry: LatLng(10.8451359, 106.7998765),
-          iconImage: 'assets/logo.png',
-          iconSize: 0.03,
-          //fontNames: ['Roboto Regular'],
-        ),
-        {
-          'id': "2"
-        }
-    );
-
-    controller.onSymbolTapped.add((argument) {_symbolClick(argument);});
-
-    /*controller.addFill(FillOptions(
-      fillPattern: fills
-    ));*/
-
-    /*
-    await mapController.addSource(
-        "fills", GeojsonSourceProperties(data: fills));
-
-    await mapController.addLayer(
-      "fills",
-      "line",
-      LineLayerProperties(
-        lineColor: ThemeColors.primary.toHexStringRGB(),
-        lineCap: "round",
-        lineJoin: "round",
-        lineWidth: 3,
-      ),
-    );
     */
   }
 
@@ -238,7 +226,10 @@ class _HomeMainMapState extends State<HomeMainMap> {
                                   foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppNumber.h45)),
                                 ),
-                                onPressed: () {},
+                                onPressed: () async {
+                                  await controller.removeSource("way${count}");
+                                  await controller.removeLayer("line${count}");
+                                },
                                 child: Text('Khẩn cấp', style: AppText.titleText1),
                               ),
                             )
