@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:toiletmap/app/ui/home/home_main_map/widget/images_frame.dart';
 import 'package:toiletmap/app/ui/toilet_detail/widget/image_carousel_widget.dart';
 import 'package:toiletmap/app/ui/toilet_detail/widget/toilet_information_frame.dart';
 
 import '../../utils/constants.dart';
 
 class ToiletDetailMainScreen extends StatelessWidget {
-  const ToiletDetailMainScreen({Key? key}) : super(key: key);
+  int id;
+
+  ToiletDetailMainScreen({required this.id, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("detail toi let id: " + id.toString());
     return SafeArea(
       top: true,
       bottom: true,
@@ -19,7 +23,6 @@ class ToiletDetailMainScreen extends StatelessWidget {
             height: AppSize.heightScreen / 10,
             color: AppColor.primaryColor2,
             child: AppBar(
-              shape: AppShapeBorder.shapeBorder1,
 
               title: Text('Thông tin'),
               titleTextStyle: AppText.appbarTitleText1,
@@ -40,7 +43,7 @@ class ToiletDetailMainScreen extends StatelessWidget {
             color: AppColor.primaryColor2,
             child: Column(
               children: [
-                ImageCarouselWidget(),
+                ImagesFrame(imageSource: []),
                 SizedBox(height: AppNumber.h80),
                 ToiletInformationFrame(),
                 SizedBox(height: AppNumber.h80),

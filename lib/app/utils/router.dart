@@ -28,7 +28,8 @@ class Router {
       case 'InformationMainScreen':
         return MaterialPageRoute(builder: (_) => const InformationMainScreen());
       case 'ToiletDetailMainScreen':
-        return MaterialPageRoute(builder: (_) => const ToiletDetailMainScreen());
+        final id = settings.arguments as int;
+        return MaterialPageRoute(builder: (_) => ToiletDetailMainScreen(id: id));
       case 'CreateAccountScreen':
         return MaterialPageRoute(builder: (_) => const CreateAccountScreen());
       default:

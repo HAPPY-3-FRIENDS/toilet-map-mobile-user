@@ -5,6 +5,7 @@ import 'package:toiletmap/app/ui/home/home_main_map/widget/images_frame.dart';
 
 import '../../../../models/toilet/toilet.dart';
 import '../../../../utils/constants.dart';
+import '../../../../utils/routes.dart';
 
 class BottomSheetToiletInfo extends StatelessWidget {
   int id;
@@ -50,7 +51,12 @@ class BottomSheetToiletInfo extends StatelessWidget {
                       ),
                       Expanded(
                         flex: 1,
-                        child: Icon(Icons.upload_file, size: AppNumber.h40,),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.toiletDetailMainScreen, arguments: id);
+                          },
+                          child: Icon(Icons.upload_file, size: AppNumber.h40,),
+                        )
                       ),
                       Expanded(
                         flex: 1,

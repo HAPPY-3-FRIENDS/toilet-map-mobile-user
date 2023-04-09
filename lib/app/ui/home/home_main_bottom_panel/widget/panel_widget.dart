@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:toiletmap/app/models/toilet/toiletFacilities/toiletFacilities.dart';
 import 'package:toiletmap/app/repositories/toilet_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_bottom_panel/widget/toilet_in_list_frame.dart';
 
@@ -107,7 +108,17 @@ class PanelWidget extends StatelessWidget {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (BuildContext context, int index) {
                   Toilet toilet = snapshot.data![index];
+                  int showerRoom = toilet.toiletFacilities[0].quantity;
+                  int normalRoom = toilet.toiletFacilities[1].quantity;
+                  int disabilityRoom = toilet.toiletFacilities[2].quantity;
+                  List<ToiletFacilities> list = [];
+                  toilet.toiletFacilities.forEach((element) {
+                    if (element.facilityType != "Phòng" && element.quantity > 0) {
+                      list.add(element);
+                    }
+                  });
                   return ToiletInListFrame(
+                    id: toilet.id,
                     toiletName: toilet.toiletName,
                     address: toilet.address + ", " + toilet.ward + ", " + toilet.district + ", " + toilet.province,
                     price: (toilet.free == false)
@@ -116,6 +127,10 @@ class PanelWidget extends StatelessWidget {
                     toiletImage: toilet.toiletImageSources[0],
                     star: toilet.ratingStar,
                     nearBy: toilet.nearBy,
+                    showerRoom: showerRoom,
+                    normalRoom: normalRoom,
+                    disabilityRoom: disabilityRoom,
+                    facilities: list,
                   );
                 },
               );
