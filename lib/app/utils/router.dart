@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toiletmap/app/models/toilet/toiletArgument.dart';
 import 'package:toiletmap/app/ui/home/home_main_screen.dart';
 import 'package:toiletmap/app/ui/login/login_main_screen.dart';
 import 'package:toiletmap/app/ui/login/login_otp_confirmation_screen.dart';
@@ -28,8 +29,8 @@ class Router {
       case 'InformationMainScreen':
         return MaterialPageRoute(builder: (_) => const InformationMainScreen());
       case 'ToiletDetailMainScreen':
-        final id = settings.arguments as int;
-        return MaterialPageRoute(builder: (_) => ToiletDetailMainScreen(id: id));
+        final index = settings.arguments as ToiletArgument;
+        return MaterialPageRoute(builder: (_) => ToiletDetailMainScreen(toiletArgument: index,));
       case 'CreateAccountScreen':
         return MaterialPageRoute(builder: (_) => const CreateAccountScreen());
       default:

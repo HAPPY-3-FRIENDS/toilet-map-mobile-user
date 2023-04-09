@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:toiletmap/app/ui/home/home_main_map/widget/images_frame.dart';
-import 'package:toiletmap/app/ui/toilet_detail/widget/image_carousel_widget.dart';
+import 'package:toiletmap/app/ui/toilet_detail/widget/detail_images_frame.dart';
 import 'package:toiletmap/app/ui/toilet_detail/widget/toilet_information_frame.dart';
 
+import '../../models/toilet/toiletArgument.dart';
 import '../../utils/constants.dart';
 
 class ToiletDetailMainScreen extends StatelessWidget {
-  int id;
+  ToiletArgument toiletArgument;
 
-  ToiletDetailMainScreen({required this.id, Key? key}) : super(key: key);
+  ToiletDetailMainScreen({
+    required this.toiletArgument,
+    Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print("detail toi let id: " + id.toString());
     return SafeArea(
       top: true,
       bottom: true,
@@ -28,7 +30,7 @@ class ToiletDetailMainScreen extends StatelessWidget {
               titleTextStyle: AppText.appbarTitleText1,
               centerTitle: true,
               toolbarHeight: AppSize.heightScreen / 10,
-              elevation: 5,
+              elevation: 0,
 
               flexibleSpace: Container(
                 height: AppSize.heightScreen / 10,
@@ -43,10 +45,20 @@ class ToiletDetailMainScreen extends StatelessWidget {
             color: AppColor.primaryColor2,
             child: Column(
               children: [
-                ImagesFrame(imageSource: []),
-                SizedBox(height: AppNumber.h80),
-                ToiletInformationFrame(),
-                SizedBox(height: AppNumber.h80),
+                DetailImagesFrame(imageSource: toiletArgument.toiletImagesList,),
+                ToiletInformationFrame(
+                  nearBy: toiletArgument.nearBy!,
+                  time: toiletArgument.time,
+                  disabilityRoom: toiletArgument.disabilityRoom,
+                  normalRoom: toiletArgument.normalRoom,
+                  showerRoom: toiletArgument.showerRoom,
+                  star: toiletArgument.star,
+                  price: toiletArgument.price,
+                  address: toiletArgument.address,
+                  toiletName: toiletArgument.toiletName,
+                  toiletFacilities: toiletArgument.facilities,
+                ),
+                SizedBox(height: AppNumber.h200),
                 Container(color: Colors.white, height: AppSize.heightScreen / 3,),
               ],
             ),

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:toiletmap/app/models/toilet/toiletArgument.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 import '../../../../models/toilet/toiletFacilities/toiletFacilities.dart';
 import '../../../../utils/routes.dart';
 
 class ToiletInListFrame extends StatelessWidget {
-  int id;
+  List<String> toiletImagesList;
+  String time;
   String toiletImage;
   String toiletName;
   String price;
@@ -19,7 +21,8 @@ class ToiletInListFrame extends StatelessWidget {
   List<ToiletFacilities> facilities;
 
   ToiletInListFrame({
-    required this.id,
+    required this. time,
+    required this.toiletImagesList,
     required this.toiletImage,
     required this.toiletName,
     required this.price,
@@ -40,8 +43,8 @@ class ToiletInListFrame extends StatelessWidget {
       facilitiesString += facilities[0].facilityName;
     if (facilities.length > 1) {
       ToiletFacilities lastFacility = facilities.last;
-      facilities.removeLast();
       facilities.forEach((element) {
+        if (element != facilities.last)
         facilitiesString += element.facilityName + " - ";
       });
       facilitiesString += lastFacility.facilityName;
@@ -50,7 +53,20 @@ class ToiletInListFrame extends StatelessWidget {
     if (nearBy != null) {
       return InkWell(
           onTap: () => {
-            Navigator.pushNamed(context, Routes.toiletDetailMainScreen, arguments: id),
+            Navigator.pushNamed(context, Routes.toiletDetailMainScreen,
+                arguments: ToiletArgument(
+                    toiletImagesList,
+                    time,
+                    toiletName,
+                    price,
+                    address,
+                    star,
+                    nearBy,
+                    showerRoom,
+                    normalRoom,
+                    disabilityRoom,
+                    facilities)
+            ),
           },
           child: Column(
             children: [
@@ -215,7 +231,18 @@ class ToiletInListFrame extends StatelessWidget {
     }
     return InkWell(
         onTap: () => {
-          Navigator.pushNamed(context, Routes.toiletDetailMainScreen, arguments: id),
+          Navigator.pushNamed(context, Routes.toiletDetailMainScreen, arguments: ToiletArgument(
+              toiletImagesList,
+              time,
+              toiletName,
+              price,
+              address,
+              star,
+              '',
+              showerRoom,
+              normalRoom,
+              disabilityRoom,
+              facilities)),
         },
         child: Column(
           children: [

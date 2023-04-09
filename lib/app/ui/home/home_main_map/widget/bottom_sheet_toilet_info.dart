@@ -4,6 +4,8 @@ import 'package:toiletmap/app/repositories/toilet_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_map/widget/images_frame.dart';
 
 import '../../../../models/toilet/toilet.dart';
+import '../../../../models/toilet/toiletArgument.dart';
+import '../../../../models/toilet/toiletFacilities/toiletFacilities.dart';
 import '../../../../utils/constants.dart';
 import '../../../../utils/routes.dart';
 
@@ -26,6 +28,17 @@ class BottomSheetToiletInfo extends StatelessWidget {
             );
           }
           if (snapshot.hasData) {
+
+            int showerRoom = snapshot.data!.toiletFacilities[0].quantity;
+            int normalRoom = snapshot.data!.toiletFacilities[1].quantity;
+            int disabilityRoom = snapshot.data!.toiletFacilities[2].quantity;
+            List<ToiletFacilities> list = [];
+            snapshot.data!.toiletFacilities.forEach((element) {
+              if (element.facilityType != "Phòng" && element.quantity > 0) {
+                list.add(element);
+              }
+            });
+
             return Container(
               height: AppSize.heightScreen * 2/3,
               padding: EdgeInsets.symmetric(
@@ -53,7 +66,26 @@ class BottomSheetToiletInfo extends StatelessWidget {
                         flex: 1,
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, Routes.toiletDetailMainScreen, arguments: id);
+                            Navigator.pushNamed(context, Routes.toiletDetailMainScreen,
+                                arguments: ToiletArgument(
+                                    snapshot.data!.toiletImageSources,
+                                    snapshot.data!.openTime + " - " +
+                                        snapshot.data!.closeTime,
+                                    snapshot.data!.toiletName,
+                                    (snapshot.data!.free == false)
+                                        ? '${snapshot.data!.minPrice} - ${snapshot.data!.maxPrice} VND/lượt'
+                                        : 'Miễn phí',
+                                    snapshot.data!.address + ", " +
+                                        snapshot.data!.ward + ", " +
+                                        snapshot.data!.district + ", " +
+                                        snapshot.data!.province,
+                                    snapshot.data!.ratingStar,
+                                    (snapshot.data!.nearBy == null) ? '' : snapshot.data!.nearBy,
+                                    showerRoom,
+                                    normalRoom,
+                                    disabilityRoom,
+                                    list)
+                            );
                           },
                           child: Icon(Icons.upload_file, size: AppNumber.h40,),
                         )

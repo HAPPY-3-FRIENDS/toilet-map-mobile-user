@@ -118,7 +118,8 @@ class PanelWidget extends StatelessWidget {
                     }
                   });
                   return ToiletInListFrame(
-                    id: toilet.id,
+                    time: toilet.openTime + " - " + toilet.closeTime,
+                    toiletImagesList: toilet.toiletImageSources,
                     toiletName: toilet.toiletName,
                     address: toilet.address + ", " + toilet.ward + ", " + toilet.district + ", " + toilet.province,
                     price: (toilet.free == false)
