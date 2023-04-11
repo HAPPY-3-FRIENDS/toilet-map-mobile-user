@@ -5,6 +5,7 @@ import 'package:toiletmap/app/ui/login/login_main_screen.dart';
 import 'package:toiletmap/app/ui/login/login_otp_confirmation_screen.dart';
 
 import '../ui/combo/buy_combo_main_screen.dart';
+import '../ui/direction/direction_main_screen.dart';
 import '../ui/history/history_main_screen.dart';
 import '../ui/information/information_main_screen.dart';
 import '../ui/login/create_account_screen.dart';
@@ -30,7 +31,10 @@ class Router {
         return MaterialPageRoute(builder: (_) => const InformationMainScreen());
       case 'ToiletDetailMainScreen':
         final index = settings.arguments as ToiletArgument;
-        return MaterialPageRoute(builder: (_) => ToiletDetailMainScreen(toiletArgument: index,));
+        return MaterialPageRoute(builder: (_) => ToiletDetailMainScreen(toiletArgument: index));
+      case 'DirectionMainScreen':
+        final index = settings.arguments as int;
+        return MaterialPageRoute(builder: (_) => DirectionMainScreen(id: index,));
       case 'CreateAccountScreen':
         return MaterialPageRoute(builder: (_) => const CreateAccountScreen());
       default:

@@ -68,6 +68,7 @@ class BottomSheetToiletInfo extends StatelessWidget {
                           onTap: () {
                             Navigator.pushNamed(context, Routes.toiletDetailMainScreen,
                                 arguments: ToiletArgument(
+                                    snapshot.data!.id,
                                     snapshot.data!.toiletImageSources,
                                     snapshot.data!.openTime + " - " +
                                         snapshot.data!.closeTime,
@@ -157,6 +158,7 @@ class BottomSheetToiletInfo extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(AppSize.widthScreen / 10))),
                         onPressed: () async {
+                          Navigator.pushNamed(context, Routes.directionMainScreen, arguments: id);
                         },
                         child: Text("Đến nhà vệ sinh", style: AppText.bottomSheetToiletInfo2,)
                     ),

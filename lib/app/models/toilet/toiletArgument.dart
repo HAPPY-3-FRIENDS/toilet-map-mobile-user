@@ -2,6 +2,7 @@
 import 'package:toiletmap/app/models/toilet/toiletFacilities/toiletFacilities.dart';
 
 class ToiletArgument {
+  int id;
   List<String> toiletImagesList;
   String time;
   String toiletName;
@@ -15,6 +16,7 @@ class ToiletArgument {
   List<ToiletFacilities> facilities;
 
   ToiletArgument(
+      this.id,
       this.toiletImagesList,
       this.time,
       this.toiletName,

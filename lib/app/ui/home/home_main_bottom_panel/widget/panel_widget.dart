@@ -118,6 +118,7 @@ class PanelWidget extends StatelessWidget {
                     }
                   });
                   return ToiletInListFrame(
+                    toiletId: toilet.id,
                     time: toilet.openTime + " - " + toilet.closeTime,
                     toiletImagesList: toilet.toiletImageSources,
                     toiletName: toilet.toiletName,

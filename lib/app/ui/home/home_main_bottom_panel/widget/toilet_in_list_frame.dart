@@ -7,6 +7,7 @@ import '../../../../models/toilet/toiletFacilities/toiletFacilities.dart';
 import '../../../../utils/routes.dart';
 
 class ToiletInListFrame extends StatelessWidget {
+  int toiletId;
   List<String> toiletImagesList;
   String time;
   String toiletImage;
@@ -21,7 +22,8 @@ class ToiletInListFrame extends StatelessWidget {
   List<ToiletFacilities> facilities;
 
   ToiletInListFrame({
-    required this. time,
+    required this.toiletId,
+    required this.time,
     required this.toiletImagesList,
     required this.toiletImage,
     required this.toiletName,
@@ -55,6 +57,7 @@ class ToiletInListFrame extends StatelessWidget {
           onTap: () => {
             Navigator.pushNamed(context, Routes.toiletDetailMainScreen,
                 arguments: ToiletArgument(
+                    toiletId,
                     toiletImagesList,
                     time,
                     toiletName,
@@ -232,6 +235,7 @@ class ToiletInListFrame extends StatelessWidget {
     return InkWell(
         onTap: () => {
           Navigator.pushNamed(context, Routes.toiletDetailMainScreen, arguments: ToiletArgument(
+              toiletId,
               toiletImagesList,
               time,
               toiletName,

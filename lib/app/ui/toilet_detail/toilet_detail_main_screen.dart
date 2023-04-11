@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:toiletmap/app/ui/home/home_main_map/widget/images_frame.dart';
 import 'package:toiletmap/app/ui/toilet_detail/widget/detail_images_frame.dart';
 import 'package:toiletmap/app/ui/toilet_detail/widget/toilet_information_frame.dart';
 
 import '../../models/toilet/toiletArgument.dart';
 import '../../utils/constants.dart';
+import '../../utils/routes.dart';
 
 class ToiletDetailMainScreen extends StatelessWidget {
   ToiletArgument toiletArgument;
@@ -39,6 +39,18 @@ class ToiletDetailMainScreen extends StatelessWidget {
             ),
           ),
         ),
+
+        floatingActionButton: FloatingActionButton.extended(
+          foregroundColor: Colors.black,
+          backgroundColor: AppColor.primaryColor2,
+          label: Text("Đến nhà vệ sinh"),
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toiletArgument.id);
+          },
+          elevation: 0,
+
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
         body: SingleChildScrollView(
           child: Container(
