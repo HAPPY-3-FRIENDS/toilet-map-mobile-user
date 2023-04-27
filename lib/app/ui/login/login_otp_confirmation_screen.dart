@@ -110,14 +110,16 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
                             borderRadius: BorderRadius.circular(10))),
                     onPressed: () async {
                       try {
+                        //open 2 code to build apk
                         //PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: LoginMainScreen.verify, smsCode: code);
 
                         // Sign the user in (or link) with the credential
                         //await auth.signInWithCredential(credential);
 
+                        //Close 3 code to build apk
                         final prefs = await SharedPreferences.getInstance();
                         prefs.setString("username", "0849666957");
-                        prefs.setString("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNjgwNjg1NzE4LCJleHAiOjE2ODEyOTA1MTgsInVzZXJuYW1lIjoiMDg0OTY2Njk1NyIsInJvbGUiOiJVc2VyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVXNlciJ9XX0.BuL4Ni8BkrIXCK0lO1AgntOsLNYXego3yA8TS6i_YvVDfdKuSABzAuxbCgpNDD_T8AkM4_NZtbPKQ92qoEmKqg");
+                        prefs.setString("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNjgyNTI1NjI5LCJleHAiOjE2ODMxMzA0MjksInVzZXJuYW1lIjoiMDg0OTY2Njk1NyIsInJvbGUiOiJVc2VyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVXNlciJ9XX0.wvlgX7zwnKtWeM2NSEvnnao-twPFeG0JP1srAmXTfWKqaPREa3tNjH_Nm7r-n7HhPPgaSh5pYhM_FhkCU1jkHA");
 
                         AccessToken? accessToken = await AuthRepository().authPhoneLogin();
                         if (accessToken == null ) {
@@ -130,7 +132,7 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('Chú ý'),
+                              title: const Text('Chú ý!'),
                               content: const Text('Mã xác nhận không khớp'),
                               actions: <Widget>[
                                 TextButton(

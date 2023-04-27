@@ -17,7 +17,7 @@ class HomeMainAppbarVer3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppSize.heightScreen / 3.8,
+      height: AppSize.heightScreen / 3.5,
       child: AppBar(
         shape: AppShapeBorder.shapeBorder1,
         elevation: 10,

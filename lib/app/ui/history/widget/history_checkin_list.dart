@@ -50,7 +50,7 @@ class HistoryCheckinList extends StatelessWidget {
                   return Card(
                     margin: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 40, vertical: AppNumber.h200),
                     child: Container(
-                      height: AppNumber.h10,
+                      height: AppSize.heightScreen / 8,
                       child: HistoryCheckin(dateTime: checkin.dateTime, serviceName: checkin.serviceName, toiletName: checkin.toiletName, turn: checkin.turn, balance: checkin.balance,),
                     )
                   );

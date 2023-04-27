@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 class HistoryOrder extends StatefulWidget {
@@ -36,7 +37,7 @@ class _HistoryHistoryOrderState extends State<HistoryOrder> {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text('- ${widget.totalPrice}', style: AppText.listText3),
+              Text('- ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(widget.totalPrice) + " VNĐ", style: AppText.listText3),
             ],
           )
         ],

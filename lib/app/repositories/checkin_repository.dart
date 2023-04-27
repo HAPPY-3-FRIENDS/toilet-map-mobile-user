@@ -17,7 +17,7 @@ class CheckinRepository {
     print('checkin get start' + accountId!.toString());
 
     final response = await http.get(
-        Uri.parse('${AppDomain.appDomain1}/api/check-in/accounts/${accountId}'),
+        Uri.parse('${AppDomain.appDomain1}/api/check-in?account-id=${accountId}'),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
           HttpHeaders.authorizationHeader: "Bearer ${accessToken}",

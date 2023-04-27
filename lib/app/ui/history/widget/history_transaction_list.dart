@@ -52,7 +52,7 @@ class HistoryTransactionList extends StatelessWidget {
                   return Card(
                       margin: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 40, vertical: AppNumber.h200),
                       child: Container(
-                        height: AppNumber.h10,
+                        height: AppSize.heightScreen / 8,
                         child: HistoryTransaction(createdDate: tracsaction.createdDate, method: tracsaction.method, total: tracsaction.total),
                       )
                   );

@@ -16,7 +16,7 @@ class QRCodeBuilder extends StatefulWidget {
 }
 
 class _QRCodeBuilderState extends State<QRCodeBuilder> {
-  int time = 15;
+  int time = 30;
   Timer? timer;
   DateTime date = DateTime.now();
 
@@ -48,8 +48,9 @@ class _QRCodeBuilderState extends State<QRCodeBuilder> {
       alignment: Alignment.center,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppNumber.h60)),
       content: Container(
-        height: AppSize.heightScreen / 2.7,
+        height: AppSize.heightScreen / 2,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             QrImage(
               data: '${widget.accountId} - ${widget.data} - $date',

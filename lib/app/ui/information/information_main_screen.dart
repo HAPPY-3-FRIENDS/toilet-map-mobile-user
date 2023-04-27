@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toiletmap/app/repositories/user_info_repository.dart';
 
+import '../../models/userInfo/user_info.dart';
 import '../../utils/constants.dart';
 import '../login/login_otp_confirmation_screen.dart';
 
@@ -32,96 +34,122 @@ class InformationMainScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: CircleAvatar(
-                            radius: AppSize.widthScreen / 7,
-                            backgroundImage: NetworkImage('https://scontent.fsgn8-3.fna.fbcdn.net/v/t39.30808-6/319192484_3397906417112328_3843130775408765333_n.jpg?stp=cp6_dst-jpg&_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=xgoClnZngHMAX_qClEV&_nc_ht=scontent.fsgn8-3.fna&oh=00_AfD-qsfhayyVBHXTb6rL_REZeLB70L0GU9gWzzXLIWBldw&oe=64277075'),
-                          ),
-                        ),
-                        Expanded(
-                            flex: 2,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                FutureBuilder<UserInfo?> (
+                    future: UserInfoRepository().getUserInfo(),
+                    builder: (context, snapshot)  {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                            child: CircularProgressIndicator(
+                                color: AppColor.primaryColor1,
+                                strokeWidth: 2.0
+                            )
+                        );
+                      }
+                      if (snapshot.hasData) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('    Đức Quân', style: AppText.titleText2,),
-                                Text('    ********57', style: AppText.titleText2,),
-                              ],
-                            )),
-                        VerticalDivider(
-                          color: AppColor.primaryColor1,
-                          thickness: 1,
-                          indent: AppSize.widthScreen / 35,
-                          endIndent: AppSize.widthScreen / 35,
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: InkWell(
-                            onTap: () => showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                  elevation: 5,
-                                  alignment: Alignment.center,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppNumber.h60)),
-                                  content: Container(
-                                    height: AppSize.widthScreen * 0.8,
-                                    child: Column(
-                                      children: [
-                                        QrImage(
-                                          data: '23',
-                                          version: QrVersions.auto,
-                                          gapless: false,
-                                          size: AppSize.widthScreen * 0.7,
-                                        ),
-                                        Text('Mã dùng để nạp tiền', style: AppText.titleText2,),
-                                      ],
-                                    ),
+                                Expanded(
+                                  flex: 1,
+                                  child: (snapshot!.data!.avatar != null)
+                                      ? CircleAvatar(
+                                      radius: AppSize.widthScreen / 7,
+                                      backgroundImage: NetworkImage(snapshot!.data!.avatar!)
                                   )
-                              )),
-                            child:  QrImage(
-                              data: '23',
-                              version: QrVersions.auto,
-                              gapless: false,
+                                      : CircleAvatar(
+                                    radius: AppSize.widthScreen / 7,
+                                    backgroundImage: AssetImage('assets/default-avatar.png'),
+                                  ),
+                                ),
+                                VerticalDivider(
+                                  color: AppColor.primaryColor1,
+                                  thickness: 1,
+                                  indent: AppSize.widthScreen / 35,
+                                  endIndent: AppSize.widthScreen / 35,
+                                ),
+                                Expanded(
+                                    flex: 2,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(snapshot!.data!.fullName!, style: AppText.titleText2,),
+                                        Text('**********', style: AppText.titleText2,),
+                                      ],
+                                    )),
+                                VerticalDivider(
+                                  color: AppColor.primaryColor1,
+                                  thickness: 1,
+                                  indent: AppSize.widthScreen / 35,
+                                  endIndent: AppSize.widthScreen / 35,
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: InkWell(
+                                    onTap: () => showDialog(
+                                        context: context,
+                                        builder: (_) => AlertDialog(
+                                            elevation: 5,
+                                            alignment: Alignment.center,
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppNumber.h60)),
+                                            content: Container(
+                                              height: AppSize.widthScreen * 0.8,
+                                              child: Column(
+                                                children: [
+                                                  QrImage(
+                                                    data: '23',
+                                                    version: QrVersions.auto,
+                                                    gapless: false,
+                                                    size: AppSize.widthScreen * 0.7,
+                                                  ),
+                                                  Text('Mã cá nhân', style: AppText.titleText2,),
+                                                ],
+                                              ),
+                                            )
+                                        )),
+                                    child:  QrImage(
+                                      data: '23',
+                                      version: QrVersions.auto,
+                                      gapless: false,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: AppColor.primaryColor2,
-                      thickness: 1,
-                      indent: AppSize.widthScreen / 35,
-                      endIndent: AppSize.widthScreen / 35,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(AppSize.widthScreen / 30),
-                      child: Text("Thiết lập thông tin cá nhân"),
-                    ),
-                    Divider(
-                      color: AppColor.primaryColor2,
-                      thickness: 1,
-                      indent: AppSize.widthScreen / 35,
-                      endIndent: AppSize.widthScreen / 35,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(AppSize.widthScreen / 30),
-                      child: Text("Lịch sử"),
-                    ),
-                    Divider(
-                      color: AppColor.primaryColor2,
-                      thickness: 1,
-                      indent: AppSize.widthScreen / 35,
-                      endIndent: AppSize.widthScreen / 35,
-                    ),
-                  ],
-                ),
+                            Divider(
+                              color: AppColor.primaryColor2,
+                              thickness: 1,
+                              indent: AppSize.widthScreen / 35,
+                              endIndent: AppSize.widthScreen / 35,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(AppSize.widthScreen / 30),
+                              child: Text("Thiết lập thông tin cá nhân"),
+                            ),
+                            Divider(
+                              color: AppColor.primaryColor2,
+                              thickness: 1,
+                              indent: AppSize.widthScreen / 35,
+                              endIndent: AppSize.widthScreen / 35,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(AppSize.widthScreen / 30),
+                              child: Text("Lịch sử"),
+                            ),
+                            Divider(
+                              color: AppColor.primaryColor2,
+                              thickness: 1,
+                              indent: AppSize.widthScreen / 35,
+                              endIndent: AppSize.widthScreen / 35,
+                            ),
+                          ],
+                        );
+                      }
+                      return Center(child: Text('Lỗi'));
+                    }),
                 SizedBox(
                   width: double.infinity,
                   height: AppNumber.h15,

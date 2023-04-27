@@ -39,8 +39,10 @@ class ToiletRepository {
 
   Future<List<Toilet>?> getToiletsNearbyByCurrentLatLong() async {
     List<double?> latlong = await SharedPreferencesRepository().getCurrentLatLong();
-    double lat = latlong[0]!;
-    double long = latlong[1]!;
+    //double lat = latlong[0]!;
+    //double long = latlong[1]!;
+    double lat = 10.848072;
+    double long = 106.793756;
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
 
     final response = await http.get(

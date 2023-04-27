@@ -38,24 +38,22 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
             children: [
               Image.asset(
                 'assets/logo.png',
-                width: 150,
-                height: 150,
+                width: AppSize.widthScreen / 2.5,
+                height: AppSize.widthScreen / 2.5,
               ),
               SizedBox(
-                height: 10,
+                height: AppSize.heightScreen / 20,
               ),
               Text(
                 "Đăng nhập / Đăng ký bằng số điện thoại",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
+                style: AppText.detailText1,
                 textAlign: TextAlign.center,
               ),
               SizedBox(
-                height: 30,
+                height: AppSize.heightScreen / 40,
               ),
               Container(
-                height: 55,
+                height: AppSize.heightScreen / 15,
                 decoration: BoxDecoration(
                     border: Border.all(width: 1, color: Colors.grey),
                     borderRadius: BorderRadius.circular(10)),
@@ -63,10 +61,10 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: 10,
+                      width: AppSize.widthScreen / 20,
                     ),
                     SizedBox(
-                      width: 40,
+                      width: AppSize.widthScreen / 10,
                       child: TextField(
                         controller: countryController,
                         keyboardType: TextInputType.number,
@@ -77,10 +75,10 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
                     ),
                     Text(
                       "|",
-                      style: TextStyle(fontSize: 33, color: Colors.grey),
+                      style: TextStyle(fontSize: AppSize.heightScreen / 40, color: Colors.grey),
                     ),
                     SizedBox(
-                      width: 10,
+                      width: AppSize.widthScreen / 20,
                     ),
                     Expanded(
                         child: TextField(
@@ -97,11 +95,11 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: AppSize.heightScreen / 40,
               ),
               SizedBox(
                 width: double.infinity,
-                height: 45,
+                height: AppSize.heightScreen / 15,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: AppColor.primaryColor1,

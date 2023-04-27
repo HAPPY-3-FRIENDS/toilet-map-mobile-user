@@ -194,7 +194,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
                           padding: EdgeInsets.only(
                               left: AppSize.widthScreen / 50,
                           right: AppSize.widthScreen / 50,
-                          top: AppNumber.h12,),
+                          top: AppNumber.h10,),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:toiletmap/app/models/userInfo/user_info.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
 import 'package:toiletmap/app/utils/constants.dart';
@@ -22,7 +23,7 @@ class _ActionFrameState extends State<ActionFrame> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.zero,
-      height: AppSize.heightScreen / 6,
+      height: AppSize.heightScreen / 5,
       decoration: AppBoxDecoration.boxDecoration1,
       child: Row(
         children: [
@@ -129,7 +130,7 @@ class _ActionFrameState extends State<ActionFrame> {
                                   ),
                                 ],
                               ),
-                              Text('${snapshot.data!.accountBalance} VND', style: AppText.appbarText2),
+                              Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot.data!.accountBalance) + ' VNĐ', style: AppText.appbarText2),
 
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -139,7 +140,8 @@ class _ActionFrameState extends State<ActionFrame> {
                                     width: AppSize.widthScreen / 3.7,
                                     child: ElevatedButton.icon(
                                       onPressed: () => {
-                                        Navigator.pushNamed(context, Routes.topUpMoneyMainScreen)
+                                        //close 1 code to build apk
+                                        //Navigator.pushNamed(context, Routes.topUpMoneyMainScreen)
                                       },
                                       icon: Icon(Icons.login, size: AppNumber.h40, color: Colors.white,),
                                       label: Text("Nạp tiền", style: TextStyle(
@@ -160,7 +162,8 @@ class _ActionFrameState extends State<ActionFrame> {
                                     width: AppSize.widthScreen / 3.7,
                                     child: ElevatedButton.icon(
                                       onPressed: () {
-                                        Navigator.pushNamed(context, Routes.buyComboMainScreen);
+                                        //close 1 code to build apk
+                                        //Navigator.pushNamed(context, Routes.buyComboMainScreen);
                                       },
                                       icon: Icon(Icons.add_shopping_cart, size: AppNumber.h40, color: Colors.white,),
                                       label: Text("Mua lượt", style: TextStyle(

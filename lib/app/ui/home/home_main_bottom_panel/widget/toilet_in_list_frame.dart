@@ -75,30 +75,31 @@ class ToiletInListFrame extends StatelessWidget {
             children: [
               Container(
                   decoration: AppBoxDecoration.boxDecoration1,
-                  height: AppSize.heightScreen / 4.5,
+                  padding: EdgeInsets.all(AppSize.widthScreen / 60),
+                  height: AppSize.heightScreen / 3.8,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(AppSize.heightScreen / 80),
-                        child: Image.network(
-                          toiletImage,
-                          height: AppSize.heightScreen / 5.5,
-                          width: AppSize.heightScreen / 5.5,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                            borderRadius: BorderRadius.circular(AppSize.heightScreen / 80),
+                            child: Image.network(
+                              toiletImage,
+                              height: AppSize.heightScreen / 4.5,
+                              width: AppSize.heightScreen / 6,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                       SizedBox(width: AppNumber.h100,),
-                      Container(
-                        height: AppSize.heightScreen / 5.5,
+                      Expanded(child: Container(
+                        height: AppSize.heightScreen / 4.5,
                         width: AppSize.heightScreen / 3.8,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(child: Container(
                                   padding: new EdgeInsets.only(right: AppNumber.w40),
@@ -223,11 +224,11 @@ class ToiletInListFrame extends StatelessWidget {
                             ),
                           ],
                         ),
-                      )
+                      ))
                     ],
                   )
               ),
-              SizedBox(height: AppNumber.h100,),
+              Container(height: AppSize.heightScreen / 100, color: AppColor.primaryColor2,)
             ],
           )
       );
@@ -252,30 +253,31 @@ class ToiletInListFrame extends StatelessWidget {
           children: [
             Container(
                 decoration: AppBoxDecoration.boxDecoration1,
-                height: AppSize.heightScreen / 4.5,
+                padding: EdgeInsets.all(AppSize.widthScreen / 60),
+                height: AppSize.heightScreen / 3.8,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(AppSize.heightScreen / 80),
                       child: Image.network(
                         toiletImage,
-                        height: AppSize.heightScreen / 5.5,
-                        width: AppSize.heightScreen / 5.5,
+                        height: AppSize.heightScreen / 4.5,
+                        width: AppSize.heightScreen / 6,
                         fit: BoxFit.cover,
                       ),
                     ),
                     SizedBox(width: AppNumber.h100,),
-                    Container(
-                      height: AppSize.heightScreen / 6,
+                    Expanded(child: Container(
+                      height: AppSize.heightScreen / 4.5,
                       width: AppSize.heightScreen / 3.8,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Flexible(child: Container(
                                 padding: new EdgeInsets.only(right: AppNumber.w40),
@@ -379,11 +381,11 @@ class ToiletInListFrame extends StatelessWidget {
                           ),
                         ],
                       ),
-                    )
+                    ))
                   ],
                 )
             ),
-            SizedBox(height: AppNumber.h100,),
+            Container(height: AppSize.heightScreen / 100, color: AppColor.primaryColor2,)
           ],
         )
     );

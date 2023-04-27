@@ -55,6 +55,14 @@ class AppBoxDecoration {
     color: Colors.white,
   );
 
+  static var boxDecoration5 = BoxDecoration(
+    borderRadius: BorderRadius.only(
+        topRight: Radius.circular(AppSize.heightScreen / 60),
+        topLeft: Radius.circular(AppSize.heightScreen / 60)
+    ),
+    color: Colors.white,
+  );
+
   static var appBarQRCodeDecoration = BoxDecoration(
     borderRadius: BorderRadius.all(Radius.circular(AppSize.heightScreen / 80)),
     color: AppColor.primaryColor1,

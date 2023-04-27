@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       title: "Nhà vệ sinh công cộng",
       debugShowCheckedModeBanner: false,
       home: Center(child: Text('Dự án Nhà vệ sinh công cộng')),
+      //change to main to build apk
       initialRoute: Routes.loginOTPConfirmationScreen,
       onGenerateRoute: router.Router.generateRoute,
     );
