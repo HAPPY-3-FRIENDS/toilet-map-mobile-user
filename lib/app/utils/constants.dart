@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 //App size
 class AppSize {
@@ -17,6 +18,8 @@ class AppColor {
   static const Color primaryColor2 = Color(0xFFD8E9F9);
   static const Color gradientColor1 = Color(0xFF0B63B0);
   static const Color gradientColor2 = Color(0xFF29ABE2);
+  static const Color gradientColor3 = Color(0xFF004886);
+  static const Color gradientColor4 = Color(0xFF68B2F4);
 }
 
 //App string
@@ -96,7 +99,19 @@ class AppBoxDecoration {
     gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: <Color>[AppColor.gradientColor1, AppColor.gradientColor2]
+        colors: <Color>[AppColor.gradientColor1, AppColor.gradientColor4]
+    ),
+  );
+
+  static final boxDecorationWithGradientLogin1 = BoxDecoration(
+    borderRadius: BorderRadius.only(
+      bottomLeft: Radius.elliptical(1000.h, 100.w),
+      bottomRight: Radius.elliptical(1000.h, 100.w),
+    ),
+    gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: <Color>[AppColor.gradientColor1, AppColor.gradientColor4]
     ),
   );
 }
@@ -115,6 +130,13 @@ class AppShapeBorder {
           topRight: Radius.circular(AppSize.heightScreen / 60)
       )
   );
+
+  static var shapeBorder3 =  RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.elliptical(1000.h, 100.w),
+        bottomRight: Radius.elliptical(1000.h, 100.w),
+      )
+  );
 }
 
 //App text
@@ -128,7 +150,7 @@ class AppText {
 
   static var detailText1 = TextStyle(
     fontWeight: FontWeight.w700,
-    fontSize: AppNumber.h40,
+    fontSize: 20.sp,
     fontStyle: FontStyle.normal,
     color: AppColor.primaryColor1,
   );
@@ -269,6 +291,18 @@ class AppText {
     fontWeight: FontWeight.w400,
     fontSize: AppNumber.h50,
     fontStyle: FontStyle.normal,
+    color: Colors.black,
+  );
+
+  static var greyText18 = TextStyle(
+    fontSize: 18.sp,
+    fontStyle: FontStyle.normal,
+    color: Colors.black38,
+  );
+
+  static var blackText22Bold = TextStyle(
+    fontSize: 22.sp,
+    fontWeight: FontWeight.w700,
     color: Colors.black,
   );
 }

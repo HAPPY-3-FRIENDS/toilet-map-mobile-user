@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
+import 'package:toiletmap/app/ui/login/login_main_screen.dart';
 
 import '../../models/userInfo/user_info.dart';
 import '../../utils/constants.dart';
@@ -163,7 +164,8 @@ class InformationMainScreen extends StatelessWidget {
                           final prefs = await SharedPreferences.getInstance();
                           await prefs.clear();
                           Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(builder: (context) => const LoginOTPConfirmationScreen()), (
+                            //change Route to build apk
+                              MaterialPageRoute(builder: (context) => const LoginMainScreen()), (
                               route) => false);
                         } catch (error) {
                           print(error);

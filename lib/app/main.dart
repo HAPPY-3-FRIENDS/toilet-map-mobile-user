@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/utils/routes.dart';
 import 'package:toiletmap/app/utils/router.dart' as router;
 import 'package:firebase_core/firebase_core.dart';
@@ -18,13 +19,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: "Nhà vệ sinh công cộng",
-      debugShowCheckedModeBanner: false,
-      home: Center(child: Text('Dự án Nhà vệ sinh công cộng')),
-      //change to main to build apk
-      initialRoute: Routes.loginOTPConfirmationScreen,
-      onGenerateRoute: router.Router.generateRoute,
+    return ScreenUtilInit(
+      designSize: const Size(360, 900),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) => MaterialApp(
+        title: "Nhà vệ sinh công cộng",
+        theme: ThemeData(
+          fontFamily: 'Roboto'
+        ),
+        debugShowCheckedModeBanner: false,
+        home: Center(child: Text('Dự án Nhà vệ sinh công cộng')),
+        //change to main to build apk
+        initialRoute: Routes.loginMainScreen,
+        onGenerateRoute: router.Router.generateRoute,
+      ),
     );
   }
 }
