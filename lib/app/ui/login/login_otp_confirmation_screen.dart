@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,21 +24,21 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
-      width: 56,
-      height: 56,
+      width: 50.w,
+      height: 60.h,
       textStyle: TextStyle(
-          fontSize: 20,
+          fontSize: 24.sp,
           color: Color.fromRGBO(30, 60, 87, 1),
-          fontWeight: FontWeight.w600),
+          fontWeight: FontWeight.w400),
       decoration: BoxDecoration(
         border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10.r),
       ),
     );
 
     final focusedPinTheme = defaultPinTheme.copyDecorationWith(
       border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(10.r),
     );
 
     final submittedPinTheme = defaultPinTheme.copyWith(
@@ -48,110 +49,115 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
 
     var code = "";
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios_rounded,
-            color: Colors.black,
+    return SafeArea(
+      top: true,
+      bottom: true,
+      child: Scaffold(
+        extendBodyBehindAppBar: false,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(150.h),
+          child: Container(
+            decoration: AppBoxDecoration.boxDecorationWithGradientNoBorder1,
+            padding: EdgeInsets.only(top: 50.h),
+            child: AppBar(
+              backgroundColor: Colors.transparent,
+              toolbarHeight: 150.h,
+
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: Colors.white,
+                ),
+              ),
+
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Nhập mã OTP", style: AppText.whiteText35),
+                  SizedBox(height: 10.h,),
+                  Text("Mã OTP được gửi về điện thoại của bạn", style: AppText.whiteText18,),
+                ],
+              ),
+              titleSpacing: 0,
+
+              elevation: 0,
+            ),
           ),
         ),
-        elevation: 0,
-      ),
-      body: Container(
-        margin: EdgeInsets.only(left: 25, right: 25),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
+        body: Container(
+          margin: EdgeInsets.all(25.w),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/logo.png',
-                width: 150,
-                height: 150,
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Text(
-                "Xác nhận Số điện thoại",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Pinput(
-                length: 6,
-                // defaultPinTheme: defaultPinTheme,
-                // focusedPinTheme: focusedPinTheme,
-                // submittedPinTheme: submittedPinTheme,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Pinput(
+                  length: 6,
+                  defaultPinTheme: defaultPinTheme,
+                  focusedPinTheme: focusedPinTheme,
+                  submittedPinTheme: submittedPinTheme,
 
-                showCursor: true,
-                onCompleted: (pin) => print(pin),
-                onChanged: (value) {
-                  code = value;
-                },
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 45,
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: AppColor.primaryColor1,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    onPressed: () async {
-                      try {
-                        //open 2 code to build apk
-                        PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: LoginMainScreen.verify, smsCode: code);
+                  showCursor: true,
+                  onCompleted: (pin) => print(pin),
+                  onChanged: (value) {
+                    code = value;
+                  },
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 60.h,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                          primary: AppColor.primaryColor2,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.r))),
+                      onPressed: () async {
+                        try {
+                          //open 2 code to build apk
+                          PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: LoginMainScreen.verify, smsCode: code);
 
-                        // Sign the user in (or link) with the credential
-                        await auth.signInWithCredential(credential);
+                          // Sign the user in (or link) with the credential
+                          await auth.signInWithCredential(credential);
 
-                        //Close 3 code to build apk
-                        //final prefs = await SharedPreferences.getInstance();
-                        //prefs.setString("username", "0849666957");
-                        //prefs.setString("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNjgyNTI1NjI5LCJleHAiOjE2ODMxMzA0MjksInVzZXJuYW1lIjoiMDg0OTY2Njk1NyIsInJvbGUiOiJVc2VyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVXNlciJ9XX0.wvlgX7zwnKtWeM2NSEvnnao-twPFeG0JP1srAmXTfWKqaPREa3tNjH_Nm7r-n7HhPPgaSh5pYhM_FhkCU1jkHA");
+                          //Close 3 code to build apk
+                          //final prefs = await SharedPreferences.getInstance();
+                          //prefs.setString("username", "0849666957");
+                          //prefs.setString("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNjgyNTI1NjI5LCJleHAiOjE2ODMxMzA0MjksInVzZXJuYW1lIjoiMDg0OTY2Njk1NyIsInJvbGUiOiJVc2VyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVXNlciJ9XX0.wvlgX7zwnKtWeM2NSEvnnao-twPFeG0JP1srAmXTfWKqaPREa3tNjH_Nm7r-n7HhPPgaSh5pYhM_FhkCU1jkHA");
 
-                        AccessToken? accessToken = await AuthRepository().authPhoneLogin();
-                        if (accessToken == null ) {
-                          Navigator.pushNamed(context, Routes.createAccountScreen);
-                        } else {
-                          Navigator.pushNamed(context, Routes.homeMainScreen);
+                          AccessToken? accessToken = await AuthRepository().authPhoneLogin();
+                          if (accessToken == null ) {
+                            Navigator.pushNamed(context, Routes.createAccountScreen);
+                          } else {
+                            Navigator.pushNamed(context, Routes.homeMainScreen);
+                          }
+                        } catch (e) {
+                          showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Chú ý!'),
+                                content: const Text('Mã xác nhận không khớp'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text('Xác nhận'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
-                      } catch (e) {
-                        showDialog<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Chú ý!'),
-                              content: const Text('Mã xác nhận không khớp'),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: const Text('Xác nhận'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }
 
-                    },
-                    child: Text("Xác nhận")),
-              ),
-            ],
-          ),
+                      },
+                      child: Text("Xác nhận", style: AppText.blackText20,)),
+                ),
+              ],
+            ),
         ),
       ),
     );

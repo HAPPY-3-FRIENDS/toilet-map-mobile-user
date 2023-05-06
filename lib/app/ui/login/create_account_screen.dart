@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/main.dart';
 import 'package:toiletmap/app/models/accessToken/access_token.dart';
@@ -19,25 +20,43 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Nhập họ tên của bạn'),
-          titleTextStyle: AppText.appbarTitleText1,
-          centerTitle: true,
-          toolbarHeight: AppSize.heightScreen / 7,
-          backgroundColor: Colors.transparent,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(150.h),
+          child: Container(
+            decoration: AppBoxDecoration.boxDecorationWithGradientNoBorder1,
+            padding: EdgeInsets.only(top: 50.h),
+            child: AppBar(
+              backgroundColor: Colors.transparent,
+              toolbarHeight: 150.h,
 
-          flexibleSpace: Container(
-            height: AppSize.heightScreen / 6,
-            decoration: AppBoxDecoration.boxDecorationWithGradient1,
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: Colors.white,
+                ),
+              ),
+
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Nhập họ tên của bạn", style: AppText.whiteText35),
+                  SizedBox(height: 10.h,),
+                  Text("Họ tên không quá 50 ký tự", style: AppText.whiteText18,),
+                ],
+              ),
+              titleSpacing: 0,
+
+              elevation: 0,
+            ),
           ),
         ),
 
         body: Container(
-            padding: EdgeInsets.only(
-                left: AppSize.widthScreen / 20,
-                right: AppSize.widthScreen / 20,
-                top: AppSize.heightScreen / 20,
-                bottom: AppSize.heightScreen / 20
+            padding: EdgeInsets.all(
+                25.w
             ),
             height: AppSize.heightScreen,
             width: AppSize.widthScreen,
@@ -54,11 +73,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     decoration: InputDecoration(
                       hintText: "Nhập họ tên của bạn",
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppSize.widthScreen /20),
+                        borderRadius: BorderRadius.circular(10.r),
                         borderSide: BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppSize.widthScreen /20),
+                        borderRadius: BorderRadius.circular(10.r),
                         borderSide: BorderSide(color: AppColor.primaryColor1),
                       ),
                     ),
@@ -66,12 +85,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  height: AppNumber.h15,
+                  height: 60.h,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                        elevation: 0,
                           primary: AppColor.primaryColor2,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(AppSize.widthScreen /20))),
+                              borderRadius: BorderRadius.circular(10.r))),
                       onPressed: () async {
                         try {
                           if (name == "") {
@@ -116,7 +136,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           );
                         }
                       },
-                      child: Text("Xác nhận", style: TextStyle(color: Colors.black45),)
+                      child: Text("Xác nhận", style: AppText.blackText20,)
                   ),
                 )
               ],

@@ -305,6 +305,12 @@ class AppText {
     fontWeight: FontWeight.w700,
     color: Colors.black,
   );
+
+  static var whiteText35 = TextStyle(fontSize: 35.sp, color: Colors.white);
+
+  static var whiteText18 = TextStyle(fontSize: 18.h, color: Colors.white70);
+
+  static var blackText20 = TextStyle(fontSize: 20.sp, color: Colors.black54);
 }
 
 //App number
