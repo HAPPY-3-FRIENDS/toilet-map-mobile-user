@@ -44,6 +44,7 @@ class ToiletRepository {
     //double lat = 10.848072;
     //double long = 106.793756;
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
+    print('Do nearby' + long.toString());
 
     final response = await http.get(
         Uri.parse('${AppDomain.appDomain1}/api/toilets?current-latitude=${lat}&current-longitude=${long}'),
