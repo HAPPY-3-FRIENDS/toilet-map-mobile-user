@@ -122,6 +122,8 @@ class PanelWidget extends StatelessWidget {
                             list.add(element);
                           }
                         });
+                        print('hihihine: '+ list.length.toString());
+
                         return ToiletInListFrame(
                           toiletId: toilet.id,
                           time: toilet.openTime + " - " + toilet.closeTime,

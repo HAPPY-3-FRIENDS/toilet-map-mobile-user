@@ -117,15 +117,15 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
                       onPressed: () async {
                         try {
                           //open 2 code to build apk
-                          PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: LoginMainScreen.verify, smsCode: code);
+                          //PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: LoginMainScreen.verify, smsCode: code);
 
                           // Sign the user in (or link) with the credential
-                          await auth.signInWithCredential(credential);
+                          //await auth.signInWithCredential(credential);
 
                           //Close 3 code to build apk
-                          //final prefs = await SharedPreferences.getInstance();
-                          //prefs.setString("username", "0849666957");
-                          //prefs.setString("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNjgyNTI1NjI5LCJleHAiOjE2ODMxMzA0MjksInVzZXJuYW1lIjoiMDg0OTY2Njk1NyIsInJvbGUiOiJVc2VyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVXNlciJ9XX0.wvlgX7zwnKtWeM2NSEvnnao-twPFeG0JP1srAmXTfWKqaPREa3tNjH_Nm7r-n7HhPPgaSh5pYhM_FhkCU1jkHA");
+                          final prefs = await SharedPreferences.getInstance();
+                          prefs.setString("username", "0849666957");
+                          prefs.setString("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNjgzNDUxNDA1LCJleHAiOjE2ODQwNTYyMDUsInVzZXJuYW1lIjoiMDg0OTY2Njk1NyIsInJvbGUiOiJVc2VyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVXNlciJ9XX0.MXaIePMIPp2V4tJlYVIj-eMJXZ23cREBYnIs4tnzp1RpoE7nZ5bhddQs9KH-Jtg3iMBA4KvRqlKTQMnEA8LdvA");
 
                           AccessToken? accessToken = await AuthRepository().authPhoneLogin();
                           if (accessToken == null ) {

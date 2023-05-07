@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/utils/routes.dart';
 import 'package:toiletmap/app/utils/router.dart' as router;
@@ -8,6 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 late SharedPreferences sharedPreferences;
 
 void main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(statusBarColor: Colors.transparent)
+  );
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
