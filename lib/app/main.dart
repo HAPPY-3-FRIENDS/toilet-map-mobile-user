@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => MaterialApp(
         title: "Nhà vệ sinh công cộng",
         theme: ThemeData(
-          fontFamily: 'Roboto'
+          fontFamily: 'Roboto',
         ),
         debugShowCheckedModeBanner: false,
         home: Center(child: Text('Dự án Nhà vệ sinh công cộng')),

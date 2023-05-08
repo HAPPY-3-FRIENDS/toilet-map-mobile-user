@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_appbar/widget_ver3/qr_code_builder.dart';
 import 'package:toiletmap/app/utils/constants.dart';
@@ -11,7 +12,7 @@ class HomeAppbarQRCodeFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(AppSize.widthScreen / 100),
+      padding: EdgeInsets.all(3.w),
       decoration: AppBoxDecoration.appBarQRCodeDecoration,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -19,62 +20,84 @@ class HomeAppbarQRCodeFrame extends StatelessWidget {
         children: [
           Text('Mã thanh toán', style: AppText.appbarQRButtonText1,),
           Container(
-            padding: EdgeInsets.all(AppSize.widthScreen / 100),
+            height: 120.h,
+            padding: EdgeInsets.all(3.w),
             decoration: AppBoxDecoration.boxDecoration1,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                InkWell(
-                  onTap: () => showDialog(
-                      context: context,
-                      builder: (_) => QRCodeBuilder(accountId: accountId,data: 'Đi vệ sinh (tiểu tiện)')
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.qr_code_2, size: AppNumber.h40),
-                      Text(' Tiểu tiện',style: TextStyle(
-                        fontSize: AppNumber.h52
-                      ),),
-                    ],
-                  ),
-                ),
-                const Divider(
-                  thickness: 1,
-                  color: AppColor.primaryColor2,
-                ),
-                InkWell(
-                  onTap: () => showDialog(
-                      context: context,
-                      builder: (_) => QRCodeBuilder(accountId: accountId, data: 'Đi vệ sinh (đại tiện)')
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.qr_code_2, size: AppNumber.h40),
-                      Text(' Đại tiện',style: TextStyle(
-                          fontSize: AppNumber.h52
-                      ),),
-                    ],
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(width: 1.5.w, color: AppColor.primaryColor2),
+                        )
+                    ),
+                    child: InkWell(
+                      onTap: () => showDialog(
+                          context: context,
+                          builder: (_) => QRCodeBuilder(accountId: accountId,data: 'Đi vệ sinh (tiểu tiện)')
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.qr_code_2, size: 15.w),
+                          Text('Tiểu tiện',style: TextStyle(
+                              fontSize: 18.sp
+                          ),),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                const Divider(
-                  thickness: 1,
-                  color: AppColor.primaryColor2,
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(width: 1.5.w, color: AppColor.primaryColor2),
+                          )
+                      ),
+                      child: InkWell(
+                        onTap: () => showDialog(
+                            context: context,
+                            builder: (_) => QRCodeBuilder(accountId: accountId, data: 'Đi vệ sinh (đại tiện)')
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.qr_code_2, size: 15.w),
+                            Text(' Đại tiện',style: TextStyle(
+                                fontSize: 18.sp
+                            ),),
+                          ],
+                        ),
+                      ),
+                    ),
                 ),
-                InkWell(
-                  onTap: () => showDialog(
-                      context: context,
-                      builder: (_) => QRCodeBuilder(accountId: accountId,data: 'Đi tắm')
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.qr_code_2, size: AppNumber.h40),
-                      Text(' Đi tắm',style: TextStyle(
-                          fontSize: AppNumber.h52
-                      ),),
-                    ],
-                  ),
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                      child: InkWell(
+                        onTap: () => showDialog(
+                            context: context,
+                            builder: (_) => QRCodeBuilder(accountId: accountId,data: 'Đi tắm')
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.qr_code_2, size: 15.w),
+                            Text(' Đi tắm',style: TextStyle(
+                                fontSize: 18.sp
+                            ),),
+                          ],
+                        ),
+                      ),
+                    ),
                 ),
               ],
             ),

@@ -1,4 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:group_button/group_button.dart';
+import 'package:intl/intl.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
 
 import '../../../../utils/constants.dart';
@@ -22,77 +26,86 @@ class _PaymentMethodChangingState extends State<PaymentMethodChanging> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     _service = widget.methodId;
   }
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: AppColor.primaryColor2,
-      contentPadding: EdgeInsets.zero,
-      alignment: Alignment.center,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    return GestureDetector(
+        onTap: () {
+          AwesomeDialog(
+              context: context,
+              dialogType: DialogType.info,
+              animType: AnimType.topSlide,
+              btnOkText: 'Xác nhận',
+              btnOkColor: AppColor.primaryColor1,
+              showCloseIcon: true,
+              body: Container(
+                height: 120.h,
+                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Chọn phương thức thanh toán',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 22.sp,
+                          fontWeight: FontWeight.w600
+                      ),
+                    ),
+                    SizedBox(height: 20.h,),
+                    GroupButton(
+                      controller: (widget.methodId == '0') ?
+                      GroupButtonController(selectedIndex: 0) :
+                      GroupButtonController(selectedIndex: 1),
+                      onSelected: (value, index, isSelected) {
+                        print('index ne' + index.toString());
+                        switch (index) {
+                          case 0:
+                            setService('0');
+                            break;
+                          case 1:
+                            setService('1');
+                            break;
+                        }
+                      },
+                      isRadio: true,
+                      options: GroupButtonOptions(
+                        textAlign: TextAlign.center,
+                        buttonHeight: 50.h,
+                        buttonWidth: 120.w,
+                        selectedColor: AppColor.primaryColor1,
+                        selectedBorderColor: AppColor.primaryColor1,
+                        borderRadius: BorderRadius.circular(10.r),
+                        unselectedBorderColor: AppColor.primaryColor1,
+                        mainGroupAlignment: MainGroupAlignment.center,
+                        crossGroupAlignment: CrossGroupAlignment.center,
+                        selectedTextStyle: AppText.white100Text18,
+                        groupingType: GroupingType.wrap,
+                        unselectedTextStyle: AppText.blue1Text18,
+                      ),
 
-      title: Center(child: Text('CÀI ĐẶT THANH TOÁN', style: TextStyle(
-        fontWeight: FontWeight.w600, fontSize: 18
-      ),)),
-      titlePadding: EdgeInsets.all(20),
-      titleTextStyle: AppText.alertText,
-
-      content: Container(
-        height: 150,
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(padding: EdgeInsets.only(left: 20), child: Text('Chọn phương thức thanh toán', style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w800
-            ),),),
-            SizedBox(height: 10,),
-            RadioListTile(
-              visualDensity: const VisualDensity(
-                horizontal: VisualDensity.minimumDensity,
-                vertical: VisualDensity.minimumDensity,
+                      buttons: ['Số lượt\n(${widget.accountTurn} lượt)','Số tiền\n(${NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(widget.accountBalance)} VNĐ)'],
+                    ),
+                  ],
+                ),
               ),
-              title: Text('Lượt hiện có (${widget.accountTurn} lượt)', style: AppText.alertText,),
-              value: '0',
-              groupValue: _service,
-              onChanged: (value) => setService(value),
-            ),
-            RadioListTile(
-              visualDensity: const VisualDensity(
-                horizontal: VisualDensity.minimumDensity,
-                vertical: VisualDensity.minimumDensity,
-              ),
-              title: Text('Số dư tài khoản (${widget.accountBalance} VND)', style: AppText.alertText,),
-              value: '1',
-              groupValue: _service,
-              onChanged: (value) => setService(value),
-            ),
-          ],
-        ),
-      ),
-
-      actions: [
-        Center(
-          child: TextButton(
-              onPressed: () async {
+              btnOkOnPress: () async {
                 if (widget.methodId != _service) {
                   await UserInfoRepository().patchUserInfoChangePaymentMethod();
                 }
                 Navigator.pushNamed(context, Routes.homeMainScreen);
-              },
-              child: Text("Lưu", style: TextStyle(
-                  fontWeight: FontWeight.w500, fontSize: 16
-              ),)),
-        )
-      ],
-      actionsPadding: EdgeInsets.all(0),
+              }
+          ).show();
+        },
+        child: Icon(Icons.compare_arrows_sharp, color: Colors.black, size: 15.w,)
     );
   }
 
   void setService(String? value) {
+    if (!mounted) return;
     setState(() {
       _service = value!;
     });

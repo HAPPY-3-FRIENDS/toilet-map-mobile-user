@@ -78,7 +78,7 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
                 children: [
                   Text("Nhập mã OTP", style: AppText.whiteText35),
                   SizedBox(height: 10.h,),
-                  Text("Mã OTP được gửi về điện thoại của bạn", style: AppText.whiteText18,),
+                  Text("Mã OTP được gửi về điện thoại của bạn", style: AppText.white70Text18,),
                 ],
               ),
               titleSpacing: 0,

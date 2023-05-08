@@ -44,7 +44,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 children: [
                   Text("Nhập họ tên của bạn", style: AppText.whiteText35),
                   SizedBox(height: 10.h,),
-                  Text("Họ tên không quá 50 ký tự", style: AppText.whiteText18,),
+                  Text("Họ tên không quá 50 ký tự", style: AppText.white70Text18,),
                 ],
               ),
               titleSpacing: 0,

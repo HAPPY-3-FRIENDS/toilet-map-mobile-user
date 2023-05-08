@@ -33,7 +33,7 @@ class AppString {
 //App decoration
 class AppBoxDecoration {
   static var boxDecoration1 = BoxDecoration(
-    borderRadius: BorderRadius.all(Radius.circular(AppSize.heightScreen / 80)),
+    borderRadius: BorderRadius.all(Radius.circular(10.r)),
     color: Colors.white,
   );
 
@@ -67,7 +67,7 @@ class AppBoxDecoration {
   );
 
   static var appBarQRCodeDecoration = BoxDecoration(
-    borderRadius: BorderRadius.all(Radius.circular(AppSize.heightScreen / 80)),
+    borderRadius: BorderRadius.all(Radius.circular(10.r)),
     color: AppColor.primaryColor1,
   );
 
@@ -119,8 +119,8 @@ class AppBoxDecoration {
 class AppShapeBorder {
   static var shapeBorder1 =  RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(AppSize.heightScreen / 60),
-          bottomRight: Radius.circular(AppSize.heightScreen / 60)
+          bottomLeft: Radius.circular(20.w),
+          bottomRight: Radius.circular(20.w)
       )
   );
 
@@ -205,22 +205,19 @@ class AppText {
 
   static var appbarText1 = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: AppNumber.h60,
-    fontStyle: FontStyle.normal,
+    fontSize: 16.sp,
     color: Colors.black,
   );
 
   static var appbarText2 = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: AppNumber.h30,
-    fontStyle: FontStyle.normal,
+    fontSize: 32.sp,
     color: Colors.black,
   );
 
   static var appbarQRButtonText1 = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: AppNumber.h52,
-    fontStyle: FontStyle.normal,
+    fontSize: 18.sp,
     color: Colors.white,
   );
 
@@ -308,9 +305,13 @@ class AppText {
 
   static var whiteText35 = TextStyle(fontSize: 35.sp, color: Colors.white);
 
-  static var whiteText18 = TextStyle(fontSize: 18.h, color: Colors.white70);
+  static var white70Text18 = TextStyle(fontSize: 18.h, color: Colors.white70);
+
+  static var white100Text18 = TextStyle(fontSize: 18.h, color: Colors.white);
 
   static var blackText20 = TextStyle(fontSize: 20.sp, color: Colors.black54);
+
+  static var blue1Text18 = TextStyle(fontSize: 18.h, color: AppColor.primaryColor1);
 }
 
 //App number

@@ -1,4 +1,6 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:toiletmap/app/models/userInfo/user_info.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
@@ -23,7 +25,7 @@ class _ActionFrameState extends State<ActionFrame> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.zero,
-      height: AppSize.heightScreen / 5,
+      height: 170.h,
       decoration: AppBoxDecoration.boxDecoration1,
       child: Row(
         children: [
@@ -31,9 +33,9 @@ class _ActionFrameState extends State<ActionFrame> {
               flex: 23,
               child: Padding(
                 padding: EdgeInsets.only(
-                  left: AppSize.widthScreen / 35,
-                  top: AppSize.widthScreen / 35,
-                  bottom: AppSize.widthScreen / 35,),
+                  left: 10.w,
+                  top: 10.w,
+                  bottom: 10.h,),
                 child: FutureBuilder<UserInfo?> (
                     future: UserInfoRepository().getUserInfo(),
                     builder: (context, snapshot)  {
@@ -51,65 +53,83 @@ class _ActionFrameState extends State<ActionFrame> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Thanh toán bằng số lượt (Mặc định)', style: AppText.appbarText1,),
-                                  GestureDetector(
-                                      onTap: () => showDialog(
-                                          context: context,
-                                          builder: (_) => PaymentMethodChanging(methodId: '0', accountTurn: snapshot.data!.accountTurn, accountBalance: snapshot.data!.accountBalance),
+                              Expanded(child: Padding(
+                                padding: EdgeInsets.only(left: 5.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Thanh toán bằng số lượt (Mặc định)',
+                                        style: AppText.appbarText1,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      child: Icon(Icons.compare_arrows_sharp, color: Colors.black, size: AppNumber.h40,)
+                                      flex: 8,
+                                    ),
+                                    Expanded(
+                                      child: PaymentMethodChanging(methodId: '0', accountTurn: snapshot.data!.accountTurn, accountBalance: snapshot.data!.accountBalance),
+                                      flex: 1,
+                                    )
+                                  ],
+                                ),
+                              ), flex: 1),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 5.w),
+                                  child: Text(
+                                    '${snapshot.data!.accountTurn} lượt',
+                                    style: AppText.appbarText2,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                ],
+                                ),
+                                flex: 1
                               ),
-                              Text('${snapshot.data!.accountTurn} lượt', style: AppText.appbarText2),
-
-                              Row(
+                              Expanded(child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    height: AppNumber.h25,
-                                    width: AppSize.widthScreen / 3.7,
+                                    height: 35.h,
+                                    width: 100.w,
                                     child: ElevatedButton.icon(
                                       onPressed: () => {
                                         //Navigator.pushNamed(context, Routes.topUpMoneyMainScreen)
                                       },
-                                      icon: Icon(Icons.login, size: AppNumber.h40, color: Colors.white,),
+                                      icon: Icon(Icons.login, size: 20.w, color: Colors.white,),
                                       label: Text("Nạp tiền", style: TextStyle(
-                                          fontSize: AppNumber.h60
+                                          fontSize: 16.sp
                                       ),),
                                       style: ElevatedButton.styleFrom(
                                         shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(AppNumber.h45),
+                                          borderRadius: new BorderRadius.circular(20.r),
                                         ),
                                       ),
                                     ),
                                   ),
                                   SizedBox(
-                                    width: AppSize.widthScreen / 40,
+                                    width: 10.w,
                                   ),
                                   SizedBox(
-                                    height: AppNumber.h25,
-                                    width: AppSize.widthScreen / 3.7,
+                                    height: 35.h,
+                                    width: 100.w,
                                     child: ElevatedButton.icon(
                                       onPressed: () {
                                         //Navigator.pushNamed(context, Routes.buyComboMainScreen);
                                       },
-                                      icon: Icon(Icons.add_shopping_cart, size: AppNumber.h40, color: Colors.white,),
+                                      icon: Icon(Icons.add_shopping_cart, size: 20.w, color: Colors.white,),
                                       label: Text("Mua lượt", style: TextStyle(
-                                          fontSize: AppNumber.h60
+                                          fontSize: 16.sp
                                       ),),
                                       style: ElevatedButton.styleFrom(
                                         shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(AppNumber.h45),
+                                          borderRadius: new BorderRadius.circular(20.r),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ],
-                              ),
+                              ), flex: 1,)
                             ],
                           );
                         } else {
@@ -117,67 +137,83 @@ class _ActionFrameState extends State<ActionFrame> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Thanh toán bằng số dư (Mặc định)', style: AppText.appbarText1,),
-                                  GestureDetector(
-                                      onTap: () => showDialog(
-                                          context: context,
-                                        builder: (_) => PaymentMethodChanging(methodId: '1', accountTurn: snapshot.data!.accountTurn, accountBalance: snapshot.data!.accountBalance),
+                              Expanded(child: Padding(
+                                padding: EdgeInsets.only(left: 5.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Thanh toán bằng số tiền (Mặc định)',
+                                        style: AppText.appbarText1,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      child: Icon(Icons.compare_arrows_sharp, color: Colors.black, size: AppNumber.h40,)
+                                      flex: 8,
+                                    ),
+                                    Expanded(
+                                      child: PaymentMethodChanging(methodId: '1', accountTurn: snapshot.data!.accountTurn, accountBalance: snapshot.data!.accountBalance),
+                                      flex: 1,
+                                    )
+                                  ],
+                                ),
+                              ), flex: 1),
+                              Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 5.w),
+                                    child: Text(
+                                      NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot.data!.accountBalance) + ' VNĐ',
+                                      style: AppText.appbarText2,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
-                                ],
+                                  flex: 1
                               ),
-                              Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot.data!.accountBalance) + ' VNĐ', style: AppText.appbarText2),
-
-                              Row(
+                              Expanded(child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    height: AppNumber.h25,
-                                    width: AppSize.widthScreen / 3.7,
+                                    height: 35.h,
+                                    width: 100.w,
                                     child: ElevatedButton.icon(
                                       onPressed: () => {
-                                        //close 1 code to build apk
                                         //Navigator.pushNamed(context, Routes.topUpMoneyMainScreen)
                                       },
-                                      icon: Icon(Icons.login, size: AppNumber.h40, color: Colors.white,),
+                                      icon: Icon(Icons.login, size: 20.w, color: Colors.white,),
                                       label: Text("Nạp tiền", style: TextStyle(
-                                          fontSize: AppNumber.h60
+                                          fontSize: 16.sp
                                       ),),
                                       style: ElevatedButton.styleFrom(
                                         shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(AppNumber.h45),
+                                          borderRadius: new BorderRadius.circular(20.r),
                                         ),
                                       ),
                                     ),
                                   ),
                                   SizedBox(
-                                    width: AppSize.widthScreen / 40,
+                                    width: 10.w,
                                   ),
                                   SizedBox(
-                                    height: AppNumber.h25,
-                                    width: AppSize.widthScreen / 3.7,
+                                    height: 35.h,
+                                    width: 100.w,
                                     child: ElevatedButton.icon(
                                       onPressed: () {
-                                        //close 1 code to build apk
                                         //Navigator.pushNamed(context, Routes.buyComboMainScreen);
                                       },
-                                      icon: Icon(Icons.add_shopping_cart, size: AppNumber.h40, color: Colors.white,),
+                                      icon: Icon(Icons.add_shopping_cart, size: 20.w, color: Colors.white,),
                                       label: Text("Mua lượt", style: TextStyle(
-                                          fontSize: AppNumber.h60
+                                          fontSize: 16.sp
                                       ),),
                                       style: ElevatedButton.styleFrom(
                                         shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(AppNumber.h45),
+                                          borderRadius: new BorderRadius.circular(20.r),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ],
-                              ),
+                              ), flex: 1,)
                             ],
                           );
                         }
@@ -190,8 +226,8 @@ class _ActionFrameState extends State<ActionFrame> {
           VerticalDivider(
             color: AppColor.primaryColor2,
             thickness: 1,
-            indent: AppSize.widthScreen / 35,
-            endIndent: AppSize.widthScreen / 35,
+            indent: 15.h,
+            endIndent: 15.h,
           ),
           FutureBuilder<int?> (
               future: SharedPreferencesRepository().getAccountId(),
@@ -209,9 +245,9 @@ class _ActionFrameState extends State<ActionFrame> {
                     flex: 10,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        right: AppSize.widthScreen / 100,
-                        top: AppSize.widthScreen / 100,
-                        bottom: AppSize.widthScreen / 100,),
+                        right: 5.w,
+                        top: 5.w,
+                        bottom: 5.w,),
                       child: HomeAppbarQRCodeFrame(accountId: snapshot.data!),
                     ),
                   );

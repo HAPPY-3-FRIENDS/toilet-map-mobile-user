@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
@@ -17,27 +18,16 @@ class HomeMainAppbarVer3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppSize.heightScreen / 3.5,
+      height: 250.h,
       child: AppBar(
         shape: AppShapeBorder.shapeBorder1,
-        elevation: 10,
+        elevation: 5,
 
         leading: InkWell(
           onTap: () async {
             Navigator.pushNamed(context, Routes.informationMainScreen);
-            /*try {
-              final prefs = await SharedPreferences.getInstance();
-              await prefs.remove('accessToken');
-              await prefs.remove('username');
-              await prefs.remove('userId');
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const LoginOTPConfirmationScreen()), (
-                  route) => false);
-            } catch (error) {
-              print(error);
-            }*/
           },
-          child: Icon(Icons.person, size: AppSize.widthScreen / 15, color: Colors.white,),
+          child: Icon(Icons.person, size: 25.w, color: Colors.white,),
         ),
 
 
@@ -54,7 +44,7 @@ class HomeMainAppbarVer3 extends StatelessWidget {
                 );
               }
               if (snapshot.hasData) {
-                return Text('Xin chào ${snapshot.data!.fullName}', style: TextStyle(fontSize: AppNumber.h45),);
+                return Text('Xin chào ${snapshot.data!.fullName}', style: TextStyle(fontSize: 20.sp),);
               }
               return Center(child: Text('Lỗi'));
             }),
@@ -64,9 +54,9 @@ class HomeMainAppbarVer3 extends StatelessWidget {
             onTap: () => {
               Navigator.pushNamed(context, Routes.historyMainScreen),
             },
-            child: Icon(Icons.history, size: AppSize.widthScreen / 15, color: Colors.white,),
+            child: Icon(Icons.history, size: 25.w, color: Colors.white,),
           ),
-          Padding(padding: EdgeInsets.only(right: AppSize.widthScreen / 30))
+          Padding(padding: EdgeInsets.only(right: 10.w))
         ],
 
         flexibleSpace: Container(
@@ -75,12 +65,12 @@ class HomeMainAppbarVer3 extends StatelessWidget {
 
 
         bottom: PreferredSize(
-            preferredSize: Size.fromHeight(AppSize.heightScreen / 4),
+            preferredSize: Size.fromHeight(300.h),
             child: Container(
               padding: EdgeInsets.only(
-                left: AppSize.widthScreen / 40,
-                right: AppSize.widthScreen / 40,
-                bottom: AppSize.widthScreen / 30,
+                left: 8.w,
+                right: 8.w,
+                bottom: 10.h,
               ),
               child: ActionFrame(),
             ),
