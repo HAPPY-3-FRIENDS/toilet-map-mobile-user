@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:location/location.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -151,9 +152,9 @@ class _HomeMainMapState extends State<HomeMainMap> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(top: AppSize.heightScreen / 5),
+        padding: EdgeInsets.only(top: 180.h),
       child: Container(
-        height: AppSize.heightScreen / 1.3,
+        height: 700.h,
         child: SizedBox(
             child: FutureBuilder(
               future: initializeLocationAndSave(),
@@ -164,8 +165,8 @@ class _HomeMainMapState extends State<HomeMainMap> {
                   return Stack(
                     children: [
                       Container(
-                        height: AppSize.heightScreen / 1.3,
-                        width: AppSize.widthScreen,
+                        height: 700.h,
+                        width: 360.w,
                         child: MapboxMap(
                           //Link goong -> user goong map
                           styleString: AppString.styleString,
@@ -180,8 +181,8 @@ class _HomeMainMapState extends State<HomeMainMap> {
                       ),
 
                       Positioned(
-                        top: AppSize.heightScreen * 0.57,
-                        left: AppSize.widthScreen * 0.8,
+                        top: 500.h,
+                        left: 288.w,
                         child:  FloatingActionButton(
                             child: Icon(Icons.my_location),
                             onPressed: () {
@@ -192,15 +193,15 @@ class _HomeMainMapState extends State<HomeMainMap> {
 
                       Padding(
                           padding: EdgeInsets.only(
-                              left: AppSize.widthScreen / 50,
-                          right: AppSize.widthScreen / 50,
-                          top: AppNumber.h10,),
+                              left: 10.w,
+                          right: 10.w,
+                          top: 90.h,),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             SizedBox(
-                              width: AppSize.widthScreen / 1.4,
-                              height: AppNumber.h20,
+                              width: 250.w,
+                              height: 45.h,
                               child: TextField(
                                 decoration: InputDecoration(
                                   contentPadding: EdgeInsets.zero,
@@ -208,7 +209,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
                                   filled: true,
                                   fillColor: Colors.white,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(AppNumber.h35),
+                                    borderRadius: BorderRadius.circular(20.r),
                                     borderSide: BorderSide.none,
                                   ),
                                   hintText: "Tìm kiếm địa chỉ",
@@ -218,13 +219,13 @@ class _HomeMainMapState extends State<HomeMainMap> {
                               ),
                             ),
                             SizedBox(
-                              height: AppNumber.h20,
-                              width: AppSize.widthScreen / 4.5,
+                              height: 45.h,
+                              width: 80.w,
                               child: TextButton(
                                 style: TextButton.styleFrom(
                                   backgroundColor: AppColor.primaryColor1,
                                   foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppNumber.h45)),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
                                 ),
                                 onPressed: () async {
                                   await controller.removeSource("way${count}");
@@ -240,10 +241,10 @@ class _HomeMainMapState extends State<HomeMainMap> {
                   );
                 } else {
                   return Container(
-                      child: const Center(
+                      child: Center(
                         child: SizedBox(
-                          height: 25,
-                          width: 25,
+                          height: 25.w,
+                          width: 25.w,
                           child: CircularProgressIndicator(),
                         ),
                       )

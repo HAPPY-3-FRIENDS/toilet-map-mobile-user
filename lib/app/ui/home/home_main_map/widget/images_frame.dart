@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 class ImagesFrame extends StatelessWidget {
@@ -11,8 +12,9 @@ class ImagesFrame extends StatelessWidget {
     switch (imageSource.length) {
       case 0:
         return Container(
-          height: AppSize.heightScreen / 4.5,
+          height: 200.h,
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.r),
             image: DecorationImage(
               fit: BoxFit.cover,
               image: NetworkImage("https://static.asianpaints.com/content/dam/asianpaintsbeautifulhomes/spaces/bathrooms/modern-toilet-design-ideas-for-contemporary-homes/Title-modern-toile-design-idea.jpg"),
@@ -21,8 +23,9 @@ class ImagesFrame extends StatelessWidget {
         );
       case 1:
         return Container(
-          height: AppSize.heightScreen / 4.5,
+          height: 200.h,
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.r),
             image: DecorationImage(
               fit: BoxFit.cover,
               image: NetworkImage(imageSource[0]),
@@ -31,7 +34,7 @@ class ImagesFrame extends StatelessWidget {
         );
       case 2:
         return Container(
-          height: AppSize.heightScreen / 4.5,
+          height: 200.h,
           color: Colors.white,
           child: Row(
             children: [
@@ -39,6 +42,10 @@ class ImagesFrame extends StatelessWidget {
                   flex: 1,
                   child: Container(
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.r),
+                          bottomLeft: Radius.circular(10.r)
+                      ),
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(imageSource[0])
@@ -54,6 +61,10 @@ class ImagesFrame extends StatelessWidget {
                   flex: 1,
                   child: Container(
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10.r),
+                          bottomRight: Radius.circular(10.r)
+                      ),
                       image: DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage(imageSource[1])
@@ -66,7 +77,7 @@ class ImagesFrame extends StatelessWidget {
         );
       case 3:
         return Container(
-          height: AppSize.heightScreen / 4.5,
+          height: 200.h,
           color: Colors.white,
           child: Row(
             children: [
@@ -74,6 +85,10 @@ class ImagesFrame extends StatelessWidget {
                   flex: 2,
                   child: Container(
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.r),
+                          bottomLeft: Radius.circular(10.r)
+                      ),
                       image: DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage(imageSource[0])
@@ -93,6 +108,9 @@ class ImagesFrame extends StatelessWidget {
                       flex: 1,
                       child: Container(
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10.r),
+                          ),
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(imageSource[1])
@@ -108,6 +126,9 @@ class ImagesFrame extends StatelessWidget {
                       flex: 1,
                       child: Container(
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.r)
+                          ),
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(imageSource[2])
@@ -123,7 +144,7 @@ class ImagesFrame extends StatelessWidget {
         );
       case 4:
         return Container(
-          height: AppSize.heightScreen / 4.5,
+          height: 200.h,
           color: Colors.white,
           child: Row(
             children: [
@@ -131,6 +152,10 @@ class ImagesFrame extends StatelessWidget {
                   flex: 3,
                   child: Container(
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.r),
+                          bottomLeft: Radius.circular(10.r)
+                      ),
                       image: DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage(imageSource[0])
@@ -150,6 +175,9 @@ class ImagesFrame extends StatelessWidget {
                       flex: 1,
                       child: Container(
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10.r),
+                          ),
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(imageSource[1])
@@ -180,6 +208,9 @@ class ImagesFrame extends StatelessWidget {
                       flex: 1,
                       child: Container(
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.r)
+                          ),
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(imageSource[3])
@@ -195,14 +226,18 @@ class ImagesFrame extends StatelessWidget {
         );
       default:
         return Container(
-          height: AppSize.heightScreen / 4.5,
           color: Colors.white,
+          height: 200.h,
           child: Row(
             children: [
               Expanded(
                   flex: 3,
                   child: Container(
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.r),
+                        bottomLeft: Radius.circular(10.r)
+                      ),
                       image: DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage(imageSource[0])
@@ -222,6 +257,9 @@ class ImagesFrame extends StatelessWidget {
                       flex: 1,
                       child: Container(
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10.r),
+                          ),
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(imageSource[1])
@@ -252,17 +290,25 @@ class ImagesFrame extends StatelessWidget {
                       flex: 1,
                       child: Container(
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.r),
+                          ),
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(imageSource[3])
                           ),
                         ),
                         child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black38,
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.r),
+                            ),
+                          ),
                           alignment: Alignment.center,
-                          color: Colors.black38,
                           child: Text(
                             '+ ' + (imageSource.length - 4).toString(),
-                            style: TextStyle(fontSize: AppNumber.h35, color: Colors.white),
+                            style: TextStyle(fontSize: 20.sp, color: Colors.white),
                           ),
                         ),
                       ),

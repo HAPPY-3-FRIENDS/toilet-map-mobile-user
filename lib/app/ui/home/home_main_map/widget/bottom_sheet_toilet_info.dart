@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:toiletmap/app/repositories/toilet_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_map/widget/images_frame.dart';
@@ -40,21 +41,21 @@ class BottomSheetToiletInfo extends StatelessWidget {
             });
 
             return Container(
-              height: AppSize.heightScreen * 2/3,
+              height: 600.h,
               padding: EdgeInsets.symmetric(
-                  horizontal: AppSize.widthScreen / 20,
-                  vertical: AppSize.widthScreen / 40
+                  horizontal: 20.w,
+                  vertical: 10.h,
               ),
               decoration: AppBoxDecoration.boxDecoration4,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                      height: AppNumber.h200,
-                      width: AppSize.widthScreen / 3,
+                      height: 3.h,
+                      width: 120.w,
                       decoration: AppBoxDecoration.boxDecoration2
                   ),
-                  SizedBox(height: AppNumber.h40,),
+                  SizedBox(height: 20.h,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -88,7 +89,7 @@ class BottomSheetToiletInfo extends StatelessWidget {
                                     list)
                             );
                           },
-                          child: Icon(Icons.upload_file, size: AppNumber.h40,),
+                          child: Icon(Icons.upload_file, size: 20.w,),
                         )
                       ),
                       Expanded(
@@ -96,19 +97,19 @@ class BottomSheetToiletInfo extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(snapshot.data!.ratingStar.toString(), style: AppText.bottomSheetToiletInfo2,),
-                            Icon(Icons.star, size: AppNumber.h40, color: Colors.yellow,),
+                            Icon(Icons.star, size: 15.w, color: Colors.yellow,),
                           ],
                         )
                       ),
                     ]
                   ),
-                  SizedBox(height: AppNumber.h50,),
+                  SizedBox(height: 20.h,),
                   Row(
                     children: [
-                      Icon(Icons.location_on_sharp, size: AppNumber.h40,),
+                      Icon(Icons.location_on_sharp, size: 15.w,),
                       Expanded(
                         child: Padding(
-                            padding: EdgeInsets.only(left: AppSize.widthScreen / 25,),
+                            padding: EdgeInsets.only(left: 15.w,),
                             child: Text(
                               snapshot.data!.address + ", " +
                                   snapshot.data!.ward + ", " +
@@ -121,22 +122,22 @@ class BottomSheetToiletInfo extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(height: AppNumber.h80,),
+                  SizedBox(height: 20.h,),
                   Row(
                     children: [
-                      Icon(Icons.access_time, size: AppNumber.h40,),
+                      Icon(Icons.access_time, size: 15.w,),
                       Padding(
-                        padding: EdgeInsets.only(left: AppSize.widthScreen / 25,),
+                        padding: EdgeInsets.only(left: 15.w,),
                         child: Text(snapshot.data!.openTime + " - " +
                             snapshot.data!.closeTime, style: AppText.bottomSheetToiletInfo2,),
                       ),
                     ],
                   ),
-                  SizedBox(height: AppNumber.h80,),
+                  SizedBox(height: 20.h,),
                   Row(
                     children: [
-                      FaIcon(FontAwesomeIcons.moneyBill, size: AppNumber.h45,),
-                      Padding(padding: EdgeInsets.only(left: AppSize.widthScreen / 25,),
+                      FaIcon(FontAwesomeIcons.moneyBill, size: 13.w,),
+                      Padding(padding: EdgeInsets.only(left: 15.w,),
                         child: Text((snapshot.data!.free == false)
                             ? '${snapshot.data!.minPrice} - ${snapshot.data!.maxPrice} VND/lượt'
                             : 'Miễn phí', style: AppText.bottomSheetToiletInfo2,
@@ -144,19 +145,19 @@ class BottomSheetToiletInfo extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: AppNumber.h50,),
+                  SizedBox(height: 20.h,),
                   ImagesFrame(imageSource: snapshot.data!.toiletImageSources,),
-                  SizedBox(height: AppNumber.h50,),
+                  SizedBox(height: 20.h,),
                   Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 4),
+                      padding: EdgeInsets.symmetric(horizontal: 90.w),
                     child: SizedBox(
                     width: double.infinity,
-                    height: AppNumber.h20,
+                    height: 45.h,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: AppColor.primaryColor2,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(AppSize.widthScreen / 10))),
+                                borderRadius: BorderRadius.circular(20.r))),
                         onPressed: () async {
                           Navigator.pushNamed(context, Routes.directionMainScreen, arguments: id);
                         },

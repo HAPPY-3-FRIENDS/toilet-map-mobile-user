@@ -38,30 +38,30 @@ class AppBoxDecoration {
   );
 
   static var boxDecoration2 = BoxDecoration(
-    borderRadius: BorderRadius.all(Radius.circular(AppSize.heightScreen / 60)),
+    borderRadius: BorderRadius.all(Radius.circular(10.r)),
     color: AppColor.primaryColor2,
   );
 
   static var boxDecoration3 = BoxDecoration(
     borderRadius: BorderRadius.only(
-        topRight: Radius.circular(AppSize.heightScreen / 60),
-        topLeft: Radius.circular(AppSize.heightScreen / 60)
+        topRight: Radius.circular(10.r),
+        topLeft: Radius.circular(10.r)
     ),
     color: AppColor.primaryColor2,
   );
 
   static var boxDecoration4 = BoxDecoration(
     borderRadius: BorderRadius.only(
-        topRight: Radius.circular(AppSize.heightScreen / 60),
-        topLeft: Radius.circular(AppSize.heightScreen / 60)
+        topRight: Radius.circular(10.r),
+        topLeft: Radius.circular(10.r)
     ),
     color: Colors.white,
   );
 
   static var boxDecoration5 = BoxDecoration(
     borderRadius: BorderRadius.only(
-        topRight: Radius.circular(AppSize.heightScreen / 60),
-        topLeft: Radius.circular(AppSize.heightScreen / 60)
+        topRight: Radius.circular(10.r),
+        topLeft: Radius.circular(10.r)
     ),
     color: Colors.white,
   );
@@ -177,8 +177,7 @@ class AppText {
 
   static var titleText1 = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: AppNumber.h40,
-    fontStyle: FontStyle.normal,
+    fontSize: 22.sp,
     color: Colors.white,
   );
 
@@ -278,15 +277,13 @@ class AppText {
 
   static var bottomSheetToiletInfo1 = TextStyle(
     fontWeight: FontWeight.w600,
-    fontSize: AppNumber.h35,
-    fontStyle: FontStyle.normal,
+    fontSize: 24.sp,
     color: AppColor.primaryColor1,
   );
 
   static var bottomSheetToiletInfo2 = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: AppNumber.h50,
-    fontStyle: FontStyle.normal,
+    fontSize: 18.sp,
     color: Colors.black,
   );
 
