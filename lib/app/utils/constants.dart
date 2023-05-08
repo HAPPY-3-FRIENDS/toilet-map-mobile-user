@@ -157,8 +157,7 @@ class AppText {
 
   static var detailText2 = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: AppNumber.h45,
-    fontStyle: FontStyle.normal,
+    fontSize: 20.sp,
     color: Colors.black,
   );
 

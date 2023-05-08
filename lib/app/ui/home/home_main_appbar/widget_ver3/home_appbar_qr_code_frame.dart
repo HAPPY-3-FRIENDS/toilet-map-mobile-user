@@ -53,51 +53,51 @@ class HomeAppbarQRCodeFrame extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(width: 1.5.w, color: AppColor.primaryColor2),
-                          )
+                  flex: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(width: 1.5.w, color: AppColor.primaryColor2),
+                        )
+                    ),
+                    child: InkWell(
+                      onTap: () => showDialog(
+                          context: context,
+                          builder: (_) => QRCodeBuilder(accountId: accountId, data: 'Đi vệ sinh (đại tiện)')
                       ),
-                      child: InkWell(
-                        onTap: () => showDialog(
-                            context: context,
-                            builder: (_) => QRCodeBuilder(accountId: accountId, data: 'Đi vệ sinh (đại tiện)')
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.qr_code_2, size: 15.w),
-                            Text(' Đại tiện',style: TextStyle(
-                                fontSize: 18.sp
-                            ),),
-                          ],
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.qr_code_2, size: 15.w),
+                          Text(' Đại tiện',style: TextStyle(
+                              fontSize: 18.sp
+                          ),),
+                        ],
                       ),
                     ),
+                  ),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: Container(
-                      child: InkWell(
-                        onTap: () => showDialog(
-                            context: context,
-                            builder: (_) => QRCodeBuilder(accountId: accountId,data: 'Đi tắm')
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.qr_code_2, size: 15.w),
-                            Text(' Đi tắm',style: TextStyle(
-                                fontSize: 18.sp
-                            ),),
-                          ],
-                        ),
+                  flex: 1,
+                  child: Container(
+                    child: InkWell(
+                      onTap: () => showDialog(
+                          context: context,
+                          builder: (_) => QRCodeBuilder(accountId: accountId,data: 'Đi tắm')
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.qr_code_2, size: 15.w),
+                          Text(' Đi tắm',style: TextStyle(
+                              fontSize: 18.sp
+                          ),),
+                        ],
                       ),
                     ),
+                  ),
                 ),
               ],
             ),

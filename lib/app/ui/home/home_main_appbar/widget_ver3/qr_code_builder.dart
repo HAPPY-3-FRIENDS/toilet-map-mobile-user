@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
@@ -39,6 +41,62 @@ class _QRCodeBuilderState extends State<QRCodeBuilder> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+        title: Container(
+          alignment: Alignment.center,
+          child: Text("Mã thanh toán ${widget.data}", style: AppText.appbarText2,),
+        ),
+        titleTextStyle: AppText.alertText,
+        elevation: 5,
+        alignment: Alignment.center,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppNumber.h60)),
+        content: Container(
+          height: 380.h,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              QrImage(
+                data: '${widget.accountId} - ${widget.data} - $date',
+                version: QrVersions.auto,
+                gapless: true,
+                size: 280.w,
+                padding: EdgeInsets.zero,
+              ),
+              Text('Mã sẽ biến mất sau $time giây', style: AppText.detailText2,),
+            ],
+          ),
+        )
+    );
+
+
+      GestureDetector(
+        onTap: () {
+          AwesomeDialog(
+              context: context,
+              dialogType: DialogType.noHeader,
+              animType: AnimType.topSlide,
+              showCloseIcon: true,
+              body: Container(
+                height: 400.h,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    QrImage(
+                      data: '${widget.accountId} - ${widget.data} - $date',
+                      version: QrVersions.auto,
+                      gapless: false,
+                      size: 280.w,
+                    ),
+                    Text('Mã sẽ biến mất sau $time giây', style: AppText.detailText2,),
+                  ],
+                ),
+              )
+          ).show();
+        },
+        child: Icon(Icons.compare_arrows_sharp, color: Colors.black, size: 15.w,)
+    );
+
+
+      AlertDialog(
       title: Container(
         alignment: Alignment.center,
         child: Text("Mã thanh toán ${widget.data}", style: AppText.appbarText2,),
