@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:toiletmap/app/models/toilet/toiletArgument.dart';
 import 'package:toiletmap/app/utils/constants.dart';
@@ -75,25 +76,26 @@ class ToiletInListFrame extends StatelessWidget {
             children: [
               Container(
                   decoration: AppBoxDecoration.boxDecoration1,
-                  padding: EdgeInsets.all(AppSize.widthScreen / 60),
-                  height: AppSize.heightScreen / 3.8,
+                  padding: EdgeInsets.all(10.r),
+                  height: 220.h,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       ClipRRect(
-                            borderRadius: BorderRadius.circular(AppSize.heightScreen / 80),
+                            borderRadius: BorderRadius.circular(10.r),
                             child: Image.network(
                               toiletImage,
-                              height: AppSize.heightScreen / 4.5,
-                              width: AppSize.heightScreen / 6,
+                              height: 200.h,
+                              width: 130.w,
                               fit: BoxFit.cover,
                             ),
                           ),
-                      SizedBox(width: AppNumber.h100,),
+                      SizedBox(width: 3.w,),
                       Expanded(child: Container(
-                        height: AppSize.heightScreen / 4.5,
-                        width: AppSize.heightScreen / 3.8,
+                        padding: EdgeInsets.only(left: 5.w),
+                        height: 200.h,
+                        width: 95.w,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +104,7 @@ class ToiletInListFrame extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(child: Container(
-                                  padding: new EdgeInsets.only(right: AppNumber.w40),
+                                  padding: new EdgeInsets.only(right: 9.w),
                                   child: Text(toiletName, maxLines: 2, overflow: TextOverflow.ellipsis, style: AppText.detailText1,),
                                 )),
                                 Row(
@@ -110,18 +112,18 @@ class ToiletInListFrame extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(star.toString(), style: AppText.detailText2,),
-                                    Icon(Icons.star, size: AppNumber.h60, color: Colors.yellow,),
+                                    Icon(Icons.star, size: 10.w, color: Colors.yellow,),
                                   ],
                                 ),
                               ],
                             ),
                             Row(
                               children: [
-                                SizedBox(width: AppNumber.h400,),
-                                FaIcon(FontAwesomeIcons.moneyBill, size: AppNumber.h100,),
-                                SizedBox(width: AppNumber.h400,),
+                                SizedBox(width: 2.5.w,),
+                                FaIcon(FontAwesomeIcons.moneyBill, size: 10.w,),
+                                SizedBox(width: 3.5.w,),
                                 Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 80),
+                                  padding: EdgeInsets.symmetric(horizontal: 0.75.w),
                                   child: Text(price, style: AppText.detailText4,),
                                 )
                               ],
@@ -129,10 +131,10 @@ class ToiletInListFrame extends StatelessWidget {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Icon(Icons.pin_drop, size: AppNumber.h60,),
+                                Icon(Icons.pin_drop, size: 15.w,),
                                 Expanded(
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 80),
+                                    padding: EdgeInsets.symmetric(horizontal: 4.5.w),
                                     child: Text(
                                       address, style: AppText.detailText3,
                                       maxLines: 2,
@@ -143,15 +145,14 @@ class ToiletInListFrame extends StatelessWidget {
                               ],
                             ),
                             Container(
-                              child: (nearBy != null)
-                                  ? Row(
+                              child: Row(
                                 children: [
-                                  SizedBox(width: AppNumber.h200,),
-                                  FaIcon(FontAwesomeIcons.locationPin, size: AppNumber.h100,),
-                                  SizedBox(width: AppNumber.h400,),
+                                  SizedBox(width: 4.w,),
+                                  FaIcon(FontAwesomeIcons.locationPin, size: 10.w,),
+                                  SizedBox(width: 2.w,),
                                   Expanded(
                                     child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 80),
+                                      padding: EdgeInsets.symmetric(horizontal: 4.5.w),
                                       child: Text(
                                         nearBy!, style: AppText.detailText3,
                                         maxLines: 1,
@@ -160,21 +161,20 @@ class ToiletInListFrame extends StatelessWidget {
                                     ),
                                   ),
                                 ],
-                              )
-                                  : null,
+                              ),
                             ),
                             Row(
                               children: [
-                                SizedBox(width: AppNumber.h200,),
+                                SizedBox(width: 3.5.w,),
 
                                 Container(
                                   child: (normalRoom != 0)
                                       ? Row(
                                     children: [
-                                      FaIcon(FontAwesomeIcons.toilet, size: AppNumber.h100),
-                                      SizedBox(width: AppSize.heightScreen / 150,),
+                                      FaIcon(FontAwesomeIcons.toilet, size: 10.w),
+                                      SizedBox(width: 6.w,),
                                       Text('${normalRoom} phòng', style: AppText.detailText3),
-                                      SizedBox(width: AppNumber.h300,),
+                                      SizedBox(width: 3.w,),
                                     ],
                                   )
                                       : null,
@@ -184,10 +184,10 @@ class ToiletInListFrame extends StatelessWidget {
                                   child: (showerRoom != 0)
                                       ? Row(
                                     children: [
-                                      Icon(Icons.shower, size: AppNumber.h80,),
+                                      Icon(Icons.shower, size: 10.w,),
                                       //SizedBox(width: AppNumber.h400,),
                                       Text('${showerRoom} phòng', style: AppText.detailText3),
-                                      SizedBox(width: AppNumber.h300,),
+                                      SizedBox(width: 6.w,),
                                     ],
                                   )
                                       : null,
@@ -197,7 +197,7 @@ class ToiletInListFrame extends StatelessWidget {
                                   child: (disabilityRoom != 0)
                                       ? Row(
                                     children: [
-                                      FaIcon(FontAwesomeIcons.wheelchair, size: AppNumber.h80),
+                                      FaIcon(FontAwesomeIcons.wheelchair, size: 10.w),
                                       //SizedBox(width: AppNumber.h400,),
                                       Text('${disabilityRoom} phòng', style: AppText.detailText3, overflow: TextOverflow.fade),
                                     ],
@@ -208,11 +208,11 @@ class ToiletInListFrame extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                SizedBox(width: AppNumber.h300,),
-                                FaIcon(FontAwesomeIcons.toiletPaper, size: AppNumber.h100,),
+                                SizedBox(width: 2.5.w,),
+                                FaIcon(FontAwesomeIcons.toiletPaper, size: 10.w),
                                 Expanded(
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 80),
+                                    padding: EdgeInsets.symmetric(horizontal: 4.w),
                                     child: Text(
                                       facilitiesString, style: AppText.detailText3,
                                       maxLines: 1,
@@ -228,7 +228,7 @@ class ToiletInListFrame extends StatelessWidget {
                     ],
                   )
               ),
-              Container(height: AppSize.heightScreen / 100, color: AppColor.primaryColor2,)
+              Container(height: 10.h, color: AppColor.primaryColor2,)
             ],
           )
       );
@@ -253,34 +253,35 @@ class ToiletInListFrame extends StatelessWidget {
           children: [
             Container(
                 decoration: AppBoxDecoration.boxDecoration1,
-                padding: EdgeInsets.all(AppSize.widthScreen / 60),
-                height: AppSize.heightScreen / 3.8,
+                padding: EdgeInsets.all(10.r),
+                height: 220.h,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(AppSize.heightScreen / 80),
+                      borderRadius: BorderRadius.circular(10.r),
                       child: Image.network(
                         toiletImage,
-                        height: AppSize.heightScreen / 4.5,
-                        width: AppSize.heightScreen / 6,
+                        height: 200.h,
+                        width: 130.w,
                         fit: BoxFit.cover,
                       ),
                     ),
-                    SizedBox(width: AppNumber.h100,),
+                    SizedBox(width: 3.w,),
                     Expanded(child: Container(
-                      height: AppSize.heightScreen / 4.5,
-                      width: AppSize.heightScreen / 3.8,
+                      padding: EdgeInsets.only(left: 5.w),
+                      height: 200.h,
+                      width: 95.w,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Flexible(child: Container(
-                                padding: new EdgeInsets.only(right: AppNumber.w40),
+                                padding: new EdgeInsets.only(right: 9.w),
                                 child: Text(toiletName, maxLines: 2, overflow: TextOverflow.ellipsis, style: AppText.detailText1,),
                               )),
                               Row(
@@ -288,18 +289,18 @@ class ToiletInListFrame extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(star.toString(), style: AppText.detailText2,),
-                                  Icon(Icons.star, size: AppNumber.h60, color: Colors.yellow,),
+                                  Icon(Icons.star, size: 10.w, color: Colors.yellow,),
                                 ],
                               ),
                             ],
                           ),
                           Row(
                             children: [
-                              SizedBox(width: AppNumber.h400,),
-                              FaIcon(FontAwesomeIcons.moneyBill, size: AppNumber.h100,),
-                              SizedBox(width: AppNumber.h400,),
+                              SizedBox(width: 2.5.w,),
+                              FaIcon(FontAwesomeIcons.moneyBill, size: 10.w,),
+                              SizedBox(width: 3.5.w,),
                               Padding(
-                                padding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 80),
+                                padding: EdgeInsets.symmetric(horizontal: 0.75.w),
                                 child: Text(price, style: AppText.detailText4,),
                               )
                             ],
@@ -307,10 +308,10 @@ class ToiletInListFrame extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(Icons.pin_drop, size: AppNumber.h60,),
+                              Icon(Icons.pin_drop, size: 15.w,),
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 80),
+                                  padding: EdgeInsets.symmetric(horizontal: 4.5.w),
                                   child: Text(
                                     address, style: AppText.detailText3,
                                     maxLines: 2,
@@ -322,16 +323,16 @@ class ToiletInListFrame extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              SizedBox(width: AppNumber.h200,),
+                              SizedBox(width: 3.5.w,),
 
                               Container(
                                 child: (normalRoom != 0)
                                     ? Row(
                                   children: [
-                                    FaIcon(FontAwesomeIcons.toilet, size: AppNumber.h100),
-                                    SizedBox(width: AppSize.heightScreen / 150,),
+                                    FaIcon(FontAwesomeIcons.toilet, size: 10.w),
+                                    SizedBox(width: 6.w,),
                                     Text('${normalRoom} phòng', style: AppText.detailText3),
-                                    SizedBox(width: AppNumber.h300,),
+                                    SizedBox(width: 3.w,),
                                   ],
                                 )
                                     : null,
@@ -341,10 +342,10 @@ class ToiletInListFrame extends StatelessWidget {
                                 child: (showerRoom != 0)
                                     ? Row(
                                   children: [
-                                    Icon(Icons.shower, size: AppNumber.h80,),
+                                    Icon(Icons.shower, size: 10.w,),
                                     //SizedBox(width: AppNumber.h400,),
                                     Text('${showerRoom} phòng', style: AppText.detailText3),
-                                    SizedBox(width: AppNumber.h300,),
+                                    SizedBox(width: 6.w,),
                                   ],
                                 )
                                     : null,
@@ -354,7 +355,7 @@ class ToiletInListFrame extends StatelessWidget {
                                 child: (disabilityRoom != 0)
                                     ? Row(
                                   children: [
-                                    FaIcon(FontAwesomeIcons.wheelchair, size: AppNumber.h80),
+                                    FaIcon(FontAwesomeIcons.wheelchair, size: 10.w),
                                     //SizedBox(width: AppNumber.h400,),
                                     Text('${disabilityRoom} phòng', style: AppText.detailText3, overflow: TextOverflow.fade),
                                   ],
@@ -365,11 +366,11 @@ class ToiletInListFrame extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              SizedBox(width: AppNumber.h300,),
-                              FaIcon(FontAwesomeIcons.toiletPaper, size: AppNumber.h100,),
+                              SizedBox(width: 2.5.w,),
+                              FaIcon(FontAwesomeIcons.toiletPaper, size: 10.w),
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 80),
+                                  padding: EdgeInsets.symmetric(horizontal: 4.w),
                                   child: Text(
                                     facilitiesString, style: AppText.detailText3,
                                     maxLines: 1,
@@ -385,7 +386,7 @@ class ToiletInListFrame extends StatelessWidget {
                   ],
                 )
             ),
-            Container(height: AppSize.heightScreen / 100, color: AppColor.primaryColor2,)
+            Container(height: 10.h, color: AppColor.primaryColor2,)
           ],
         )
     );

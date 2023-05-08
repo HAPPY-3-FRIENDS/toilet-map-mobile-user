@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:toiletmap/app/ui/home/home_main_bottom_panel/widget/panel_widget.dart';
@@ -22,21 +23,21 @@ class _HomeMainBottomPanelState extends State<HomeMainBottomPanel> {
           panelSnapping: true,
           renderPanelSheet: true,
 
-          minHeight: AppNumber.h10,
-          borderRadius: BorderRadius.circular(AppSize.heightScreen / 60),
+          minHeight: 80.h,
+          borderRadius: BorderRadius.circular(10.r),
           color: Colors.transparent,
           backdropEnabled: true,
           panel: PanelWidget(),
           collapsed: Container(
-            height: AppSize.heightScreen / 10,
+            height: 80.h,
             decoration: AppBoxDecoration.boxDecorationWithGradient2,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  height: AppNumber.h200,
-                  width: AppSize.widthScreen / 3,
+                  height: 4.h,
+                  width: 120.w,
                   decoration: AppBoxDecoration.boxDecoration2
                 ),
                 Center(

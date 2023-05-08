@@ -85,8 +85,8 @@ class AppBoxDecoration {
 
   static var boxDecorationWithGradient2 = BoxDecoration(
     borderRadius: BorderRadius.only(
-        topRight: Radius.circular(AppSize.heightScreen / 60),
-        topLeft: Radius.circular(AppSize.heightScreen / 60)
+        topRight: Radius.circular(10.r),
+        topLeft: Radius.circular(10.r)
     ),
     gradient: const LinearGradient(
         begin: Alignment.topCenter,
@@ -151,7 +151,6 @@ class AppText {
   static var detailText1 = TextStyle(
     fontWeight: FontWeight.w700,
     fontSize: 20.sp,
-    fontStyle: FontStyle.normal,
     color: AppColor.primaryColor1,
   );
 
@@ -163,15 +162,13 @@ class AppText {
 
   static var detailText3 = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: AppNumber.h50,
-    fontStyle: FontStyle.normal,
+    fontSize: 18.sp,
     color: Colors.black,
   );
 
   static var detailText4 = TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: AppNumber.h50,
-    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w600,
+    fontSize: 18.sp,
     color: Colors.black,
   );
 
@@ -183,8 +180,7 @@ class AppText {
 
   static var titleText2 = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: AppNumber.h40,
-    fontStyle: FontStyle.normal,
+    fontSize: 20.sp,
     color: Colors.black,
   );
 

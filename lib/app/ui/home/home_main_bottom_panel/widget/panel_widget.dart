@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/models/toilet/toiletFacilities/toiletFacilities.dart';
 import 'package:toiletmap/app/repositories/toilet_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_bottom_panel/widget/toilet_in_list_frame.dart';
@@ -21,18 +20,18 @@ class PanelWidget extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: [
               Container(
-                height: AppSize.heightScreen / 10,
+                height: 80.h,
                 decoration: AppBoxDecoration.boxDecoration4,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                        height: AppNumber.h200,
-                        width: AppSize.widthScreen / 3,
+                        height: 4.h,
+                        width: 120.w,
                         decoration: AppBoxDecoration.boxDecoration2
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: AppNumber.h50,right: AppNumber.h50),
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -42,8 +41,8 @@ class PanelWidget extends StatelessWidget {
                               InkWell(
                                 onTap: () {},
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 60),
-                                  child: Icon(Icons.refresh, size: AppSize.widthScreen / 20,),
+                                  padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                  child: Icon(Icons.refresh, size: 15.w,),
                                 ),
                               ),
                             ],
@@ -70,8 +69,8 @@ class PanelWidget extends StatelessWidget {
                             },
                             child: Row(
                               children: [
-                                Icon(Icons.filter_alt),
-                                Text('Lọc'),
+                                Icon(Icons.filter_alt, color: Colors.black, size: 18.w,),
+                                Text('Lọc', style: AppText.detailText2,),
                               ],
                             ),
                           ),
@@ -93,7 +92,7 @@ class PanelWidget extends StatelessWidget {
     return SingleChildScrollView(
 
       child: Container(
-        height: AppSize.heightScreen / 1.7,
+        height: 530.h,
         child: (
             FutureBuilder<List<Toilet>?> (
                 future: ToiletRepository().getToiletsNearbyByCurrentLatLong(),

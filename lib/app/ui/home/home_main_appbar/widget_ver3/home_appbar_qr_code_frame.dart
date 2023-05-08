@@ -12,11 +12,16 @@ class HomeAppbarQRCodeFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(3.w),
+      padding: EdgeInsets.only(
+          left: 3.w,
+          right: 3.w,
+          top: 10.w,
+          bottom: 3.w
+      ),
       decoration: AppBoxDecoration.appBarQRCodeDecoration,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text('Mã thanh toán', style: AppText.appbarQRButtonText1,),
           Container(
