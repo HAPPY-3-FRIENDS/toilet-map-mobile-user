@@ -11,13 +11,13 @@ import 'package:http/http.dart' as http;
 import '../utils/constants.dart';
 
 class CheckinRepository {
-  Future<List<Checkin>?> getCheckinsByAccountId() async {
+  Future<List<Checkin>?> getCheckinsByAccountId(int page) async {
     int? accountId = await SharedPreferencesRepository().getAccountId();
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
     print('checkin get start' + accountId!.toString());
 
     final response = await http.get(
-        Uri.parse('${AppDomain.appDomain1}/api/check-in?account-id=${accountId}'),
+        Uri.parse('${AppDomain.appDomain1}/api/check-in?account-id=${accountId}&pageIndex=${page}&pageSize=10'),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
           HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
@@ -41,6 +41,33 @@ class CheckinRepository {
       List<Checkin> checkins = [];
       print("checkin list empty");
       return checkins;
+    }
+
+    print("checkins get failed");
+    return null;
+  }
+
+  Future<int?> countCheckinsByAccountId() async {
+    int? accountId = await SharedPreferencesRepository().getAccountId();
+    String? accessToken = await SharedPreferencesRepository().getAccessToken();
+    print('checkin get start' + accountId!.toString());
+
+    final response = await http.get(
+        Uri.parse('${AppDomain.appDomain1}/api/check-in/count?account-id=${accountId}'),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+          HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+        }
+    );
+
+    if (response.statusCode == 200) {
+      print('hihi');
+      final responseJson = jsonDecode(response.body);
+      print(responseJson);
+      BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
+      print(baseResponse.data);
+      print("count checkins successfully ");
+      return baseResponse.data;
     }
 
     print("checkins get failed");

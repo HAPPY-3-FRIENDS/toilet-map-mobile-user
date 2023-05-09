@@ -243,22 +243,19 @@ class AppText {
 
   static var listText1 = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: AppNumber.h60,
-    fontStyle: FontStyle.normal,
+    fontSize: 16.sp,
     color: Colors.grey,
   );
 
   static var listText2 = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: AppNumber.h60,
-    fontStyle: FontStyle.normal,
+    fontSize: 18.sp,
     color: Colors.black,
   );
 
   static var listText3 = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: AppNumber.h40,
-    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w500,
+    fontSize: 22.sp,
     color: Colors.black,
   );
 

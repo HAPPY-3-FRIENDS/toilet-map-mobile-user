@@ -6,15 +6,58 @@ import 'package:toiletmap/app/utils/constants.dart';
 
 import '../../../models/checkin/checkin.dart';
 
-class HistoryCheckinList extends StatelessWidget {
+class HistoryCheckinList extends StatefulWidget {
 
   HistoryCheckinList({Key? key}) : super(key: key);
 
+  @override
+  State<HistoryCheckinList> createState() => _HistoryCheckinListState();
+}
+
+class _HistoryCheckinListState extends State<HistoryCheckinList> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
   GlobalKey<RefreshIndicatorState>();
+  final scrollController = ScrollController();
+  bool isLoadingMore = false;
+  List posts = [];
+  int page = 1;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scrollController.addListener(_scrollListener);
+    _fetchPosts(page);
+  }
+  
+  @override
   Widget build(BuildContext context) {
+    FutureBuilder<int?>(
+      future: CheckinRepository().countCheckinsByAccountId(),
+      builder: (context, snapshot){
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          print("ham nay bi goi lai");
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppColor.primaryColor1,
+              strokeWidth: 2.0,
+            ),
+          );
+        }
+        if(snapshot.hasData){
+          print("check okok");
+          if (snapshot.data! == 0) {
+            return Center(
+              child: Text('Bạn chưa có lịch sử nào.', style: AppText.detailText2),
+            );
+          }
+        }
+        return const Center(
+          child: Text('Lỗi'),
+        );
+      },
+    );
+
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       color: AppColor.primaryColor1,
@@ -26,46 +69,46 @@ class HistoryCheckinList extends StatelessWidget {
         return Future<void>.delayed(const Duration(seconds: 3));
       },
       // Pull from top to show refresh indicator.
-      child: FutureBuilder<List<Checkin>?>(
-        future: CheckinRepository().getCheckinsByAccountId(),
-        builder: (context, snapshot){
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: AppColor.primaryColor1,
-                strokeWidth: 2.0,
-              ),
-            );
-          }
-          if(snapshot.hasData){
-            if (snapshot.data!.isEmpty) {
-              return Center(
-                child: Text('Bạn chưa có lịch sử nào.', style: AppText.detailText2),
-              );
-            }
-            else {
+      child: Container(
+        padding: EdgeInsets.only(top: 5.h),
+        child: ListView.builder(
+          controller: scrollController,
+          itemCount: isLoadingMore ? posts.length + 1 : posts.length,
+          itemBuilder: (BuildContext context, int index) {
+            if (index < posts.length) {
+              Checkin checkin = posts[index];
               return Container(
-                padding: EdgeInsets.only(top: 5.h),
-                child: ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Checkin checkin = snapshot.data![index];
-                    return Container(
-                      height: 100.h,
-                      margin: EdgeInsets.symmetric(vertical: 3.h),
-                      child: HistoryCheckin(dateTime: checkin.dateTime, serviceName: checkin.serviceName, toiletName: checkin.toiletName, turn: checkin.turn, balance: checkin.balance,),
-                    );
-                  },
-                ),
+                height: 100.h,
+                margin: EdgeInsets.symmetric(vertical: 3.h),
+                child: HistoryCheckin(dateTime: checkin.dateTime, serviceName: checkin.serviceName, toiletName: checkin.toiletName, turn: checkin.turn, balance: checkin.balance,),
               );
+            } else {
+              return Center(child: CircularProgressIndicator());
             }
-
-          }
-          return const Center(
-            child: Text('Lỗi'),
-          );
-        },
-      ),
+          },
+        ),
+      )
     );
+  }
+
+  Future<void> _fetchPosts(int page) async {
+    List<Checkin>? set = await CheckinRepository().getCheckinsByAccountId(page);
+    setState(() {
+      posts = posts + set!;
+    });
+  }
+
+  Future<void> _scrollListener() async {
+    if (isLoadingMore) return;
+    if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      setState(() {
+        isLoadingMore = true;
+      });
+      page += 1;
+      await _fetchPosts(page);
+      setState(() {
+        isLoadingMore = false;
+      });
+    }
   }
 }

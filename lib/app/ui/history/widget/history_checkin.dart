@@ -32,10 +32,17 @@ class _HistoryCheckinState extends State<HistoryCheckin> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(widget.dateTime, style: AppText.listText1,),
                   Expanded(
-                    child: Text(widget.toiletName, style: AppText.listText3, maxLines: 2, overflow: TextOverflow.ellipsis),),
-                  Text(widget.serviceName, style: AppText.listText2,),
+                      flex: 1,
+                      child: Text(widget.dateTime, style: AppText.listText1,),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Text(widget.toiletName, style: AppText.listText3, maxLines: 1, overflow: TextOverflow.ellipsis),),
+                  Expanded(
+                      flex: 1,
+                      child: Text(widget.serviceName, style: AppText.listText2,),
+                  ),
                 ],
               ),),
           Expanded(
@@ -45,9 +52,9 @@ class _HistoryCheckinState extends State<HistoryCheckin> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
-                  padding: EdgeInsets.all(AppSize.widthScreen / 60),
+                  padding: EdgeInsets.all(10.w),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    borderRadius: BorderRadius.all(Radius.circular(10.r)),
                     color: AppColor.primaryColor1,
                   ),
                   child: Text("Đánh giá", style: AppText.appbarQRButtonText1,),
