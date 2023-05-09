@@ -41,7 +41,7 @@ class _HistoryCheckinState extends State<HistoryCheckin> {
                     child: Text(widget.toiletName, style: AppText.listText3, maxLines: 1, overflow: TextOverflow.ellipsis),),
                   Expanded(
                       flex: 1,
-                      child: Text(widget.serviceName, style: AppText.listText2,),
+                      child: Text(widget.serviceName, style: AppText.listText4,),
                   ),
                 ],
               ),),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
@@ -17,19 +18,19 @@ class _HistoryTransactionState extends State<HistoryTransaction> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppNumber.h15,
-      margin: EdgeInsets.all(AppSize.widthScreen / 40),
-      decoration: AppBoxDecoration.boxDecoration1,
+      height: 100.h,
+      padding: EdgeInsets.all(10.w),
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(widget.createdDate, style: AppText.listText1,),
               Text("Nạp tiền vào tài khoản", style: AppText.listText3,),
-              Text(widget.method, style: AppText.listText2,),
+              Text(widget.method, style: AppText.listText4,),
             ],
           ),
           Column(

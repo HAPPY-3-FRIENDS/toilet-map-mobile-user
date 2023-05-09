@@ -10,13 +10,13 @@ import '../utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 class TransactionRepository {
-  Future<List<Transaction>?> getTransactionsByAccountId() async {
+  Future<List<Transaction>?> getTransactionsByAccountId(int page) async {
     int? accountId = await SharedPreferencesRepository().getAccountId();
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
     print('Transaction get start' + accountId!.toString());
 
     final response = await http.get(
-        Uri.parse('${AppDomain.appDomain1}/api/payments?account-id=${accountId}'),
+        Uri.parse('${AppDomain.appDomain1}/api/payments?account-id=${accountId}&pageIndex=${page}&pageSize=10'),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
           HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
@@ -43,6 +43,33 @@ class TransactionRepository {
     }
 
     print("Transaction get failed");
+    return null;
+  }
+
+  Future<int?> countTransactionsByAccountId() async {
+    int? accountId = await SharedPreferencesRepository().getAccountId();
+    String? accessToken = await SharedPreferencesRepository().getAccessToken();
+    print('checkin get start' + accountId!.toString());
+
+    final response = await http.get(
+        Uri.parse('${AppDomain.appDomain1}/api/payments/count?account-id=${accountId}'),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+          HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+        }
+    );
+
+    if (response.statusCode == 200) {
+      print('hihi');
+      final responseJson = jsonDecode(response.body);
+      print(responseJson);
+      BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
+      print(baseResponse.data);
+      print("count successfully ");
+      return baseResponse.data;
+    }
+
+    print("get failed");
     return null;
   }
 }

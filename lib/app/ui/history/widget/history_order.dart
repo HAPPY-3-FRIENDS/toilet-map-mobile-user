@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
@@ -18,19 +19,19 @@ class _HistoryHistoryOrderState extends State<HistoryOrder> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppNumber.h15,
-      margin: EdgeInsets.all(AppSize.widthScreen / 40),
-      decoration: AppBoxDecoration.boxDecoration1,
+      height: 100.h,
+      padding: EdgeInsets.all(10.w),
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(widget.dateTime, style: AppText.listText1,),
               Text('Mua gói ${widget.totalTurn} lượt', style: AppText.listText3,),
-              Text(widget.paymentMethod, style: AppText.listText2,),
+              Text(widget.paymentMethod, style: AppText.listText4,),
             ],
           ),
           Column(

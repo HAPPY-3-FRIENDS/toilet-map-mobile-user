@@ -259,6 +259,12 @@ class AppText {
     color: Colors.black,
   );
 
+  static var listText4 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 18.sp,
+    color: AppColor.primaryColor1,
+  );
+
   static var toiletInfoText1 = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: AppNumber.h25,
