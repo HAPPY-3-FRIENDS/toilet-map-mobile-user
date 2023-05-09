@@ -155,6 +155,7 @@ class BottomSheetToiletInfo extends StatelessWidget {
                     height: 45.h,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          elevation: 0,
                             primary: AppColor.primaryColor2,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.r))),

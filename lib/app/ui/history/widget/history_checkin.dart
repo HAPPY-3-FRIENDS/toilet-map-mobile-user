@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
@@ -19,9 +20,9 @@ class _HistoryCheckinState extends State<HistoryCheckin> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppSize.heightScreen / 6,
-      margin: EdgeInsets.all(AppSize.widthScreen / 40),
-      decoration: AppBoxDecoration.boxDecoration1,
+      height: 100.h,
+      padding: EdgeInsets.all(10.w),
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

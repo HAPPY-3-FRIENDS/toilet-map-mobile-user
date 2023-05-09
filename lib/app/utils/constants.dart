@@ -186,8 +186,8 @@ class AppText {
 
   static var titleText3 = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: AppNumber.h45,
-    fontStyle: FontStyle.normal,
+    fontSize: 20.sp,
+    color: AppColor.primaryColor1
   );
 
   static var mainButtonText = TextStyle(
@@ -217,9 +217,14 @@ class AppText {
 
   static var appbarTitleText1 = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: AppNumber.h30,
-    fontStyle: FontStyle.normal,
+    fontSize: 30.sp,
     color: Colors.white,
+  );
+
+  static var appbarTitleText2 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 30.sp,
+    color: AppColor.primaryColor1,
   );
 
   static var bankingInfoText1 = TextStyle(

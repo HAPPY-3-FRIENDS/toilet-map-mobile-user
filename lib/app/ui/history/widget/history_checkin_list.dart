@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/repositories/checkin_repository.dart';
 import 'package:toiletmap/app/ui/history/widget/history_checkin.dart';
 import 'package:toiletmap/app/utils/constants.dart';
@@ -43,18 +44,19 @@ class HistoryCheckinList extends StatelessWidget {
               );
             }
             else {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Checkin checkin = snapshot.data![index];
-                  return Card(
-                    margin: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 40, vertical: AppNumber.h200),
-                    child: Container(
-                      height: AppSize.heightScreen / 8,
+              return Container(
+                padding: EdgeInsets.only(top: 5.h),
+                child: ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    Checkin checkin = snapshot.data![index];
+                    return Container(
+                      height: 100.h,
+                      margin: EdgeInsets.symmetric(vertical: 3.h),
                       child: HistoryCheckin(dateTime: checkin.dateTime, serviceName: checkin.serviceName, toiletName: checkin.toiletName, turn: checkin.turn, balance: checkin.balance,),
-                    )
-                  );
-                },
+                    );
+                  },
+                ),
               );
             }
 
