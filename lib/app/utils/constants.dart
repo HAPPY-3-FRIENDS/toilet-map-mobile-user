@@ -184,6 +184,12 @@ class AppText {
     color: Colors.black,
   );
 
+  static var titleText4 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 20.sp,
+    color: Colors.black38,
+  );
+
   static var titleText3 = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 20.sp,

@@ -10,8 +10,9 @@ class UserInfo {
   String defaultPayment;
   int accountBalance;
   int accountTurn;
+  String? phone;
 
-  UserInfo(this.accountId, this.fullName, this.gmail, this.avatar, this.defaultPayment, this.accountBalance, this.accountTurn);
+  UserInfo(this.accountId, this.fullName, this.gmail, this.avatar, this.defaultPayment, this.accountBalance, this.accountTurn, this.phone);
 
   factory UserInfo.fromJson(Map<String, dynamic> json) => _$UserInfoFromJson(json);
   Map<String, dynamic> toJson() => _$UserInfoToJson(this);

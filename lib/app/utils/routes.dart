@@ -9,4 +9,7 @@ class Routes {
   static const String toiletDetailMainScreen = 'ToiletDetailMainScreen';
   static const String createAccountScreen = 'CreateAccountScreen';
   static const String directionMainScreen = 'DirectionMainScreen';
+  static const String informationChangeMainScreen = 'InformationChangeMainScreen';
+  static const String informationPaymentScreen = 'InformationPaymentScreen';
+  static const String informationServicePriceScreen = 'InformationServicePriceScreen';
 }

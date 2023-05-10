@@ -14,6 +14,7 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
       json['defaultPayment'] as String,
       json['accountBalance'] as int,
       json['accountTurn'] as int,
+      json['phone'] as String?,
     );
 
 Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
@@ -24,4 +25,5 @@ Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'defaultPayment': instance.defaultPayment,
       'accountBalance': instance.accountBalance,
       'accountTurn': instance.accountTurn,
+      'phone': instance.phone
     };

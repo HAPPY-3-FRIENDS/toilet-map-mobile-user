@@ -10,8 +10,8 @@ import '../../models/userInfo/user_info.dart';
 import '../../utils/constants.dart';
 import '../login/login_otp_confirmation_screen.dart';
 
-class InformationMainScreen extends StatelessWidget {
-  const InformationMainScreen({Key? key}) : super(key: key);
+class InformationServicePriceScreen extends StatelessWidget {
+  const InformationServicePriceScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class InformationMainScreen extends StatelessWidget {
                   ),
                 ),
 
-                title: Text('Thông tin cá nhân'),
+                title: Text('Bảng giá dịch vụ'),
                 titleTextStyle: AppText.appbarTitleText2,
                 centerTitle: true,
                 toolbarHeight: 100.h,
@@ -49,7 +49,10 @@ class InformationMainScreen extends StatelessWidget {
             ),
           ),
 
-          body: Container(
+          body: Center(child: Text('Đang chờ API')),
+
+
+        /*Container(
             color: Color(0xFFF1F1F1),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -197,9 +200,7 @@ class InformationMainScreen extends StatelessWidget {
                                     height: 5.h,
                                   ),
                                   InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, Routes.informationPaymentScreen);
-                                    },
+                                    onTap: () {},
                                     child: Container(
                                       height: 60.h,
                                       width: double.infinity,
@@ -257,9 +258,7 @@ class InformationMainScreen extends StatelessWidget {
                                     height: 5.h,
                                   ),
                                   InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, Routes.informationServicePriceScreen);
-                                    },
+                                    onTap: () {},
                                     child: Container(
                                       height: 60.h,
                                       width: double.infinity,
@@ -318,7 +317,7 @@ class InformationMainScreen extends StatelessWidget {
                 )
               ],
             ),
-          )
+          )*/
       ),
     );
   }

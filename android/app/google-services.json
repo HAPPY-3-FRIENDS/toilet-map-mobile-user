@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "875327965926-trg1isvrml9eqq3up4hm5ev4akhvniiv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.toiletmap",
+            "certificate_hash": "24e3f72a5020d72e23f78062b95e5c75892400a4"
+          }
+        },
+        {
           "client_id": "875327965926-qslr305k7rnastmsg91tjbm2i9a40u56.apps.googleusercontent.com",
           "client_type": 3
         }

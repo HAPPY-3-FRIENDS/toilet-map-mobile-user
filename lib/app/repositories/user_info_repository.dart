@@ -13,6 +13,7 @@ class UserInfoRepository {
   Future<UserInfo?> getUserInfo() async {
     int? accountId = await SharedPreferencesRepository().getAccountId();
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
+    String? phone = await SharedPreferencesRepository().getUsername();
     print('userinfo' + accountId!.toString());
 
     final response = await http.get(
@@ -30,6 +31,7 @@ class UserInfoRepository {
       BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
       print(baseResponse.data);
       UserInfo userInfo = UserInfo.fromJson(baseResponse.data);
+      userInfo.phone = phone;
       print("user info successfully " + userInfo.fullName);
       return userInfo;
     } else {

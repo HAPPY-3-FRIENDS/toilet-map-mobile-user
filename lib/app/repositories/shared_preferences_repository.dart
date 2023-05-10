@@ -6,6 +6,11 @@ class SharedPreferencesRepository {
     return sharedPreferences.getInt("accountId");
   }
 
+  Future<String?> getUsername() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString("username");
+  }
+
   Future<String?> getAccessToken() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString("accessToken");
