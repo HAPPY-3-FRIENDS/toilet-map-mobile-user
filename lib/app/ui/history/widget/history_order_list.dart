@@ -47,8 +47,17 @@ class _HistoryOrderListState extends State<HistoryOrderList> {
         if(snapshot.hasData){
           print("check okok");
           if (snapshot.data! == 0) {
-            return Center(
-              child: Text('Bạn chưa có lịch sử nào.', style: AppText.detailText2),
+            return Container(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  SizedBox(height: 10.h,),
+                  SizedBox(height: 200.w, width: 200.w,
+                    child: Image(image: AssetImage('assets/images/no-data.gif'),),),
+                  SizedBox(height: 10.h,),
+                  Text('Bạn chưa có lịch sử nào.', style: AppText.detailText2)
+                ],
+              ),
             );
           } else {
             return RefreshIndicator(
