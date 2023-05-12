@@ -273,15 +273,13 @@ class AppText {
 
   static var toiletInfoText1 = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: AppNumber.h25,
-    fontStyle: FontStyle.normal,
+    fontSize: 28.sp,
     color: AppColor.primaryColor1,
   );
 
   static var toiletInfoText2 = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: AppNumber.h50,
-    fontStyle: FontStyle.normal,
+    fontSize: 18.sp,
     color: Colors.black,
   );
 

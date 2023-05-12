@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../models/toilet/toiletFacilities/toiletFacilities.dart';
@@ -46,8 +47,8 @@ class ToiletInformationFrame extends StatelessWidget {
     if (nearBy.isNotEmpty) {
       return Container(
         color: Colors.white,
-        height: AppSize.heightScreen / 2.5,
-        padding: EdgeInsets.all(AppSize.widthScreen / 20),
+        height: 300.h,
+        padding: EdgeInsets.all(15.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +59,7 @@ class ToiletInformationFrame extends StatelessWidget {
                 Flexible(
                     flex: 5,
                     child: Container(
-                      padding: new EdgeInsets.only(right: AppNumber.w40),
+                      padding: new EdgeInsets.only(right: 5.w),
                       child: Expanded(
                         child: Text(
                           toiletName,
@@ -83,9 +84,9 @@ class ToiletInformationFrame extends StatelessWidget {
             ),
             Row(
               children: [
-                SizedBox(width: AppSize.widthScreen / 200,),
-                FaIcon(FontAwesomeIcons.locationDot, size: AppSize.heightScreen / 40,),
-                SizedBox(width: AppSize.widthScreen / 20,),
+                SizedBox(width: 1.8.w,),
+                FaIcon(FontAwesomeIcons.locationDot, size: 12.w,),
+                SizedBox(width: 18.w,),
                 Expanded(
                   child: Text(
                     address,
@@ -97,9 +98,9 @@ class ToiletInformationFrame extends StatelessWidget {
             ),
             Row(
               children: [
-                SizedBox(width: AppSize.widthScreen / 200,),
-                FaIcon(FontAwesomeIcons.locationPin, size: AppSize.heightScreen / 40,),
-                SizedBox(width: AppSize.widthScreen / 20,),
+                SizedBox(width: 1.8.w,),
+                FaIcon(FontAwesomeIcons.locationPin, size: 12.w,),
+                SizedBox(width: 18.w,),
                 Expanded(
                   child: Text(
                     nearBy,
@@ -110,8 +111,8 @@ class ToiletInformationFrame extends StatelessWidget {
             ),
             Row(
               children: [
-                FaIcon(FontAwesomeIcons.clock, size: AppSize.heightScreen / 40,),
-                SizedBox(width: AppSize.widthScreen / 20,),
+                FaIcon(FontAwesomeIcons.clock, size: 12.w,),
+                SizedBox(width: 18.w,),
                 Expanded(
                   child: Text(
                     time,
@@ -122,8 +123,8 @@ class ToiletInformationFrame extends StatelessWidget {
             ),
             Row(
               children: [
-                FaIcon(FontAwesomeIcons.moneyBill, size: AppSize.heightScreen / 40,),
-                SizedBox(width: AppSize.widthScreen / 25,),
+                FaIcon(FontAwesomeIcons.moneyBill, size: 12.w,),
+                SizedBox(width: 14.4.w),
                 Expanded(
                   child: Text(
                     price,
@@ -140,11 +141,11 @@ class ToiletInformationFrame extends StatelessWidget {
                   child: (normalRoom != 0)
                       ? Row(
                     children: [
-                      SizedBox(width: AppSize.widthScreen / 200,),
-                      FaIcon(FontAwesomeIcons.toilet, size: AppSize.heightScreen / 40),
-                      SizedBox(width: AppSize.widthScreen / 20,),
+                      SizedBox(width: 1.8.w,),
+                      FaIcon(FontAwesomeIcons.toilet, size: 12.w),
+                      SizedBox(width: 18.w,),
                       Text('${normalRoom} phòng', style: AppText.toiletInfoText2),
-                      SizedBox(width: AppSize.widthScreen / 20,),
+                      SizedBox(width: 18.w,),
                     ],
                   )
                       : null,
@@ -154,10 +155,10 @@ class ToiletInformationFrame extends StatelessWidget {
                   child: (showerRoom != 0)
                       ? Row(
                     children: [
-                      FaIcon(FontAwesomeIcons.shower, size: AppSize.heightScreen / 40),
-                      SizedBox(width: AppSize.widthScreen / 20,),
+                      FaIcon(FontAwesomeIcons.shower, size: 12.w),
+                      SizedBox(width: 18.w,),
                       Text('${showerRoom} phòng', style: AppText.toiletInfoText2),
-                      SizedBox(width: AppSize.widthScreen / 20,),
+                      SizedBox(width: 18.w,),
                     ],
                   )
                       : null,
@@ -167,8 +168,8 @@ class ToiletInformationFrame extends StatelessWidget {
                   child: (disabilityRoom != 0)
                       ? Row(
                     children: [
-                      FaIcon(FontAwesomeIcons.wheelchair, size: AppSize.heightScreen / 40),
-                      SizedBox(width: AppSize.widthScreen / 20,),
+                      FaIcon(FontAwesomeIcons.wheelchair, size: 12.w),
+                      SizedBox(width: 18.w,),
                       Text('${disabilityRoom} phòng', style: AppText.toiletInfoText2),
                     ],
                   )
@@ -179,8 +180,8 @@ class ToiletInformationFrame extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FaIcon(FontAwesomeIcons.toiletPaper, size: AppSize.heightScreen / 40),
-                SizedBox(width: AppSize.widthScreen / 30,),
+                FaIcon(FontAwesomeIcons.toiletPaper, size: 12.w),
+                SizedBox(width: 14.w),
                 Expanded(
                   child: Text(
                     facilitiesString, style: AppText.toiletInfoText2,
@@ -196,8 +197,8 @@ class ToiletInformationFrame extends StatelessWidget {
     }
     return Container(
       color: Colors.white,
-      height: AppSize.heightScreen / 3,
-      padding: EdgeInsets.all(AppSize.widthScreen / 20),
+      height: 260.h,
+      padding: EdgeInsets.all(15.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,7 +209,7 @@ class ToiletInformationFrame extends StatelessWidget {
               Flexible(
                   flex: 5,
                   child: Container(
-                    padding: new EdgeInsets.only(right: AppNumber.w40),
+                    padding: new EdgeInsets.only(right: 5.w),
                     child: Expanded(
                       child: Text(
                         toiletName,
@@ -233,9 +234,9 @@ class ToiletInformationFrame extends StatelessWidget {
           ),
           Row(
             children: [
-              SizedBox(width: AppSize.widthScreen / 200,),
-              FaIcon(FontAwesomeIcons.locationDot, size: AppSize.heightScreen / 40,),
-              SizedBox(width: AppSize.widthScreen / 20,),
+              SizedBox(width: 1.8.w,),
+              FaIcon(FontAwesomeIcons.locationDot, size: 12.w,),
+              SizedBox(width: 18.w,),
               Expanded(
                 child: Text(
                   address,
@@ -247,8 +248,8 @@ class ToiletInformationFrame extends StatelessWidget {
           ),
           Row(
             children: [
-              FaIcon(FontAwesomeIcons.clock, size: AppSize.heightScreen / 40,),
-              SizedBox(width: AppSize.widthScreen / 20,),
+              FaIcon(FontAwesomeIcons.clock, size: 12.w,),
+              SizedBox(width: 18.w,),
               Expanded(
                 child: Text(
                   time,
@@ -259,8 +260,8 @@ class ToiletInformationFrame extends StatelessWidget {
           ),
           Row(
             children: [
-              FaIcon(FontAwesomeIcons.moneyBill, size: AppSize.heightScreen / 40,),
-              SizedBox(width: AppSize.widthScreen / 25,),
+              FaIcon(FontAwesomeIcons.moneyBill, size: 12.w,),
+              SizedBox(width: 14.4.w),
               Expanded(
                 child: Text(
                   price,
@@ -277,11 +278,11 @@ class ToiletInformationFrame extends StatelessWidget {
                 child: (normalRoom != 0)
                     ? Row(
                   children: [
-                    SizedBox(width: AppSize.widthScreen / 200,),
-                    FaIcon(FontAwesomeIcons.toilet, size: AppSize.heightScreen / 40),
-                    SizedBox(width: AppSize.widthScreen / 20,),
+                    SizedBox(width: 1.8.w,),
+                    FaIcon(FontAwesomeIcons.toilet, size: 12.w),
+                    SizedBox(width: 18.w,),
                     Text('${normalRoom} phòng', style: AppText.toiletInfoText2),
-                    SizedBox(width: AppSize.widthScreen / 20,),
+                    SizedBox(width: 18.w,),
                   ],
                 )
                     : null,
@@ -291,10 +292,10 @@ class ToiletInformationFrame extends StatelessWidget {
                 child: (showerRoom != 0)
                     ? Row(
                   children: [
-                    FaIcon(FontAwesomeIcons.shower, size: AppSize.heightScreen / 40),
-                    SizedBox(width: AppSize.widthScreen / 20,),
+                    FaIcon(FontAwesomeIcons.shower, size: 12.w),
+                    SizedBox(width: 18.w,),
                     Text('${showerRoom} phòng', style: AppText.toiletInfoText2),
-                    SizedBox(width: AppSize.widthScreen / 20,),
+                    SizedBox(width: 18.w,),
                   ],
                 )
                     : null,
@@ -304,8 +305,8 @@ class ToiletInformationFrame extends StatelessWidget {
                 child: (disabilityRoom != 0)
                     ? Row(
                   children: [
-                    FaIcon(FontAwesomeIcons.wheelchair, size: AppSize.heightScreen / 40),
-                    SizedBox(width: AppSize.widthScreen / 20,),
+                    FaIcon(FontAwesomeIcons.wheelchair, size: 12.w),
+                    SizedBox(width: 18.w,),
                     Text('${disabilityRoom} phòng', style: AppText.toiletInfoText2),
                   ],
                 )
@@ -316,8 +317,8 @@ class ToiletInformationFrame extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              FaIcon(FontAwesomeIcons.toiletPaper, size: AppSize.heightScreen / 40),
-              SizedBox(width: AppSize.widthScreen / 30,),
+              FaIcon(FontAwesomeIcons.toiletPaper, size: 12.w),
+              SizedBox(width: 14.w),
               Expanded(
                 child: Text(
                   facilitiesString, style: AppText.toiletInfoText2,
