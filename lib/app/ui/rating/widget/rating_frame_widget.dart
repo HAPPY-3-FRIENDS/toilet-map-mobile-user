@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:toiletmap/app/ui/toilet_detail/widget/image_full_widget.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 import '../../../models/rating/rating.dart';
@@ -14,52 +15,122 @@ class RatingFrameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200.h,
       color: Colors.white,
-      padding: EdgeInsets.all(20.w),
+      padding: EdgeInsets.all(15.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             flex: 2,
-              child: CircleAvatar(
-                radius: 20.w,
-                backgroundImage: AssetImage('assets/default-avatar.png'),
-              ),
+              child: Padding(
+                padding: EdgeInsets.only(right: 10.w),
+                child: CircleAvatar(
+                  radius: 12.w,
+                  backgroundImage: AssetImage('assets/default-avatar.png'),
+                ),
+              )
           ),
           Expanded(
-              flex: 12,
+              flex: 15,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(rating.fullName, style: AppText.listText1,),
-                  RatingBar.builder(
-                    itemSize: 18.w,
-                    initialRating: double.parse(rating.star.toString()),
-                    ignoreGestures: true,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 1.w),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${rating.fullName[0]}*******${rating.fullName[rating.fullName.length - 1]}', style: AppText.greyText14,),
+                          SizedBox(height: 5.h,),
+                          RatingBar.builder(
+                            itemSize: 12.w,
+                            initialRating: double.parse(rating.star.toString()),
+                            ignoreGestures: true,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemPadding: EdgeInsets.symmetric(horizontal: 0.5.w),
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            onRatingUpdate: (rating) {
+                              print(rating);
+                            },
+                          ),
+                        ],
+                      ),
+                      Icon(Icons.more_horiz, size: 16.w, color: Colors.grey,),
+                    ],
                   ),
-                  Text('Mua gói ${rating.comment} lượt', style: AppText.listText3,),
-                  Text(rating.dateTime, style: AppText.listText4,),
+                  SizedBox(height: 5.h,),
+                  Wrap(
+                    children: [
+                      Text('${rating.comment}', style: AppText.blackText18,),
+                    ],
+                  ),
+                  (rating!.imageSources![0] != null)
+                  ? Container(
+                    padding: EdgeInsets.only(top: 5.h),
+                    height: 90.w,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: (rating!.imageSources!.length < 3) ? rating!.imageSources!.length : 3,
+                      itemBuilder: (context, index) {
+                        if (rating!.imageSources!.length > 3 && index == 2) {
+                          return InkWell(
+                            onTap: () => showDialog(
+                                context: context,
+                                builder: (_) => ImageFullWidget(images: rating!.imageSources!, indexImage: index,)
+                            ),
+                            child: Container(
+                              height: 90.w,
+                              width: 90.w,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(rating!.imageSources![index]!,)
+                                ),
+                              ),
+                              child: Container(
+                                alignment: Alignment.center,
+                                color: Colors.black38,
+                                child: Text(
+                                  '+ ' + (rating!.imageSources!.length - 3).toString(),
+                                  style: TextStyle(fontSize: 20.sp, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                        return InkWell(
+                          onTap: () => showDialog(
+                              context: context,
+                              builder: (_) => ImageFullWidget(images: rating!.imageSources!, indexImage: index,)
+                          ),
+                          child: Container(
+                              child: Container(
+                                padding: EdgeInsets.only(right: 7.w),
+                                child: Image.network(
+                                  height: 90.w,
+                                  width: 90.w,
+                                  rating!.imageSources![index]!,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                          ),
+                        );
+                      }
+                    ),
+                  ) : Container(height: 0,),
+                  SizedBox(height: 5.h,),
+                  Text('${rating.dateTime}', style: AppText.greyText16,),
                 ],
               ),
-          ),
-          Expanded(
-              flex: 1,
-              child: Icon(Icons.more_horiz, size: 18.w,),
           ),
         ],
       ),

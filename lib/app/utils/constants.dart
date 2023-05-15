@@ -315,13 +315,19 @@ class AppText {
 
   static var whiteText35 = TextStyle(fontSize: 35.sp, color: Colors.white);
 
-  static var white70Text18 = TextStyle(fontSize: 18.h, color: Colors.white70);
+  static var white70Text18 = TextStyle(fontSize: 18.sp, color: Colors.white70);
 
-  static var white100Text18 = TextStyle(fontSize: 18.h, color: Colors.white);
+  static var white100Text18 = TextStyle(fontSize: 18.sp, color: Colors.white);
 
   static var blackText20 = TextStyle(fontSize: 20.sp, color: Colors.black54);
 
-  static var blue1Text18 = TextStyle(fontSize: 18.h, color: AppColor.primaryColor1);
+  static var blue1Text18 = TextStyle(fontSize: 18.sp, color: AppColor.primaryColor1);
+
+  static var greyText14 = TextStyle(fontSize: 14.sp, color: Colors.grey);
+
+  static var greyText16 = TextStyle(fontSize: 16.sp, color: Colors.grey);
+
+  static var blackText18 = TextStyle(fontSize: 18.sp, color: Colors.black);
 }
 
 //App number

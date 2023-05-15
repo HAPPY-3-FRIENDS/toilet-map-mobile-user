@@ -25,7 +25,7 @@ class ToiletRatingFrame extends StatelessWidget {
           Container(
             color: Colors.white,
             height: 100.h,
-            padding: EdgeInsets.all(19.w),
+            padding: EdgeInsets.all(14.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,

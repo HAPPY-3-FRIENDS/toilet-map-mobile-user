@@ -48,7 +48,7 @@ class ToiletInformationFrame extends StatelessWidget {
       return Container(
         color: Colors.white,
         height: 300.h,
-        padding: EdgeInsets.all(20.w),
+        padding: EdgeInsets.all(15.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,20 +56,18 @@ class ToiletInformationFrame extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(
+                Expanded(
                     flex: 5,
                     child: Container(
                       padding: new EdgeInsets.only(right: 5.w),
-                      child: Expanded(
-                        child: Text(
+                      child:Text(
                           toiletName,
                           style: AppText.toiletInfoText1,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,),
                       ),
-                    )
                 ),
-                Flexible(
+                Expanded(
                   flex: 1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -206,20 +204,18 @@ class ToiletInformationFrame extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              Expanded(
                   flex: 5,
                   child: Container(
                     padding: new EdgeInsets.only(right: 5.w),
-                    child: Expanded(
-                      child: Text(
+                    child: Text(
                         toiletName,
                         style: AppText.toiletInfoText1,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,),
                     ),
-                  )
               ),
-              Flexible(
+              Expanded(
                 flex: 1,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,

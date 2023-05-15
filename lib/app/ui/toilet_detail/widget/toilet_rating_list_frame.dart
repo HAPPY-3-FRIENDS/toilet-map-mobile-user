@@ -25,8 +25,7 @@ class ToiletRatingListFrame extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               Rating rating = ratings[index];
               return Container(
-                height: 150.h,
-                padding: EdgeInsets.only(top: 5.h),
+                padding: EdgeInsets.only(top: 2.h),
                 child: RatingFrameWidget(rating: rating,),
               );
             },
