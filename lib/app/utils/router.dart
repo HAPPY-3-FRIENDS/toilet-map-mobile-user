@@ -13,6 +13,7 @@ import '../ui/information/information_payment_screen.dart';
 import '../ui/information/information_service_price_screen.dart';
 import '../ui/login/create_account_screen.dart';
 import '../ui/money/top_up_money_main_screen.dart';
+import '../ui/rating/rating_list_screen.dart';
 import '../ui/toilet_detail/toilet_detail_main_screen.dart';
 
 class Router {
@@ -46,6 +47,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => const InformationPaymentScreen());
       case 'InformationServicePriceScreen':
         return MaterialPageRoute(builder: (_) => const InformationServicePriceScreen());
+      case 'RatingListScreen':
+        return MaterialPageRoute(builder: (_) => const RatingListScreen());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

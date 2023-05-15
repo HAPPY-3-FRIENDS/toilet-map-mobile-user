@@ -48,7 +48,7 @@ class ToiletInformationFrame extends StatelessWidget {
       return Container(
         color: Colors.white,
         height: 300.h,
-        padding: EdgeInsets.all(15.w),
+        padding: EdgeInsets.all(20.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,7 +198,7 @@ class ToiletInformationFrame extends StatelessWidget {
     return Container(
       color: Colors.white,
       height: 260.h,
-      padding: EdgeInsets.all(15.w),
+      padding: EdgeInsets.all(20.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,

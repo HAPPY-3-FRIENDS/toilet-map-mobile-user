@@ -10,8 +10,8 @@ import '../../models/userInfo/user_info.dart';
 import '../../utils/constants.dart';
 import '../login/login_otp_confirmation_screen.dart';
 
-class InformationMainScreen extends StatelessWidget {
-  const InformationMainScreen({Key? key}) : super(key: key);
+class RatingListScreen extends StatelessWidget {
+  const RatingListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class InformationMainScreen extends StatelessWidget {
                   ),
                 ),
 
-                title: Text('Thông tin cá nhân'),
+                title: Text('Đánh giá'),
                 titleTextStyle: AppText.appbarTitleText2,
                 centerTitle: true,
                 toolbarHeight: 100.h,
@@ -66,7 +66,7 @@ class InformationMainScreen extends StatelessWidget {
                         );
                       }
                       if (snapshot.hasData) {
-                        String phone = '********' + snapshot!.data!.phone!.substring(8,10);
+                        String phone = '********' + snapshot!.data!.phone!.substring(7,9);
 
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

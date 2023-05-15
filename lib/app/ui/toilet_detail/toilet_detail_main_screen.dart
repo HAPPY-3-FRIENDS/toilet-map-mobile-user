@@ -1,15 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toiletmap/app/repositories/rating_repository.dart';
 import 'package:toiletmap/app/ui/toilet_detail/widget/detail_images_frame.dart';
 import 'package:toiletmap/app/ui/toilet_detail/widget/toilet_information_frame.dart';
+import 'package:toiletmap/app/ui/toilet_detail/widget/toilet_rating_frame.dart';
+import 'package:toiletmap/app/ui/toilet_detail/widget/toilet_rating_list_frame.dart';
 
+import '../../models/rating/rating.dart';
 import '../../models/toilet/toiletArgument.dart';
 import '../../utils/constants.dart';
 import '../../utils/routes.dart';
 
 class ToiletDetailMainScreen extends StatefulWidget {
-  ToiletArgument toiletArgument;
+  final ToiletArgument toiletArgument;
 
   ToiletDetailMainScreen({
     required this.toiletArgument,
@@ -23,6 +27,8 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
   final CarouselController carouselController = CarouselController();
   int currentIndex = 0;
   late ScrollController _scrollController;
+  late Future<int?> _future;
+  late Future<List<Rating>?> _future2;
   double _scrollControllerOffset = 0.0;
 
   _scrollListener() {
@@ -36,12 +42,16 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
     // TODO: implement initState
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
+    _future = RatingRepository().countRatingsByToiletId(widget.toiletArgument.id);
+    _future2 = RatingRepository().getRatingsByToiletId(widget.toiletArgument.id, 1);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     List<String?> imageList = widget!.toiletArgument!.toiletImagesList;
+    int toiletId = widget.toiletArgument.id;
+    double toiletStar = widget.toiletArgument.star;
 
     return SafeArea(
       top: true,
@@ -68,7 +78,7 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
                 centerTitle: true,
                 toolbarHeight: 100.h,
                 backgroundColor: Colors.white,
-                elevation: 0,
+                elevation: 1,
 
                 iconTheme: IconThemeData(
                     color: AppColor.primaryColor1
@@ -165,8 +175,58 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
                   toiletName: widget.toiletArgument.toiletName,
                   toiletFacilities: widget.toiletArgument.facilities,
                 ),
-                SizedBox(height: 15.h,),
-                Container(color: Colors.black, height: 2000.h,),
+                SizedBox(height: 10.h,),
+                FutureBuilder<int?> (
+                      future: _future,
+                      builder: (context, snapshot)  {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator(
+                                  color: AppColor.primaryColor1,
+                                  strokeWidth: 2.0
+                              )
+                          );
+                        }
+                        if (snapshot.hasData) {
+                          return ToiletRatingFrame(ratingCount: snapshot!.data!, ratingStar: toiletStar, toiletId: toiletId);
+                        }
+                        return Center(child: Text('Lỗi'));
+                      }),
+                FutureBuilder<List<Rating>?> (
+                    future: _future2,
+                    builder: (context, snapshot)  {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                            child: CircularProgressIndicator(
+                                color: AppColor.primaryColor1,
+                                strokeWidth: 2.0
+                            )
+                        );
+                      }
+                      if (snapshot.hasData) {
+                        return ToiletRatingListFrame(ratings: snapshot!.data!);
+                      }
+                      if (!snapshot.hasData) {
+                        return Container(
+                          width: double.infinity,
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10.h,),
+                              SizedBox(height: 100.w, width: 100.w,
+                                child: Image(image: AssetImage('assets/images/no-data.gif'),),),
+                              SizedBox(height: 5.h,),
+                              Text('Chưa có đánh giá nào', style: AppText.detailText2)
+                            ],
+                          ),
+                        );
+                      }
+                      return Center(child: Text('Lỗi'));
+                    }),
+                Container(
+                  height: 100.h,
+                  color: Colors.white,
+                ),
               ],
             ),
           ),

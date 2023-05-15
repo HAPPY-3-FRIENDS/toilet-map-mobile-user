@@ -191,9 +191,9 @@ class AppText {
   );
 
   static var titleText3 = TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 20.sp,
-    color: AppColor.primaryColor1
+      fontWeight: FontWeight.w500,
+      fontSize: 20.sp,
+      color: AppColor.primaryColor1
   );
 
   static var mainButtonText = TextStyle(
@@ -304,6 +304,12 @@ class AppText {
   static var blackText22Bold = TextStyle(
     fontSize: 22.sp,
     fontWeight: FontWeight.w700,
+    color: Colors.black,
+  );
+
+  static var blackText20Bold = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w600,
     color: Colors.black,
   );
 
