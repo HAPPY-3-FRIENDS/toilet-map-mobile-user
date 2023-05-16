@@ -41,6 +41,7 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
   Widget build(BuildContext context) {
     List<String?> imageList = widget!.toiletArgument!.toiletImagesList;
     int toiletId = widget.toiletArgument.id;
+    String toiletName = widget.toiletArgument.toiletName;
     double toiletStar = widget.toiletArgument.star;
 
     return SafeArea(
@@ -180,7 +181,7 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
                           );
                         }
                         if (snapshot.hasData) {
-                          return ToiletRatingFrame(ratingCount: snapshot!.data!, ratingStar: toiletStar, toiletId: toiletId);
+                          return ToiletRatingFrame(ratingCount: snapshot!.data!, ratingStar: toiletStar, toiletId: toiletId, toiletName: toiletName,);
                         }
                         return Center(child: Text('Lỗi'));
                       }),

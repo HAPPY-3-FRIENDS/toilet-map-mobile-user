@@ -9,9 +9,10 @@ class Rating {
   String comment;
   String dateTime;
   List<String?>? imageSources;
+  String? avatar;
 
 
-  Rating(this.id, this.fullName, this.star, this.comment, this.dateTime, this.imageSources);
+  Rating(this.id, this.fullName, this.star, this.comment, this.dateTime, this.imageSources, this.avatar);
 
   factory Rating.fromJson(Map<String, dynamic> json) => _$RatingFromJson(json);
   Map<String, dynamic> toJson() => _$RatingToJson(this);

@@ -1,17 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toiletmap/app/repositories/user_info_repository.dart';
-import 'package:toiletmap/app/ui/login/login_main_screen.dart';
-import 'package:toiletmap/app/utils/routes.dart';
+import 'package:toiletmap/app/repositories/rating_repository.dart';
+import 'package:toiletmap/app/ui/rating/widget/rating_frame_widget.dart';
+import 'package:toiletmap/app/models/toilet/toiletArgument2.dart';
 
-import '../../models/userInfo/user_info.dart';
+import '../../models/rating/rating.dart';
 import '../../utils/constants.dart';
-import '../login/login_otp_confirmation_screen.dart';
 
-class RatingListScreen extends StatelessWidget {
-  const RatingListScreen({Key? key}) : super(key: key);
+class RatingListScreen extends StatefulWidget {
+  ToiletArgument2 toiletArgument2;
+
+  RatingListScreen({Key? key, required this.toiletArgument2}) : super(key: key);
+
+  @override
+  State<RatingListScreen> createState() => _RatingListScreenState();
+}
+
+class _RatingListScreenState extends State<RatingListScreen> {
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  GlobalKey<RefreshIndicatorState>();
+  final scrollController = ScrollController();
+  bool isLoadingMore = false;
+  List posts = [];
+  int page = 1;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scrollController.addListener(_scrollListener);
+    _fetchPosts(page);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +39,7 @@ class RatingListScreen extends StatelessWidget {
       top: true,
       bottom: true,
       child: Scaffold(
+        backgroundColor: Colors.white,
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(100.h),
             child: Container(
@@ -40,7 +61,7 @@ class RatingListScreen extends StatelessWidget {
                 centerTitle: true,
                 toolbarHeight: 100.h,
                 backgroundColor: Colors.white,
-                elevation: 0,
+                elevation: 1,
 
                 iconTheme: IconThemeData(
                     color: AppColor.primaryColor1
@@ -49,277 +70,183 @@ class RatingListScreen extends StatelessWidget {
             ),
           ),
 
-          body: Container(
-            color: Color(0xFFF1F1F1),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FutureBuilder<UserInfo?> (
-                    future: UserInfoRepository().getUserInfo(),
-                    builder: (context, snapshot)  {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                            child: CircularProgressIndicator(
-                                color: AppColor.primaryColor1,
-                                strokeWidth: 2.0
-                            )
-                        );
-                      }
-                      if (snapshot.hasData) {
-                        String phone = '********' + snapshot!.data!.phone!.substring(7,9);
-
-                        return Column(
+          body: SingleChildScrollView(
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    height: 100.h,
+                    padding: EdgeInsets.all(14.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Container(
-                              color: Colors.white,
-                              height: 130.h,
-                              padding: EdgeInsets.all(10.w),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Expanded(
-                                      flex: 1,
-                                      child: (snapshot!.data!.avatar != null)
-                                          ? Container(
-                                        padding: EdgeInsets.only(left: 10.w),
-                                        child: CircleAvatar(
-                                          radius: 50.w,
-                                          backgroundImage: NetworkImage(snapshot!.data!.avatar!),
-                                        ),
-                                      )
-                                          : Container(
-                                        padding: EdgeInsets.only(left: 10.w),
-                                        child: CircleAvatar(
-                                          radius: 50.w,
-                                          backgroundImage: AssetImage('assets/default-avatar.png'),
-                                        ),
-                                      )
-                                  ),
-                                  SizedBox(width: 20.w,),
-                                  Expanded(
-                                      flex: 2,
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(flex: 5,
-                                              child: Align(
-                                                alignment: Alignment.bottomLeft,
-                                                child: Text(snapshot!.data!.fullName!, style: AppText.titleText2,
-                                                  maxLines: 1, overflow: TextOverflow.ellipsis,),
-                                              )
-                                          ),
-                                          Expanded(flex: 1, child: Container(),),
-                                          Expanded(flex: 5,
-                                              child: Align(
-                                                alignment: Alignment.topLeft,
-                                                child: Text(phone, style: AppText.titleText2),
-                                              )
-                                          ),
-                                        ],
-                                      )),
-                                  VerticalDivider(
-                                    color: AppColor.primaryColor2,
-                                    thickness: 1,
-                                    indent: 15.w,
-                                    endIndent: 15.w,
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: InkWell(
-                                      onTap: () => showDialog(
-                                          context: context,
-                                          builder: (_) => AlertDialog(
-                                              elevation: 5,
-                                              alignment: Alignment.center,
-                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppNumber.h60)),
-                                              content: Container(
-                                                height: 300.h,
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                  children: [
-                                                    QrImage(
-                                                      data: '23',
-                                                      version: QrVersions.auto,
-                                                      gapless: false,
-                                                      size: 200.w,
-                                                    ),
-                                                    Text('Mã cá nhân', style: AppText.titleText2,),
-                                                  ],
-                                                ),
-                                              )
-                                          )),
-                                      child:  QrImage(
-                                        size: 70.w,
-                                        data: '23',
-                                        version: QrVersions.auto,
-                                        gapless: false,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 5.h,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, Routes.informationChangeMainScreen);
-                                    },
-                                    child: Container(
-                                      height: 60.h,
-                                      width: double.infinity,
-                                      color: Colors.white,
-                                      padding: EdgeInsets.symmetric(horizontal: 15.w),
-                                      child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Row(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Icon(Icons.person, color: AppColor.primaryColor1, size: 20.w,),
-                                                  SizedBox(width: 10.w),
-                                                  Text("Thiết lập thông tin cá nhân", style: AppText.titleText2,),
-                                                ],
-                                              ),
-                                              Icon(Icons.arrow_forward_ios_outlined, size: 17.w, color: Colors.black38,),
-                                            ],
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          )
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5.h,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, Routes.informationPaymentScreen);
-                                    },
-                                    child: Container(
-                                      height: 60.h,
-                                      width: double.infinity,
-                                      color: Colors.white,
-                                      padding: EdgeInsets.symmetric(horizontal: 15.w),
-                                      child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Row(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Icon(Icons.account_balance_wallet, color: AppColor.primaryColor1, size: 20.w,),
-                                                  SizedBox(width: 10.w),
-                                                  Text("Thiết lập thanh toán", style: AppText.titleText2,),
-                                                ],
-                                              ),
-                                              Icon(Icons.arrow_forward_ios_outlined, size: 17.w, color: Colors.black38,),
-                                            ],
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          )
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5.h,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, Routes.historyMainScreen);
-                                    },
-                                    child: Container(
-                                      height: 60.h,
-                                      width: double.infinity,
-                                      color: Colors.white,
-                                      padding: EdgeInsets.symmetric(horizontal: 15.w),
-                                      child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Row(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Icon(Icons.history, color: AppColor.primaryColor1, size: 20.w,),
-                                                  SizedBox(width: 10.w),
-                                                  Text("Lịch sử", style: AppText.titleText2,),
-                                                ],
-                                              ),
-                                              Icon(Icons.arrow_forward_ios_outlined, size: 17.w, color: Colors.black38,),
-                                            ],
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          )
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5.h,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, Routes.informationServicePriceScreen);
-                                    },
-                                    child: Container(
-                                      height: 60.h,
-                                      width: double.infinity,
-                                      color: Colors.white,
-                                      padding: EdgeInsets.symmetric(horizontal: 15.w),
-                                      child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Row(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Icon(Icons.wc_rounded, color: AppColor.primaryColor1, size: 20.w,),
-                                                  SizedBox(width: 10.w),
-                                                  Text("Giá dịch vụ", style: AppText.titleText2,),
-                                                ],
-                                              ),
-                                              Icon(Icons.arrow_forward_ios_outlined, size: 17.w, color: Colors.black38,),
-                                            ],
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          )
-                                      ),
-                                    ),
+                            Expanded(
+                              flex: 1,
+                              child: Padding(padding: EdgeInsets.only(left: 1.w),
+                                  child: Wrap(
+                                    children: [
+                                      Text('${widget.toiletArgument2.toiletName}', style: AppText.blackText20Bold, maxLines: 2, overflow: TextOverflow.ellipsis),
+                                    ],
                                   )
-                                ],
                               ),
                             ),
+                            Expanded(flex: 2, child: Row(
+                              children: [
+                                RatingBar.builder(
+                                  itemSize: 18.w,
+                                  initialRating: widget.toiletArgument2.ratingStar,
+                                  ignoreGestures: true,
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  itemPadding: EdgeInsets.symmetric(horizontal: 1.w),
+                                  itemBuilder: (context, _) => Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                  ),
+                                  onRatingUpdate: (rating) {
+                                    print(rating);
+                                  },
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 5.w),
+                                  child: Text(
+                                    '${widget.toiletArgument2.ratingStar}/5.0 (${widget.toiletArgument2.ratingCount} Đánh giá)',
+                                    style: AppText.greyText18,
+                                  ),
+                                )
+                              ],
+                            )),
                           ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  FutureBuilder<int?>(
+                    future: RatingRepository().countRatingsByToiletId(widget.toiletArgument2.id),
+                    builder: (context, snapshot){
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        print("ham nay bi goi lai");
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColor.primaryColor1,
+                            strokeWidth: 2.0,
+                          ),
                         );
                       }
-                      return Center(child: Text('Lỗi'));
-                    }),
-                Container(
-                  padding: EdgeInsets.all(15.w),
-                  width: double.infinity,
-                  height: 90.h,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          primary: AppColor.primaryColor2,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.r))),
-                      onPressed: () async {
-                        try {
-                          final prefs = await SharedPreferences.getInstance();
-                          await prefs.clear();
-                          Navigator.of(context).pushAndRemoveUntil(
-                            //change Route to build apk
-                              MaterialPageRoute(builder: (context) => const LoginMainScreen()), (
-                              route) => false);
-                        } catch (error) {
-                          print(error);
+                      if(snapshot.hasData){
+                        print("check okok");
+                        if (snapshot.data! == 0) {
+                          return Container(
+                            child: Column(
+                              children: [
+                                SizedBox(height: 10.h,),
+                                SizedBox(height: 200.w, width: 200.w,
+                                  child: Image(image: AssetImage('assets/images/no-data.gif'),),),
+                                SizedBox(height: 10.h,),
+                                Text('Chưa có đánh giá nào', style: AppText.detailText2)
+                              ],
+                            ),
+                          );
+                        } else {
+                          return RefreshIndicator(
+                            key: _refreshIndicatorKey,
+                            color: AppColor.primaryColor1,
+                            backgroundColor: Colors.white,
+                            strokeWidth: 2.0,
+                            onRefresh: () async {
+                              // Replace this delay with the code to be executed during refresh
+                              // and return a Future when code finishs execution.
+                              return Future<void>.delayed(const Duration(seconds: 3));
+                            },
+                            // Pull from top to show refresh indicator.
+                            child: Column(
+                              children: [
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: ClampingScrollPhysics(),
+                                  itemCount: isLoadingMore ? posts.length + 1 : posts.length,
+                                  controller: scrollController,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    Rating rating = posts[index];
+                                    if (index < posts.length) {
+                                      Rating rating = posts[index];
+                                      return Column(
+                                        children: [
+                                          Container(height: 2.h, color: Color(0xFFF1F1F1),),
+                                          RatingFrameWidget(rating: rating,),
+                                        ],
+                                      );
+                                    } else {
+                                      return Center(child: CircularProgressIndicator());
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+
+                            /*Column(
+                            children: [
+                              ListView.builder(
+                                  controller: scrollController,
+                                  itemCount: 4,//isLoadingMore ? posts.length + 1 : posts.length,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    if (index < posts.length) {
+                                      Rating rating = posts[index];
+                                      return Container(
+                                    padding: EdgeInsets.only(top: 2.h),
+                                    child: RatingFrameWidget(rating: rating,),
+                                  );
+                                    } else {
+                                      return Center(child: CircularProgressIndicator());
+                                    }
+                                  },
+                                ),
+                            ],
+                          ),*/
+                          );
                         }
-                      },
-                      child: Text("Đăng xuất", style: TextStyle(color: Colors.black),)
+                      }
+                      return const Center(
+                        child: Text('Lỗi'),
+                      );
+                    },
                   ),
-                )
-              ],
-            ),
+                ],
+              ),
+            )
           )
       ),
     );
   }
+
+  Future<void> _fetchPosts(int page) async {
+    List<Rating>? set = await RatingRepository().getRatingsByToiletId(widget.toiletArgument2.id, page);
+    setState(() {
+      posts = posts + set!;
+    });
+  }
+
+  Future<void> _scrollListener() async {
+    if (isLoadingMore) return;
+    if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      setState(() {
+        isLoadingMore = true;
+      });
+      page += 1;
+      await _fetchPosts(page);
+      setState(() {
+        isLoadingMore = false;
+      });
+    }
+  }
 }
+

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toiletmap/app/models/toilet/toiletArgument.dart';
+import 'package:toiletmap/app/models/toilet/toiletArgument2.dart';
 import 'package:toiletmap/app/ui/home/home_main_screen.dart';
 import 'package:toiletmap/app/ui/information/information_change_main_screen.dart';
 import 'package:toiletmap/app/ui/login/login_main_screen.dart';
@@ -48,7 +49,8 @@ class Router {
       case 'InformationServicePriceScreen':
         return MaterialPageRoute(builder: (_) => const InformationServicePriceScreen());
       case 'RatingListScreen':
-        return MaterialPageRoute(builder: (_) => const RatingListScreen());
+        final index1 = settings.arguments as ToiletArgument2;
+        return MaterialPageRoute(builder: (_) => RatingListScreen(toiletArgument2: index1));
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

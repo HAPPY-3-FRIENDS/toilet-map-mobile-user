@@ -25,10 +25,13 @@ class RatingFrameWidget extends StatelessWidget {
             flex: 2,
               child: Padding(
                 padding: EdgeInsets.only(right: 10.w),
-                child: CircleAvatar(
+                child: (rating.avatar != null)
+                    ? CircleAvatar(
                   radius: 12.w,
-                  backgroundImage: AssetImage('assets/default-avatar.png'),
-                ),
+                  backgroundImage: NetworkImage('${rating.avatar}'),)
+                    : CircleAvatar(
+                  radius: 12.w,
+                  backgroundImage: AssetImage('assets/default-avatar.png'),),
               )
           ),
           Expanded(

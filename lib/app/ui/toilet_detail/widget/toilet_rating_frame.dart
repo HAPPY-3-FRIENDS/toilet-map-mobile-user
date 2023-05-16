@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toiletmap/app/models/toilet/toiletArgument2.dart';
 import 'package:toiletmap/app/repositories/rating_repository.dart';
 import 'package:toiletmap/app/ui/rating/widget/rating_frame_widget.dart';
 
 import '../../../models/rating/rating.dart';
 import '../../../utils/constants.dart';
+import '../../../utils/routes.dart';
 
 class ToiletRatingFrame extends StatelessWidget {
   //in this code we will use the widget rating frame from the rating folder ///
 
   final double ratingStar;
   final int toiletId;
+  final String toiletName;
   final int ratingCount;
   //final List<Rating> ratings;
 
-  ToiletRatingFrame({Key? key, required this.ratingStar, required this.toiletId, required this.ratingCount}) : super(key: key);
+  ToiletRatingFrame({Key? key, required this.ratingStar, required this.toiletId, required this.ratingCount, required this.toiletName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +68,12 @@ class ToiletRatingFrame extends StatelessWidget {
                     )
                   ],
                 ),
-                Text('Xem thêm', style: AppText.greyText18,),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.ratingListScreen, arguments: ToiletArgument2(toiletId, toiletName, ratingStar, ratingCount));
+                  },
+                  child: Text('Xem thêm', style: AppText.greyText18,),
+                ),
               ],
             ),
           ),
