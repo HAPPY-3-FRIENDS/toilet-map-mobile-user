@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:location/location.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -166,8 +167,8 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                   return Stack(
                     children: [
                       Container(
-                        height: AppSize.heightScreen / 1.5,
-                        width: AppSize.widthScreen,
+                        height: 600.h,
+                        width: 360.w,
                         child: MapboxMap(
                           //Link goong -> user goong map
                           styleString: AppString.styleString,
@@ -182,8 +183,8 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                       ),
 
                       Positioned(
-                        top: AppSize.heightScreen * 0.45,
-                        left: AppSize.widthScreen * 0.8,
+                        top: 405.h,
+                        left: 288.w,
                         child:  FloatingActionButton(
                             child: Icon(Icons.my_location),
                             onPressed: () {
@@ -195,10 +196,10 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                   );
                 } else {
                   return Container(
-                      child: const Center(
+                      child: Center(
                         child: SizedBox(
-                          height: 25,
-                          width: 25,
+                          height: 20.w,
+                          width: 20.w,
                           child: CircularProgressIndicator(),
                         ),
                       )

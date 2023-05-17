@@ -59,7 +59,7 @@ class InformationChangeMainScreen extends StatelessWidget {
                     );
                   }
                   if (snapshot.hasData) {
-                    String phone = '********' + snapshot!.data!.phone!.substring(7,9);
+                    String phone = '********' + snapshot!.data!.phone!.substring(8, 10);
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

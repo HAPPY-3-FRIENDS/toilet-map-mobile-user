@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/ui/direction/widget/direction_bottom_panel.dart';
 import 'package:toiletmap/app/ui/direction/widget/direction_map_frame.dart';
 
@@ -18,22 +19,22 @@ class DirectionMainScreen extends StatelessWidget {
         bottom: true,
         child: Scaffold(
             appBar: PreferredSize(
-              preferredSize: Size.fromHeight(AppSize.heightScreen / 10),
+              preferredSize: Size.fromHeight(100.h),
               child: Container(
-                height: AppSize.heightScreen / 10,
-                color: AppColor.primaryColor2,
+                color: Colors.white,
+                padding: EdgeInsets.only(top: 20.h),
                 child: AppBar(
                   automaticallyImplyLeading: false,
 
                   title: Text('Chỉ đường'),
-                  titleTextStyle: AppText.appbarTitleText1,
+                  titleTextStyle: AppText.appbarTitleText2,
                   centerTitle: true,
-                  toolbarHeight: AppSize.heightScreen / 10,
+                  toolbarHeight: 100.h,
+                  backgroundColor: Colors.white,
                   elevation: 0,
 
-                  flexibleSpace: Container(
-                    height: AppSize.heightScreen / 10,
-                    decoration: AppBoxDecoration.boxDecorationWithGradient1,
+                  iconTheme: IconThemeData(
+                      color: AppColor.primaryColor1
                   ),
                 ),
               ),
