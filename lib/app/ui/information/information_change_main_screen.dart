@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/models/userInfo/user_info.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
+import 'package:toiletmap/app/utils/routes.dart';
 
 import '../../utils/constants.dart';
 
@@ -88,7 +89,9 @@ class InformationChangeMainScreen extends StatelessWidget {
                                 height: 5.h,
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+
+                                },
                                 child: Container(
                                   height: 60.h,
                                   width: double.infinity,
@@ -122,7 +125,9 @@ class InformationChangeMainScreen extends StatelessWidget {
                                 height: 5.h,
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushNamed(context, Routes.informationChangeNameScreen);
+                                },
                                 child: Container(
                                   height: 60.h,
                                   width: double.infinity,

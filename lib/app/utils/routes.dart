@@ -13,4 +13,5 @@ class Routes {
   static const String informationPaymentScreen = 'InformationPaymentScreen';
   static const String informationServicePriceScreen = 'InformationServicePriceScreen';
   static const String ratingListScreen = 'RatingListScreen';
+  static const String informationChangeNameScreen = 'InformationChangeNameScreen';
 }

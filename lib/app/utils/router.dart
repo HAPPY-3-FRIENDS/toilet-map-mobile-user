@@ -9,6 +9,7 @@ import 'package:toiletmap/app/ui/login/login_otp_confirmation_screen.dart';
 import '../ui/combo/buy_combo_main_screen.dart';
 import '../ui/direction/direction_main_screen.dart';
 import '../ui/history/history_main_screen.dart';
+import '../ui/information/information_change_name_screen.dart';
 import '../ui/information/information_main_screen.dart';
 import '../ui/information/information_payment_screen.dart';
 import '../ui/information/information_service_price_screen.dart';
@@ -51,7 +52,10 @@ class Router {
       case 'RatingListScreen':
         final index1 = settings.arguments as ToiletArgument2;
         return MaterialPageRoute(builder: (_) => RatingListScreen(toiletArgument2: index1));
-      default:
+      case 'InformationChangeNameScreen':
+        return MaterialPageRoute(builder: (_) => const InformationChangeNameScreen());
+
+        default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(
             body: Center(
