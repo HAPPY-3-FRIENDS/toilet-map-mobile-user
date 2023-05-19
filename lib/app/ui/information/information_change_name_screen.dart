@@ -5,6 +5,7 @@ import 'package:toiletmap/app/main.dart';
 import 'package:toiletmap/app/models/accessToken/access_token.dart';
 import 'package:toiletmap/app/repositories/auth_repository.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
+import 'package:toiletmap/app/ui/home/home_main_screen.dart';
 
 import '../../utils/constants.dart';
 import '../../utils/routes.dart';
@@ -111,7 +112,7 @@ class _InformationChangeNameScreenState extends State<InformationChangeNameScree
                           );
                         } else {
                           await UserInfoRepository().patchUserInfoChangeName(name);
-                          await Navigator.pushNamed(context, Routes.informationMainScreen);
+                          Navigator.pushNamed(context, Routes.homeMainScreen);
                         }
                       } catch (e) {
                         showDialog<void>(

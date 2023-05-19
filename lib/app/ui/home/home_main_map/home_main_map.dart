@@ -6,8 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/main.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:toiletmap/app/repositories/map_repository.dart';
+import 'package:toiletmap/app/repositories/toilet_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_map/widget/bottom_sheet_toilet_info.dart';
 import 'package:toiletmap/app/utils/constants.dart';
+
+import '../../../models/toilet/toilet.dart';
+import '../../../utils/routes.dart';
 
 class HomeMainMap extends StatefulWidget {
   const HomeMainMap({Key? key}) : super(key: key);
@@ -228,8 +232,27 @@ class _HomeMainMapState extends State<HomeMainMap> {
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
                                 ),
                                 onPressed: () async {
-                                  await controller.removeSource("way${count}");
-                                  await controller.removeLayer("line${count}");
+                                  Toilet? toilet = await ToiletRepository().getNearestToilet();
+                                  if (toilet == null) {
+                                    showDialog<void>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text('Chú ý'),
+                                          content: const Text('Không tìm thấy nhà vệ sinh phù hợp!'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text('Xác nhận'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }
+                                  Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
                                 },
                                 child: Text('Khẩn cấp', style: AppText.titleText1),
                               ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -108,10 +109,35 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
                         child: CarouselSlider(
                           items: widget.toiletArgument!.toiletImagesList
                               .map(
-                                (item) => Image.network(
-                              item,
-                              fit: BoxFit.fitHeight,
-                            ),
+                                (item) => CachedNetworkImage(
+                                    imageUrl: item,
+                                    placeholder: (context, url) => SizedBox(
+                                      child: Center(
+                                          child: CircularProgressIndicator()
+                                      ),
+                                      height: 20.w,
+                                      width: 20.w,
+                                    ),
+                                    errorWidget: (context, url, error) => Container(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                          SizedBox(height: 20.h,),
+                                          Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                                        ],
+                                      ),
+                                    ),
+                                    imageBuilder: (context, imageProvider) => Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                      ),
+                                    )
+                                ),
                           )
                               .toList(),
                           carouselController: carouselController,

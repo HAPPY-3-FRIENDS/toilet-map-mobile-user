@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -82,15 +83,39 @@ class ToiletInListFrame extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      ClipRRect(
-                            borderRadius: BorderRadius.circular(10.r),
-                            child: Image.network(
-                              toiletImage,
-                              height: 200.h,
-                              width: 130.w,
-                              fit: BoxFit.cover,
-                            ),
+                      CachedNetworkImage(
+                        imageUrl: toiletImage,
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Container(
+                          height: 200.h,
+                          width: 130.w,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              border: Border.all(color: Color(0xFFF1F1F1), width: 2.w),
+                              color: Color(0xFFF1F1F1)
                           ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                              SizedBox(height: 20.h,),
+                              Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                            ],
+                          ),
+                        ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            height: 200.h,
+                            width: 130.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                      ),
                       SizedBox(width: 3.w,),
                       Expanded(child: Container(
                         padding: EdgeInsets.only(left: 5.w),
@@ -259,14 +284,38 @@ class ToiletInListFrame extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: Image.network(
-                        toiletImage,
-                        height: 200.h,
-                        width: 130.w,
-                        fit: BoxFit.cover,
-                      ),
+                    CachedNetworkImage(
+                        imageUrl: toiletImage,
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Container(
+                          height: 200.h,
+                          width: 130.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            border: Border.all(color: Color(0xFFF1F1F1), width: 2.w),
+                            color: Color(0xFFF1F1F1)
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                              SizedBox(height: 20.h,),
+                              Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                            ],
+                          ),
+                        ),
+                        imageBuilder: (context, imageProvider) => Container(
+                          height: 200.h,
+                          width: 130.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        )
                     ),
                     SizedBox(width: 3.w,),
                     Expanded(child: Container(

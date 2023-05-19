@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,9 +27,37 @@ class RatingFrameWidget extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(right: 10.w),
                 child: (rating.avatar != null)
-                    ? CircleAvatar(
-                  radius: 12.w,
-                  backgroundImage: NetworkImage('${rating.avatar}'),)
+                    ? CachedNetworkImage(
+                    imageUrl: rating.avatar!,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Container(
+                      height: 12.w,
+                      width: 12.w,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6.w),
+                          border: Border.all(color: Color(0xFFF1F1F1), width: 1.w),
+                          color: Color(0xFFF1F1F1)
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.error_outline_rounded, size: 10.w, color: Colors.black54,)
+                        ],
+                      ),
+                    ),
+                    imageBuilder: (context, imageProvider) => Container(
+                      height: 12.w,
+                      width: 12.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6.w),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                )
                     : CircleAvatar(
                   radius: 12.w,
                   backgroundImage: AssetImage('assets/default-avatar.png'),),
