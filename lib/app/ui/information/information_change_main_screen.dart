@@ -90,7 +90,7 @@ class InformationChangeMainScreen extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-
+                                  Navigator.pushNamed(context, Routes.informationChangePhoneScreen);
                                 },
                                 child: Container(
                                   height: 60.h,

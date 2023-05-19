@@ -3,6 +3,8 @@ import 'package:toiletmap/app/models/toilet/toiletArgument.dart';
 import 'package:toiletmap/app/models/toilet/toiletArgument2.dart';
 import 'package:toiletmap/app/ui/home/home_main_screen.dart';
 import 'package:toiletmap/app/ui/information/information_change_main_screen.dart';
+import 'package:toiletmap/app/ui/information/information_change_phone_confirm_screen.dart';
+import 'package:toiletmap/app/ui/information/information_change_phone_screen.dart';
 import 'package:toiletmap/app/ui/login/login_main_screen.dart';
 import 'package:toiletmap/app/ui/login/login_otp_confirmation_screen.dart';
 
@@ -54,6 +56,11 @@ class Router {
         return MaterialPageRoute(builder: (_) => RatingListScreen(toiletArgument2: index1));
       case 'InformationChangeNameScreen':
         return MaterialPageRoute(builder: (_) => const InformationChangeNameScreen());
+      case 'InformationChangePhoneScreen':
+        return MaterialPageRoute(builder: (_) => const InformationChangePhoneScreen());
+      case 'InformationChangePhoneConfirmScreen':
+        final index1 = settings.arguments as String;
+        return MaterialPageRoute(builder: (_) => InformationChangePhoneConfirmScreen(phone: index1,));
 
         default:
         return MaterialPageRoute(builder: (_) {
