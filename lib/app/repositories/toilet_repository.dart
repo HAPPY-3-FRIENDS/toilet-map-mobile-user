@@ -62,7 +62,7 @@ class ToiletRepository {
       print(baseResponse.data);
       List<Toilet> toilets = (baseResponse.data as List).map(
               (i) => Toilet.fromJson(i)).toList();
-      print("Toilet successfully " + toilets.toString());
+      print("Toilet length successfully " + toilets.length.toString());
       print("check Toilet 1 element" + toilets[0].toString());
       return toilets;
     }

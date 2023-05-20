@@ -94,7 +94,7 @@ class _ActionFrameState extends State<ActionFrame> {
                                     width: 100.w,
                                     child: ElevatedButton.icon(
                                       onPressed: () => {
-                                        //Navigator.pushNamed(context, Routes.topUpMoneyMainScreen)
+                                        Navigator.pushNamed(context, Routes.topUpMoneyMainScreen)
                                       },
                                       icon: Icon(Icons.login, size: 20.w, color: Colors.white,),
                                       label: Text("Nạp tiền", style: TextStyle(
@@ -115,7 +115,7 @@ class _ActionFrameState extends State<ActionFrame> {
                                     width: 100.w,
                                     child: ElevatedButton.icon(
                                       onPressed: () {
-                                        //Navigator.pushNamed(context, Routes.buyComboMainScreen);
+                                        Navigator.pushNamed(context, Routes.buyComboMainScreen);
                                       },
                                       icon: Icon(Icons.add_shopping_cart, size: 20.w, color: Colors.white,),
                                       label: Text("Mua lượt", style: TextStyle(

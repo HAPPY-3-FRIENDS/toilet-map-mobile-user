@@ -115,7 +115,9 @@ class InformationPaymentScreen extends StatelessWidget {
                                     height: 5.h,
                                   ),
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.pushNamed(context, Routes.topUpMoneyMainScreen);
+                                    },
                                     child: Container(
                                       height: 60.h,
                                       width: double.infinity,
@@ -145,7 +147,9 @@ class InformationPaymentScreen extends StatelessWidget {
                                     height: 5.h,
                                   ),
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.pushNamed(context, Routes.buyComboMainScreen);
+                                    },
                                     child: Container(
                                       height: 60.h,
                                       width: double.infinity,
