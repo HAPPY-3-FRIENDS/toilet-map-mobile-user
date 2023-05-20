@@ -87,7 +87,7 @@ class _TopUpMoneyMainScreenState extends State<TopUpMoneyMainScreen> {
                   height: 60.h,
                   child: ElevatedButton(
                     onPressed: () {},
-                    child: Text("Nạp số dư", style: AppText.white100Text18,),
+                    child: Text("Nạp tiền", style: AppText.white100Text20,),
                   ),
                 )
               ],

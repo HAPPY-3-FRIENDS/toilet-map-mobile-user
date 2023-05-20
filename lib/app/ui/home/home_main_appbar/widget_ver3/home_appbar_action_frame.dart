@@ -2,10 +2,13 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:toiletmap/app/models/combo/comboArgument.dart';
 import 'package:toiletmap/app/models/userInfo/user_info.dart';
+import 'package:toiletmap/app/repositories/combo_repository.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
+import '../../../../models/combo/combo.dart';
 import '../../../../repositories/shared_preferences_repository.dart';
 import '../../../../utils/routes.dart';
 import 'payment_method_changing.dart';
@@ -114,8 +117,18 @@ class _ActionFrameState extends State<ActionFrame> {
                                     height: 35.h,
                                     width: 100.w,
                                     child: ElevatedButton.icon(
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, Routes.buyComboMainScreen);
+                                      onPressed: () async {
+                                        List<String> buttonList = [];
+                                        List<int> priceList = [];
+                                        List<Combo>? combo = await ComboRepository().getCombos();
+
+                                        combo!.forEach((element) {
+                                          buttonList.add(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(element.price) + " VNĐ/" + element.totalTurn.toString() + " lượt");
+                                          priceList.add(element.price);
+                                        });
+
+                                        ComboArgument comboArgument = ComboArgument(buttonList, priceList, snapshot.data!.accountBalance);
+                                        await Navigator.pushNamed(context, Routes.buyComboMainScreen, arguments: comboArgument);
                                       },
                                       icon: Icon(Icons.add_shopping_cart, size: 20.w, color: Colors.white,),
                                       label: Text("Mua lượt", style: TextStyle(
@@ -178,7 +191,7 @@ class _ActionFrameState extends State<ActionFrame> {
                                     width: 100.w,
                                     child: ElevatedButton.icon(
                                       onPressed: () => {
-                                        //Navigator.pushNamed(context, Routes.topUpMoneyMainScreen)
+                                        Navigator.pushNamed(context, Routes.topUpMoneyMainScreen)
                                       },
                                       icon: Icon(Icons.login, size: 20.w, color: Colors.white,),
                                       label: Text("Nạp tiền", style: TextStyle(
@@ -198,8 +211,18 @@ class _ActionFrameState extends State<ActionFrame> {
                                     height: 35.h,
                                     width: 100.w,
                                     child: ElevatedButton.icon(
-                                      onPressed: () {
-                                        //Navigator.pushNamed(context, Routes.buyComboMainScreen);
+                                      onPressed: () async {
+                                        List<String> buttonList = [];
+                                        List<int> priceList = [];
+                                        List<Combo>? combo = await ComboRepository().getCombos();
+
+                                        combo!.forEach((element) {
+                                          buttonList.add(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(element.price) + " VNĐ/" + element.totalTurn.toString() + " lượt");
+                                          priceList.add(element.price);
+                                        });
+
+                                        ComboArgument comboArgument = ComboArgument(buttonList, priceList, snapshot.data!.accountBalance);
+                                        await Navigator.pushNamed(context, Routes.buyComboMainScreen, arguments: comboArgument);
                                       },
                                       icon: Icon(Icons.add_shopping_cart, size: 20.w, color: Colors.white,),
                                       label: Text("Mua lượt", style: TextStyle(

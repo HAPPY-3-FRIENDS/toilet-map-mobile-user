@@ -1,67 +1,194 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:group_button/group_button.dart';
+import 'package:intl/intl.dart';
+import 'package:toiletmap/app/repositories/combo_repository.dart';
+import 'package:toiletmap/app/utils/constants.dart';
 
-import '../../utils/constants.dart';
+import '../../models/combo/combo.dart';
+import '../../models/combo/comboArgument.dart';
 
 class BuyComboMainScreen extends StatefulWidget {
-  const BuyComboMainScreen({Key? key}) : super(key: key);
+  ComboArgument comboArgument;
+
+  BuyComboMainScreen({Key? key, required this.comboArgument}) : super(key: key);
 
   @override
   State<BuyComboMainScreen> createState() => _BuyComboMainScreenState();
 }
 
 class _BuyComboMainScreenState extends State<BuyComboMainScreen> {
+  late int money = 0;
+  late TextEditingController _controller;
+  late int _value = 1;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<String> buttonList = widget.comboArgument.buttonList;
+    List<int> priceList = widget.comboArgument.priceList;
+
     return SafeArea(
       top: true,
       bottom: true,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Mua gói lượt'),
-          titleTextStyle: AppText.appbarTitleText1,
-          centerTitle: true,
-          toolbarHeight: AppSize.heightScreen / 12,
-          backgroundColor: Colors.transparent,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(100.h),
+          child: Container(
+            color: Colors.white,
+            padding: EdgeInsets.only(top: 20.h),
+            child: AppBar(
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: AppColor.primaryColor1,
+                ),
+              ),
 
-          flexibleSpace: Container(
-            height: AppSize.heightScreen / 12,
-            decoration: AppBoxDecoration.boxDecorationWithGradientNoBorder1,
+              title: Text('Mua gói'),
+              titleTextStyle: AppText.appbarTitleText2,
+              centerTitle: true,
+              toolbarHeight: 100.h,
+              backgroundColor: Colors.white,
+              elevation: 0,
+
+              iconTheme: IconThemeData(
+                  color: AppColor.primaryColor1
+              ),
+            ),
+          ),
+        ),
+        backgroundColor: Color(0xFFF1F1F1),
+
+        bottomSheet:  Container(
+          height: 150.h,
+          color: Colors.white,
+          padding: EdgeInsets.all(20.w),
+          child: Column(
+            children: [
+              Padding(padding: EdgeInsets.symmetric(horizontal: 2.w),child:
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Tổng tiền", style: AppText.blackText18,),
+                  Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(money) + " VNĐ", style: AppText.blackText18),
+                ],
+              ),),
+              SizedBox(height: 15.h,),
+              SizedBox(
+                width: double.infinity,
+                height: 60.h,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text("Mua gói", style: AppText.white100Text20,),
+                ),
+              )
+            ],
           ),
         ),
 
-        body: Center(
-          child: Container(
-            padding: EdgeInsets.all(AppSize.heightScreen/45),
-            width: AppSize.widthScreen * 0.9,
-            height: AppSize.heightScreen * 0.6,
-            decoration: AppBoxDecoration.boxDecoration2,
-            child: Column(
-              children: [
-                Text("Hướng dẫn nạp tiền vào tài khoản", style: AppText.detailText1),
-                SizedBox(height: AppNumber.h40,),
-                Text("Quỷ khách vui lòng chuyển khoản vào Số tài khoản với nội dung bên dưới"),
-                SizedBox(height: AppNumber.h40,),
-                Container(
-                  padding: EdgeInsets.all(AppNumber.h60),
-                  height: AppSize.heightScreen * 0.25,
-                  width: AppSize.widthScreen * 0.75,
-                  decoration: AppBoxDecoration.boxDecoration1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('CÔNG TY TNHH BA THÀNH VIÊN HAPPY 3 FRIENDS', style: AppText.bankingInfoText1),
-                      Text('STK: 0123456789999', style: AppText.bankingInfoText2),
-                      Text('Ngân hàng Sacombank (SCB)', style: AppText.bankingInfoText2),
-                      Text('Chi nhánh Thủ Đức, Thành phố Hồ Chí Minh', style: AppText.bankingInfoText2),
-                    ],
-                  ),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                child: Column(
+                  children: [
+                    Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 15.h,),
+                          Padding(padding: EdgeInsets.only(left: 2.w),child: Text('Gói vệ sinh', style: AppText.blackText20),),
+                          SizedBox(height: 10.h,),
+                          (buttonList.length > 0)
+                              ? GroupButton(
+                            onSelected: (value, index, isSelected) {
+                              print('index ne' + index.toString());
+                              (money == priceList[index]) ?
+                              setState(() {
+                                money = 0;
+                              }) : setState(() {
+                                money = priceList[index];
+                              });
+                            },
+                            maxSelected: 1,
+                            enableDeselect: true,
+                            options: GroupButtonOptions(
+                              buttonWidth: 150.w,
+                              selectedColor: AppColor.primaryColor2,
+                              unselectedColor: Colors.white,
+                              selectedBorderColor: AppColor.primaryColor1,
+                              unselectedBorderColor: AppColor.primaryColor2,
+                              borderRadius: BorderRadius.circular(10.r),
+                              elevation: 0,
+                              selectedShadow: [],
+                              unselectedShadow: [],
+                              mainGroupAlignment: MainGroupAlignment.center,
+                              crossGroupAlignment: CrossGroupAlignment.center,
+                              selectedTextStyle: AppText.blackText18,
+                              groupingType: GroupingType.wrap,
+                              unselectedTextStyle: AppText.blackText18,
+                            ),
+
+                            buttons: buttonList,
+                          )
+                              : Center(child: Text('Đã có lỗi xảy ra', style: AppText.blackText20,),),
+                          SizedBox(height: 15.h,),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 3.h),
+                    Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 15.h,),
+                          Padding(padding: EdgeInsets.only(left: 2.w),child: Text('Phương thức mua', style: AppText.blackText20),),
+                          SizedBox(height: 10.h,),
+                          Row(
+                            children: [
+                              Radio(value: 1, groupValue: _value, onChanged: (value) {
+                                setState(() {
+                                  _value = 1;
+                                });
+                              },),
+                              SizedBox(width: 10.w,),
+                              Text('VNPAY', style: AppText.blackText18,),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Radio(value: 2, groupValue: _value, onChanged: (value) {
+                                setState(() {
+                                  _value = 2;
+                                });
+                              },),
+                              SizedBox(width: 10.w,),
+                              Text('Số tiền (${NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(widget.comboArgument.currentMoney) + " VNĐ"})', style: AppText.blackText18,),
+                            ],
+                          ),
+                          SizedBox(height: 10.h,),
+                        ],
+                      ),
+                    ),
+                    Container(height: 150.h,),
+                  ],
                 ),
-                SizedBox(height: AppNumber.h40,),
-                Text('Nội dung chuyển khoản: ', style: AppText.bankingInfoText2,),
-                Text('[Số điện thoại tài khoản] - Nạp tiền', style: AppText.bankingInfoText2),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

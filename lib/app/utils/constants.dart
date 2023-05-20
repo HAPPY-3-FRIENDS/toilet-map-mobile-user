@@ -319,6 +319,8 @@ class AppText {
 
   static var white100Text18 = TextStyle(fontSize: 18.sp, color: Colors.white);
 
+  static var white100Text20 = TextStyle(fontSize: 20.sp, color: Colors.white);
+
   static var blackText20 = TextStyle(fontSize: 20.sp, color: Colors.black54);
 
   static var blue1Text18 = TextStyle(fontSize: 18.sp, color: AppColor.primaryColor1);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toiletmap/app/models/combo/comboArgument.dart';
 import 'package:toiletmap/app/models/toilet/toiletArgument.dart';
 import 'package:toiletmap/app/models/toilet/toiletArgument2.dart';
 import 'package:toiletmap/app/ui/home/home_main_screen.dart';
@@ -32,7 +33,8 @@ class Router {
       case 'TopUpMoneyMainScreen':
         return MaterialPageRoute(builder: (_) => const TopUpMoneyMainScreen());
       case 'BuyComboMainScreen':
-        return MaterialPageRoute(builder: (_) => const BuyComboMainScreen());
+        final index = settings.arguments as ComboArgument;
+        return MaterialPageRoute(builder: (_) => BuyComboMainScreen(comboArgument: index,));
       case 'HistoryMainScreen':
         return MaterialPageRoute(builder: (_) => const HistoryMainScreen());
       case 'InformationMainScreen':

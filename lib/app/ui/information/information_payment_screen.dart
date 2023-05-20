@@ -7,7 +7,10 @@ import 'package:toiletmap/app/repositories/user_info_repository.dart';
 import 'package:toiletmap/app/ui/login/login_main_screen.dart';
 import 'package:toiletmap/app/utils/routes.dart';
 
+import '../../models/combo/combo.dart';
+import '../../models/combo/comboArgument.dart';
 import '../../models/userInfo/user_info.dart';
+import '../../repositories/combo_repository.dart';
 import '../../utils/constants.dart';
 import '../login/login_otp_confirmation_screen.dart';
 
@@ -147,8 +150,18 @@ class InformationPaymentScreen extends StatelessWidget {
                                     height: 5.h,
                                   ),
                                   InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, Routes.buyComboMainScreen);
+                                    onTap: () async {
+                                      List<String> buttonList = [];
+                                      List<int> priceList = [];
+                                      List<Combo>? combo = await ComboRepository().getCombos();
+
+                                      combo!.forEach((element) {
+                                        buttonList.add(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(element.price) + " VNĐ/" + element.totalTurn.toString() + " lượt");
+                                        priceList.add(element.price);
+                                      });
+
+                                      ComboArgument comboArgument = ComboArgument(buttonList, priceList, snapshot.data!.accountBalance);
+                                      await Navigator.pushNamed(context, Routes.buyComboMainScreen, arguments: comboArgument);
                                     },
                                     child: Container(
                                       height: 60.h,
