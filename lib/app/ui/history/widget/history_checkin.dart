@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:toiletmap/app/utils/constants.dart';
+import 'package:toiletmap/app/utils/routes.dart';
 
 class HistoryCheckin extends StatefulWidget {
   String toiletName;
@@ -51,13 +52,18 @@ class _HistoryCheckinState extends State<HistoryCheckin> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
-                  padding: EdgeInsets.all(10.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                    color: AppColor.primaryColor1,
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.ratingMainScreen);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10.w),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                      color: AppColor.primaryColor1,
+                    ),
+                    child: Text("Đánh giá", style: AppText.appbarQRButtonText1,),
                   ),
-                  child: Text("Đánh giá", style: AppText.appbarQRButtonText1,),
                 ),
                 Text((widget.turn != null)
                     ? '- ${widget.turn} lượt'

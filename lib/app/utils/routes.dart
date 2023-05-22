@@ -16,4 +16,5 @@ class Routes {
   static const String informationChangeNameScreen = 'InformationChangeNameScreen';
   static const String informationChangePhoneScreen = 'InformationChangePhoneScreen';
   static const String informationChangePhoneConfirmScreen = 'InformationChangePhoneConfirmScreen';
+  static const String ratingMainScreen = 'RatingMainScreen';
 }

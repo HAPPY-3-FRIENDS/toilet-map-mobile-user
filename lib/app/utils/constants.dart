@@ -321,15 +321,17 @@ class AppText {
 
   static var white100Text20 = TextStyle(fontSize: 20.sp, color: Colors.white);
 
-  static var blackText20 = TextStyle(fontSize: 20.sp, color: Colors.black54);
-
   static var blue1Text18 = TextStyle(fontSize: 18.sp, color: AppColor.primaryColor1);
 
   static var greyText14 = TextStyle(fontSize: 14.sp, color: Colors.grey);
 
   static var greyText16 = TextStyle(fontSize: 16.sp, color: Colors.grey);
 
+  static var blackText16 = TextStyle(fontSize: 16.sp, color: Colors.black);
+
   static var blackText18 = TextStyle(fontSize: 18.sp, color: Colors.black);
+
+  static var blackText20 = TextStyle(fontSize: 20.sp, color: Colors.black54);
 
   static var blackText22 = TextStyle(fontSize: 22.sp, color: Colors.black);
 }
