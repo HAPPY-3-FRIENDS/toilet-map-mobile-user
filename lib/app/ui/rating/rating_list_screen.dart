@@ -130,70 +130,55 @@ class _RatingListScreenState extends State<RatingListScreen> {
                       ],
                     ),
                   ),
-                  FutureBuilder<int?>(
-                    future: RatingRepository().countRatingsByToiletId(widget.toiletArgument2.id),
-                    builder: (context, snapshot){
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        print("ham nay bi goi lai");
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: AppColor.primaryColor1,
-                            strokeWidth: 2.0,
-                          ),
-                        );
-                      }
-                      if(snapshot.hasData){
-                        print("check okok");
-                        if (snapshot.data! == 0) {
-                          return Container(
-                            child: Column(
-                              children: [
-                                SizedBox(height: 10.h,),
-                                SizedBox(height: 200.w, width: 200.w,
-                                  child: Image(image: AssetImage('assets/images/no-data.gif'),),),
-                                SizedBox(height: 10.h,),
-                                Text('Chưa có đánh giá nào', style: AppText.detailText2)
-                              ],
-                            ),
+                  (widget.toiletArgument2.ratingCount == 0)
+                  ? Container(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10.h,),
+                        SizedBox(height: 200.w, width: 200.w,
+                          child: Image(image: AssetImage('assets/images/no-data.gif'),),),
+                        SizedBox(height: 10.h,),
+                        Text('Chưa có đánh giá nào', style: AppText.detailText2)
+                      ],
+                    ),
+                  )
+                  : RefreshIndicator(
+                key: _refreshIndicatorKey,
+                color: AppColor.primaryColor1,
+                backgroundColor: Colors.white,
+                strokeWidth: 2.0,
+                onRefresh: () async {
+                  // Replace this delay with the code to be executed during refresh
+                  // and return a Future when code finishs execution.
+                  return Future<void>.delayed(const Duration(seconds: 3));
+                },
+                // Pull from top to show refresh indicator.
+                child: Column(
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: isLoadingMore ? posts.length + 1 : posts.length,
+                      controller: scrollController,
+                      itemBuilder: (BuildContext context, int index) {
+                        Rating rating = posts[index];
+                        if (index < posts.length) {
+                          Rating rating = posts[index];
+                          return Column(
+                            children: [
+                              Container(height: 2.h, color: Color(0xFFF1F1F1),),
+                              RatingFrameWidget(rating: rating,),
+                            ],
                           );
                         } else {
-                          return RefreshIndicator(
-                            key: _refreshIndicatorKey,
-                            color: AppColor.primaryColor1,
-                            backgroundColor: Colors.white,
-                            strokeWidth: 2.0,
-                            onRefresh: () async {
-                              // Replace this delay with the code to be executed during refresh
-                              // and return a Future when code finishs execution.
-                              return Future<void>.delayed(const Duration(seconds: 3));
-                            },
-                            // Pull from top to show refresh indicator.
-                            child: Column(
-                              children: [
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: ClampingScrollPhysics(),
-                                  itemCount: isLoadingMore ? posts.length + 1 : posts.length,
-                                  controller: scrollController,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    Rating rating = posts[index];
-                                    if (index < posts.length) {
-                                      Rating rating = posts[index];
-                                      return Column(
-                                        children: [
-                                          Container(height: 2.h, color: Color(0xFFF1F1F1),),
-                                          RatingFrameWidget(rating: rating,),
-                                        ],
-                                      );
-                                    } else {
-                                      return Center(child: CircularProgressIndicator());
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
+                  ],
+                ),
 
-                            /*Column(
+                /*Column(
                             children: [
                               ListView.builder(
                                   controller: scrollController,
@@ -212,14 +197,7 @@ class _RatingListScreenState extends State<RatingListScreen> {
                                 ),
                             ],
                           ),*/
-                          );
-                        }
-                      }
-                      return const Center(
-                        child: Text('Lỗi'),
-                      );
-                    },
-                  ),
+              ),
                 ],
               ),
             )

@@ -79,7 +79,6 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
             ),
           ),
 
-          persistentFooterButtons: [],
           floatingActionButton: FloatingActionButton.extended(
           foregroundColor: Colors.black,
           backgroundColor: AppColor.primaryColor2,
