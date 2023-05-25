@@ -10,8 +10,10 @@ class HistoryCheckin extends StatefulWidget {
   String serviceName;
   int? turn;
   int? balance;
+  int id;
+  String status;
 
-  HistoryCheckin({Key? key, required this.toiletName, required this.dateTime, required this.serviceName, this.balance, this.turn}) : super(key: key);
+  HistoryCheckin({Key? key, required this.toiletName, required this.dateTime, required this.serviceName, this.balance, this.turn, required this.id, required this.status}) : super(key: key);
 
   @override
   State<HistoryCheckin> createState() => _HistoryCheckinState();
@@ -52,6 +54,7 @@ class _HistoryCheckinState extends State<HistoryCheckin> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                (widget.status == "Chưa đánh giá") ?
                 InkWell(
                   onTap: () {
                     Navigator.pushNamed(context, Routes.ratingMainScreen);
@@ -64,7 +67,10 @@ class _HistoryCheckinState extends State<HistoryCheckin> {
                     ),
                     child: Text("Đánh giá", style: AppText.appbarQRButtonText1,),
                   ),
-                ),
+                )
+                    : ((widget.status == "Đã đánh giá")
+                ? Text(widget.status, style: AppText.primary1Text20,)
+                : Text("Đã hoàn tất", style: AppText.primary1Text20,)),
                 Text((widget.turn != null)
                     ? '- ${widget.turn} lượt'
                     : '- ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(widget.balance) + " VNĐ"

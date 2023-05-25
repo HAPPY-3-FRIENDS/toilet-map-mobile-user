@@ -89,7 +89,7 @@ class _HistoryCheckinListState extends State<HistoryCheckinList> {
                 return Container(
                   height: 100.h,
                   margin: EdgeInsets.symmetric(vertical: 3.h),
-                  child: HistoryCheckin(dateTime: checkin.dateTime, serviceName: checkin.serviceName, toiletName: checkin.toiletName, turn: checkin.turn, balance: checkin.balance,),
+                  child: HistoryCheckin(dateTime: checkin.dateTime, serviceName: checkin.serviceName, toiletName: checkin.toiletName, turn: checkin.turn, balance: checkin.balance, id: checkin.id, status: checkin.status!),
                 );
               } else {
                 return Center(child: CircularProgressIndicator());

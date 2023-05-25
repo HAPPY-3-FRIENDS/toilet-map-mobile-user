@@ -336,6 +336,8 @@ class AppText {
   static var blackText20 = TextStyle(fontSize: 20.sp, color: Colors.black54);
 
   static var blackText22 = TextStyle(fontSize: 22.sp, color: Colors.black);
+
+  static var primary1Text20 = TextStyle(fontSize: 20.sp, color: AppColor.primaryColor1);
 }
 
 //App number

@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
+import 'package:toiletmap/app/models/checkin/checkin.dart';
 import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_appbar/home_main_appbar_ver3.dart';
 import 'package:toiletmap/app/ui/home/home_main_bottom_panel/home_main_bottom_panel.dart';
@@ -47,11 +50,27 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     client.subscribe(
         destination: '/topic/check-in',
         callback: (StompFrame frame) {
+
           Map<String, dynamic> result = json.decode(frame.body!);
+          Checkin checkin = Checkin.fromJson(result);
           setState(() {
             HomeMainScreen.newCheckins += 1;
           });
-          print(result);
+          print('id ne ' + checkin.id.toString());
+          AwesomeDialog(
+              context: context,
+              dialogType: DialogType.success,
+              animType: AnimType.topSlide,
+              btnOkText: 'Đánh giá',
+              btnOkColor: AppColor.primaryColor1,
+              showCloseIcon: true,
+              body: Container(
+                height: 120.h,
+                color: Colors.white,
+                child: Text('hihi')
+              ),
+              btnOkOnPress: () async {}
+          ).show();
         });
   }
 

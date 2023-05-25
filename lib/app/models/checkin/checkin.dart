@@ -9,7 +9,8 @@ class Checkin {
   String serviceName;
   int? balance;
   int? turn;
-
+  int id;
+  String? status;
 /*
   @JsonKey(includeFromJson: false, includeToJson: false)
   String? fullName;
@@ -20,7 +21,7 @@ class Checkin {
 
 
 
-  Checkin(this.toiletId, this.toiletName, this.dateTime, this.serviceName, this.balance, this.turn);
+  Checkin(this.toiletId, this.toiletName, this.dateTime, this.serviceName, this.balance, this.turn, this.id, this.status);
 
   factory Checkin.fromJson(Map<String, dynamic> json) => _$CheckinFromJson(json);
   Map<String, dynamic> toJson() => _$CheckinToJson(this);
