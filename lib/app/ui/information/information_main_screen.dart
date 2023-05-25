@@ -234,7 +234,7 @@ class _InformationMainScreenState extends State<InformationMainScreen> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      Navigator.pushNamed(context, Routes.historyMainScreen).then((_) => setState(() {}));
+                                      Navigator.pushNamed(context, Routes.historyMainScreen);
                                     },
                                     child: Container(
                                       height: 60.h,
