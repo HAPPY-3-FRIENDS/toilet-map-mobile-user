@@ -27,7 +27,7 @@ class AppString {
   static const String appName = "Toilet Map - Nhà Vệ Sinh Công Cộng";
   static const String appDomain = "https://toilet-map.azurewebsites.net";
   static const String loginSuccessfully = "Đăng nhập thành công";
-  static const String styleString = "https://tiles.goong.io/assets/goong_map_dark.json?api_key=Rx4uWeCguGjTpjupmAlqdMUJV9iKW1rLiiGLtfdt";
+  static const String styleString = "https://tiles.goong.io/assets/goong_light_v2.json?api_key=Rx4uWeCguGjTpjupmAlqdMUJV9iKW1rLiiGLtfdt";
 }
 
 //App decoration
@@ -314,6 +314,8 @@ class AppText {
   );
 
   static var whiteText35 = TextStyle(fontSize: 35.sp, color: Colors.white);
+
+  static var white100Text12 = TextStyle(fontSize: 12.sp, color: Colors.white);
 
   static var white70Text18 = TextStyle(fontSize: 18.sp, color: Colors.white70);
 

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_appbar/widget_ver3/home_appbar_action_frame.dart';
+import 'package:toiletmap/app/ui/home/home_main_screen.dart';
 import 'package:toiletmap/app/ui/login/login_main_screen.dart';
 
 import '../../../models/userInfo/user_info.dart';
@@ -12,8 +14,14 @@ import '../../../utils/constants.dart';
 import '../../../utils/routes.dart';
 import '../../login/login_otp_confirmation_screen.dart';
 
-class HomeMainAppbarVer3 extends StatelessWidget {
+class HomeMainAppbarVer3 extends StatefulWidget {
   const HomeMainAppbarVer3({Key? key}) : super(key: key);
+
+  @override
+  State<HomeMainAppbarVer3> createState() => _HomeMainAppbarVer3State();
+}
+
+class _HomeMainAppbarVer3State extends State<HomeMainAppbarVer3> {
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +33,7 @@ class HomeMainAppbarVer3 extends StatelessWidget {
 
         leading: InkWell(
           onTap: () async {
-            Navigator.pushNamed(context, Routes.informationMainScreen);
+            Navigator.pushNamed(context, Routes.informationMainScreen).then((_) => setState(() {}));
           },
           child: Icon(Icons.person, size: 25.w, color: Colors.white,),
         ),
@@ -52,11 +60,26 @@ class HomeMainAppbarVer3 extends StatelessWidget {
         actions: [
           InkWell(
             onTap: () => {
-              Navigator.pushNamed(context, Routes.historyMainScreen),
+              Navigator.pushNamed(context, Routes.historyMainScreen).then((_) => setState(() {})),
             },
-            child: Icon(Icons.history, size: 25.w, color: Colors.white,),
+            child: (HomeMainScreen.newCheckins != 0)
+              ? Align(
+              alignment: Alignment.center,
+              child: badges.Badge(
+                badgeStyle: badges.BadgeStyle(
+                  shape: badges.BadgeShape.square,
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                badgeContent: Text(
+                  "${HomeMainScreen.newCheckins}",
+                  style: AppText.white100Text12,
+                ),
+                child: Icon(Icons.history, size: 25.w, color: Colors.white,),
+              ),
+            )
+                : Icon(Icons.history, size: 25.w, color: Colors.white,),
           ),
-          Padding(padding: EdgeInsets.only(right: 10.w))
+          Padding(padding: EdgeInsets.only(right: 15.w))
         ],
 
         flexibleSpace: Container(

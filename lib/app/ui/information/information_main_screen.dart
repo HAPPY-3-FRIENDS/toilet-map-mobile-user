@@ -10,8 +10,14 @@ import '../../models/userInfo/user_info.dart';
 import '../../utils/constants.dart';
 import '../login/login_otp_confirmation_screen.dart';
 
-class InformationMainScreen extends StatelessWidget {
+class InformationMainScreen extends StatefulWidget {
   const InformationMainScreen({Key? key}) : super(key: key);
+
+  @override
+  State<InformationMainScreen> createState() => _InformationMainScreenState();
+}
+
+class _InformationMainScreenState extends State<InformationMainScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +234,7 @@ class InformationMainScreen extends StatelessWidget {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      Navigator.pushNamed(context, Routes.historyMainScreen);
+                                      Navigator.pushNamed(context, Routes.historyMainScreen).then((_) => setState(() {}));
                                     },
                                     child: Container(
                                       height: 60.h,

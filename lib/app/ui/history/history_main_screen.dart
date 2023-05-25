@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/ui/history/widget/history_checkin_list.dart';
 import 'package:toiletmap/app/ui/history/widget/history_order_list.dart';
 import 'package:toiletmap/app/ui/history/widget/history_transaction_list.dart';
+import 'package:toiletmap/app/ui/home/home_main_screen.dart';
 
 import '../../utils/constants.dart';
 
@@ -15,6 +16,15 @@ class HistoryMainScreen extends StatefulWidget {
 }
 
 class _HistoryMainScreenState extends State<HistoryMainScreen> with TickerProviderStateMixin {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      HomeMainScreen.newCheckins = 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +42,7 @@ class _HistoryMainScreenState extends State<HistoryMainScreen> with TickerProvid
             child: AppBar(
               leading: IconButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pop(context, true);
                 },
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,

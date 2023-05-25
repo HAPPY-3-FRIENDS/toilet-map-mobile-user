@@ -214,7 +214,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
                                   fillColor: Colors.white,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.r),
-                                    borderSide: BorderSide.none,
+                                    borderSide: BorderSide.none
                                   ),
                                   hintText: "Tìm kiếm địa chỉ",
                                   prefixIcon: Icon(Icons.search),
