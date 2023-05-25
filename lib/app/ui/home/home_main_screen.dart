@@ -86,15 +86,18 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     return SafeArea(
       top: true,
       bottom: true,
-      child: Scaffold(
-        body: Stack(
-          children: [
-            HomeMainMap(),
-            HomeMainAppbarVer3(),
-            HomeMainBottomPanel(),
-          ],
-        )
-      ),
+      child: WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+            body: Stack(
+              children: [
+                HomeMainMap(),
+                HomeMainAppbarVer3(),
+                HomeMainBottomPanel(),
+              ],
+            )
+        ),
+      )
     );
   }
 }

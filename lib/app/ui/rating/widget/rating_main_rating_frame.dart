@@ -6,9 +6,24 @@ import 'package:toiletmap/app/models/commonComment/common_comment.dart';
 import 'package:toiletmap/app/repositories/common_comment_repository.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
-class RatingMainRatingFrame extends StatelessWidget {
+import '../../../models/checkin/checkin.dart';
+import '../../../models/rating/rating.dart';
+import '../../../repositories/rating_repository.dart';
+import '../../../utils/routes.dart';
 
-  const RatingMainRatingFrame({Key? key}) : super(key: key);
+class RatingMainRatingFrame extends StatefulWidget {
+  Checkin checkin;
+
+  RatingMainRatingFrame({Key? key, required this.checkin}) : super(key: key);
+
+  @override
+  State<RatingMainRatingFrame> createState() => _RatingMainRatingFrameState();
+}
+
+class _RatingMainRatingFrameState extends State<RatingMainRatingFrame> {
+  String comment = '';
+  int star = 0;
+  List<String> imageSources = [];
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +51,7 @@ class RatingMainRatingFrame extends StatelessWidget {
                     color: Colors.amber,
                   ),
                   onRatingUpdate: (rating) {
+                    star = rating.toInt();
                     print(rating);
                   },
                 ),
@@ -97,6 +113,9 @@ class RatingMainRatingFrame extends StatelessWidget {
             SizedBox(
               height: 100.h,
               child: TextField(
+                onChanged: (value) => setState(() => {
+                  comment = value
+                }),
                 maxLines: null,
                 expands: true, // and this
                 keyboardType: TextInputType.multiline,
@@ -122,6 +141,27 @@ class RatingMainRatingFrame extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: 20.h,),
+            Align(
+              alignment: Alignment.center,
+              child: FloatingActionButton.extended(
+                foregroundColor: Colors.black,
+                backgroundColor: AppColor.primaryColor2,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.r),)
+                ),
+                label: Text("Đánh giá"),
+                onPressed: () async {
+                  print(widget.checkin.id);
+                  Rating? rating = await RatingRepository().postRating(widget.checkin.toiletId, star, comment, widget.checkin.id, imageSources);
+                  if (rating != null) {
+                    Navigator.pushNamed(context, Routes.homeMainScreen);
+                  }
+                  },
+                elevation: 0,
+              ),
+            )
           ],
         ),
       ),

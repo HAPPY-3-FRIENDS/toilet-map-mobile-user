@@ -4,16 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 import 'package:toiletmap/app/utils/routes.dart';
 
-class HistoryCheckin extends StatefulWidget {
-  String toiletName;
-  String dateTime;
-  String serviceName;
-  int? turn;
-  int? balance;
-  int id;
-  String status;
+import '../../../models/checkin/checkin.dart';
 
-  HistoryCheckin({Key? key, required this.toiletName, required this.dateTime, required this.serviceName, this.balance, this.turn, required this.id, required this.status}) : super(key: key);
+class HistoryCheckin extends StatefulWidget {
+  Checkin checkin;
+
+  HistoryCheckin({Key? key, required this.checkin}) : super(key: key);
 
   @override
   State<HistoryCheckin> createState() => _HistoryCheckinState();
@@ -37,14 +33,14 @@ class _HistoryCheckinState extends State<HistoryCheckin> {
                 children: [
                   Expanded(
                       flex: 1,
-                      child: Text(widget.dateTime, style: AppText.listText1,),
+                      child: Text(widget.checkin.dateTime, style: AppText.listText1,),
                   ),
                   Expanded(
                     flex: 1,
-                    child: Text(widget.toiletName, style: AppText.listText3, maxLines: 1, overflow: TextOverflow.ellipsis),),
+                    child: Text(widget.checkin.toiletName, style: AppText.listText3, maxLines: 1, overflow: TextOverflow.ellipsis),),
                   Expanded(
                       flex: 1,
-                      child: Text(widget.serviceName, style: AppText.listText4,),
+                      child: Text(widget.checkin.serviceName, style: AppText.listText4,),
                   ),
                 ],
               ),),
@@ -54,10 +50,10 @@ class _HistoryCheckinState extends State<HistoryCheckin> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                (widget.status == "Chưa đánh giá") ?
+                (widget.checkin.status == "Chưa đánh giá") ?
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.ratingMainScreen);
+                    Navigator.pushNamed(context, Routes.ratingMainScreen, arguments: widget.checkin).then((_) => setState(() {widget.checkin.status!;}));
                   },
                   child: Container(
                     padding: EdgeInsets.all(10.w),
@@ -68,12 +64,12 @@ class _HistoryCheckinState extends State<HistoryCheckin> {
                     child: Text("Đánh giá", style: AppText.appbarQRButtonText1,),
                   ),
                 )
-                    : ((widget.status == "Đã đánh giá")
-                ? Text(widget.status, style: AppText.primary1Text20,)
+                    : ((widget.checkin.status == "Đã đánh giá")
+                ? Text(widget.checkin.status!, style: AppText.primary1Text20,)
                 : Text("Đã hoàn tất", style: AppText.primary1Text20,)),
-                Text((widget.turn != null)
-                    ? '- ${widget.turn} lượt'
-                    : '- ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(widget.balance) + " VNĐ"
+                Text((widget.checkin.turn != null)
+                    ? '- ${widget.checkin.turn} lượt'
+                    : '- ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(widget.checkin.balance) + " VNĐ"
                   , style: AppText.listText3,),
               ],
             ),),

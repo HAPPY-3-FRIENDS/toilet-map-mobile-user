@@ -9,6 +9,7 @@ import 'package:toiletmap/app/ui/information/information_change_phone_screen.dar
 import 'package:toiletmap/app/ui/login/login_main_screen.dart';
 import 'package:toiletmap/app/ui/login/login_otp_confirmation_screen.dart';
 
+import '../models/checkin/checkin.dart';
 import '../ui/combo/buy_combo_main_screen.dart';
 import '../ui/direction/direction_main_screen.dart';
 import '../ui/history/history_main_screen.dart';
@@ -66,7 +67,8 @@ class Router {
         final index1 = settings.arguments as String;
         return MaterialPageRoute(builder: (_) => InformationChangePhoneConfirmScreen(phone: index1,));
       case 'RatingMainScreen':
-        return MaterialPageRoute(builder: (_) => const RatingMainScreen());
+        final index = settings.arguments as Checkin;
+        return MaterialPageRoute(builder: (_) => RatingMainScreen(checkin: index,));
       /*case 'NavigationTestScreen':
         return MaterialPageRoute(builder: (_) => const NavigationTestScreen());*/
 

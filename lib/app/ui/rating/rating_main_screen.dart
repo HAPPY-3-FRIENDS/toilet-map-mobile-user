@@ -7,11 +7,14 @@ import 'package:toiletmap/app/models/toilet/toiletArgument2.dart';
 import 'package:toiletmap/app/ui/rating/widget/rating_main_information_frame.dart';
 import 'package:toiletmap/app/ui/rating/widget/rating_main_rating_frame.dart';
 
+import '../../models/checkin/checkin.dart';
 import '../../models/rating/rating.dart';
 import '../../utils/constants.dart';
 
 class RatingMainScreen extends StatefulWidget {
-  const RatingMainScreen({Key? key}) : super(key: key);
+  Checkin checkin;
+
+  RatingMainScreen({Key? key, required this.checkin}) : super(key: key);
 
   @override
   State<RatingMainScreen> createState() => _RatingMainScreenState();
@@ -62,27 +65,12 @@ class _RatingMainScreenState extends State<RatingMainScreen> {
             ),
           ),
 
-        floatingActionButton: FloatingActionButton.extended(
-          foregroundColor: Colors.black,
-          backgroundColor: AppColor.primaryColor2,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.r),)
-          ),
-          label: Text("Đánh giá"),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          elevation: 0,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-
           body: SingleChildScrollView(
             child: Column(
               children: [
-                RatingMainInformationFrame(),
+                RatingMainInformationFrame(toiletId: widget.checkin.toiletId),
                 Container(height: 5.h, color: Color(0xFFF1F1F1),),
-                RatingMainRatingFrame(),
+                RatingMainRatingFrame(checkin: widget.checkin),
               ],
             ),
           ),

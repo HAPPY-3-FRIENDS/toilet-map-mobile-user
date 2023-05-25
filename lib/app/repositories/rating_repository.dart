@@ -67,4 +67,35 @@ class RatingRepository {
     print("get failed");
     return null;
   }
+
+  Future<Rating?> postRating(toiletId, star, comment, checkInId, imageSources) async {
+    int? accountId = await SharedPreferencesRepository().getAccountId();
+    String? accessToken = await SharedPreferencesRepository().getAccessToken();
+
+    var response = await http.post(
+        Uri.parse("${AppDomain.appDomain1}/api/ratings"),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+          HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+        },
+        body:
+        jsonEncode({
+          "toiletId": toiletId,
+          "star": star,
+          "comment": comment,
+          "accountId": accountId,
+          "checkInId": checkInId,
+          "imageSources": imageSources,
+        })
+    );
+    print('response ne: ' + response.body);
+    if (response.statusCode == 201) {
+      print('checkin successfully');
+      final responseJson = jsonDecode(response.body);
+      BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
+      Rating rating = Rating.fromJson(baseResponse.data);
+      return rating;
+    } else {
+    }
+  }
 }
