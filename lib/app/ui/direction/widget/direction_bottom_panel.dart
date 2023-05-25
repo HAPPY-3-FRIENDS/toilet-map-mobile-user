@@ -45,7 +45,21 @@ class DirectionBottomPanel extends StatelessWidget {
                   horizontal: 18.w,
                   vertical: 9.w
               ),
-              decoration: AppBoxDecoration.boxDecoration4,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10.r),
+                    topLeft: Radius.circular(10.r)
+                ),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

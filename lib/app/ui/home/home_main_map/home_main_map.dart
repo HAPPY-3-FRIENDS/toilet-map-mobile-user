@@ -203,23 +203,36 @@ class _HomeMainMapState extends State<HomeMainMap> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            SizedBox(
-                              width: 250.w,
-                              height: 45.h,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  isDense: true,
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20.r),
-                                    borderSide: BorderSide.none
+                            Container(
+                              child: SizedBox(
+                                width: 250.w,
+                                height: 45.h,
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.zero,
+                                    isDense: true,
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20.r),
+                                        borderSide: BorderSide.none
+                                    ),
+                                    hintText: "Tìm kiếm địa chỉ",
+                                    prefixIcon: Icon(Icons.search),
+                                    prefixIconColor: AppColor.primaryColor1,
                                   ),
-                                  hintText: "Tìm kiếm địa chỉ",
-                                  prefixIcon: Icon(Icons.search),
-                                  prefixIconColor: AppColor.primaryColor1,
                                 ),
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.w),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 0.5,
+                                    blurRadius: 1,
+                                    offset: Offset(0, 0.5), // changes position of shadow
+                                  ),
+                                ],
                               ),
                             ),
                             SizedBox(
@@ -227,6 +240,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
                               width: 80.w,
                               child: TextButton(
                                 style: TextButton.styleFrom(
+                                  elevation: 1,
                                   backgroundColor: AppColor.primaryColor1,
                                   foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),

@@ -31,7 +31,7 @@ class DirectionMainScreen extends StatelessWidget {
                   centerTitle: true,
                   toolbarHeight: 100.h,
                   backgroundColor: Colors.white,
-                  elevation: 0,
+                  elevation: 1,
 
                   iconTheme: IconThemeData(
                       color: AppColor.primaryColor1
