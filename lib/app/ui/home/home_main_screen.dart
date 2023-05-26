@@ -7,12 +7,14 @@ import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 import 'package:toiletmap/app/models/checkin/checkin.dart';
+import 'package:toiletmap/app/repositories/checkin_repository.dart';
 import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_appbar/home_main_appbar_ver3.dart';
 import 'package:toiletmap/app/ui/home/home_main_bottom_panel/home_main_bottom_panel.dart';
 import 'package:toiletmap/app/ui/home/home_main_map/home_main_map.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
+import '../../utils/routes.dart';
 import 'home_main_appbar/home_main_appbar.dart';
 import 'home_main_appbar/home_main_appbar_ver2.dart';
 import 'home_main_bottom_panel/widget/panel_widget.dart';
@@ -28,6 +30,13 @@ class HomeMainScreen extends StatefulWidget {
 
 class _HomeMainScreenState extends State<HomeMainScreen> {
   late StompClient client;
+
+  _initRatingNew() async {
+    int? num = await CheckinRepository().countCheckinsNotRatingByAccountId();
+    setState(() {
+      HomeMainScreen.newCheckins = num!;
+    });
+  }
 
   _initClient() async {
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
@@ -61,15 +70,35 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
               context: context,
               dialogType: DialogType.success,
               animType: AnimType.topSlide,
-              btnOkText: 'Đánh giá',
-              btnOkColor: AppColor.primaryColor1,
+              btnOkText: 'Đánh giá ngay',
+              //btnOkColor: AppColor.primaryColor1,
               showCloseIcon: true,
               body: Container(
                 height: 120.h,
                 color: Colors.white,
-                child: Text('hihi')
+                child: Padding(
+                  padding: EdgeInsets.all(20.w),
+                  child: RichText(
+                    text: TextSpan(
+                        text: 'Cảm ơn bạn đã sử dụng dịch vụ tại ',
+                        style: TextStyle(fontSize: 18.sp, color: Colors.black),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: checkin.toiletName,
+                            style: TextStyle(
+                              fontSize: 20.sp,
+                              color: AppColor.primaryColor1,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ]
+                    ),
+                  ),
+                )
               ),
-              btnOkOnPress: () async {}
+              btnOkOnPress: () async {
+                Navigator.pushNamed(context, Routes.ratingMainScreen, arguments: checkin).then((_) => setState(() {}));
+              }
           ).show();
         });
   }
@@ -78,6 +107,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _initRatingNew();
     _initClient();
   }
 

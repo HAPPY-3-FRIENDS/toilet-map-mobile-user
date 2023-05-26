@@ -33,7 +33,7 @@ class _HistoryCheckinState extends State<HistoryCheckin> {
                 children: [
                   Expanded(
                       flex: 1,
-                      child: Text(widget.checkin.dateTime, style: AppText.listText1,),
+                      child: Text(widget.checkin.dateTime!, style: AppText.listText1,),
                   ),
                   Expanded(
                     flex: 1,

@@ -5,7 +5,7 @@ part 'checkin.g.dart';
 class Checkin {
   int toiletId;
   String toiletName;
-  String dateTime;
+  String? dateTime;
   String serviceName;
   int? balance;
   int? turn;

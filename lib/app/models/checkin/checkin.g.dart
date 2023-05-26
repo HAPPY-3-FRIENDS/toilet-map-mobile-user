@@ -9,7 +9,7 @@ part of 'checkin.dart';
 Checkin _$CheckinFromJson(Map<String, dynamic> json) => Checkin(
       json['toiletId'] as int,
       json['toiletName'] as String,
-      json['dateTime'] as String,
+      json['dateTime'] as String?,
       json['serviceName'] as String,
       json['balance'] as int?,
       json['turn'] as int?,

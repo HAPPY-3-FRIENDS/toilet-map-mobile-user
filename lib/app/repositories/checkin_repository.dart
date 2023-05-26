@@ -73,4 +73,31 @@ class CheckinRepository {
     print("checkins get failed");
     return null;
   }
+
+  Future<int?> countCheckinsNotRatingByAccountId() async {
+    int? accountId = await SharedPreferencesRepository().getAccountId();
+    String? accessToken = await SharedPreferencesRepository().getAccessToken();
+    print('checkin get start' + accountId!.toString());
+
+    final response = await http.get(
+        Uri.parse('${AppDomain.appDomain1}/api/check-in/count/check-in-not-rating-yet?account-id=${accountId}'),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+          HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+        }
+    );
+
+    if (response.statusCode == 200) {
+      print('hihi');
+      final responseJson = jsonDecode(response.body);
+      print(responseJson);
+      BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
+      print(baseResponse.data);
+      print("count checkins successfully ");
+      return baseResponse.data;
+    }
+
+    print("checkins get failed");
+    return null;
+  }
 }

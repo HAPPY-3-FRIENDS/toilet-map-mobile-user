@@ -177,7 +177,7 @@ class _BuyComboMainScreenState extends State<BuyComboMainScreen> {
                                 });
                               },),
                               SizedBox(width: 10.w,),
-                              Text('Số tiền (${NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(widget.comboArgument.currentMoney) + " VNĐ"})', style: AppText.blackText18,),
+                              Text('Tổng tiền còn dư (${NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(widget.comboArgument.currentMoney) + " VNĐ"})', style: AppText.blackText18,),
                             ],
                           ),
                           SizedBox(height: 10.h,),
