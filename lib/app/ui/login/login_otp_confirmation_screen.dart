@@ -123,7 +123,7 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
                           //Close 3 code to build apk
                           final prefs = await SharedPreferences.getInstance();
                           prefs.setString("username", "0849666957");
-                          prefs.setString("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNjg0NzUwOTUxLCJleHAiOjE2ODUzNTU3NTEsInVzZXJuYW1lIjoiMDg0OTY2Njk1NyIsInJvbGUiOiJVc2VyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVXNlciJ9XX0.qKrlrBa-itqvPXh5nk_6b44mDaVIY4fw8EdkcLAituOInbr7zF6_XV81xa8ax_5yI8ZwtUMCfdrO9M6EvbWW3w");
+                          prefs.setString("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNjg1NDEyNzgyLCJleHAiOjE2ODYwMTc1ODIsInVzZXJuYW1lIjoiMDg0OTY2Njk1NyIsInJvbGUiOiJVc2VyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVXNlciJ9XX0.9JdU94M_XH2evBF8pvLhULJoevgUxK3AaQByXGLPw3lxFSKMnfe7KR-o-JGeOWiYBk7TEA3kj9jE8JD8_5cEgQ");
 
                           AccessToken? accessToken = await AuthRepository().authPhoneLogin();
                           if (accessToken == null ) {

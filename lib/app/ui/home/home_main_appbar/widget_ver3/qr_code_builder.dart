@@ -7,6 +7,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 class QRCodeBuilder extends StatefulWidget {
+  static bool qrCode = false;
   final String data;
   final int accountId;
 
@@ -26,7 +27,17 @@ class _QRCodeBuilderState extends State<QRCodeBuilder> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    QRCodeBuilder.qrCode = true;
     startTimer();
+    print(QRCodeBuilder.qrCode);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    QRCodeBuilder.qrCode = false;
+    print(QRCodeBuilder.qrCode);
   }
 
   void startTimer() {
