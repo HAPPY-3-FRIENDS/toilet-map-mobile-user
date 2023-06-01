@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toiletmap/app/models/combo/comboArgument.dart';
+import 'package:toiletmap/app/models/placeDetail/place_detail.dart';
 import 'package:toiletmap/app/models/toilet/toiletArgument.dart';
 import 'package:toiletmap/app/models/toilet/toiletArgument2.dart';
 import 'package:toiletmap/app/ui/home/home_main_screen.dart';
@@ -22,6 +23,8 @@ import '../ui/money/top_up_money_main_screen.dart';
 import '../ui/navigation/navigation_test_screen.dart';
 import '../ui/rating/rating_list_screen.dart';
 import '../ui/rating/rating_main_screen.dart';
+import '../ui/search/search_main_screen.dart';
+import '../ui/search/search_map_screen.dart';
 import '../ui/toilet_detail/toilet_detail_main_screen.dart';
 
 class Router {
@@ -71,6 +74,11 @@ class Router {
         return MaterialPageRoute(builder: (_) => RatingMainScreen(checkin: index,));
       /*case 'NavigationTestScreen':
         return MaterialPageRoute(builder: (_) => const NavigationTestScreen());*/
+      case 'SearchMainScreen':
+        return MaterialPageRoute(builder: (_) => const SearchMainScreen());
+      case 'SearchMapScreen':
+        final index = settings.arguments as PlaceDetail;
+        return MaterialPageRoute(builder: (_) => SearchMapScreen(placeDetail: index,));
 
         default:
         return MaterialPageRoute(builder: (_) {

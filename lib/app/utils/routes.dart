@@ -18,4 +18,6 @@ class Routes {
   static const String informationChangePhoneConfirmScreen = 'InformationChangePhoneConfirmScreen';
   static const String ratingMainScreen = 'RatingMainScreen';
   static const String navigationTestScreen = 'NavigationTestScreen';
+  static const String searchMainScreen = 'SearchMainScreen';
+  static const String searchMapScreen = 'SearchMapScreen';
 }

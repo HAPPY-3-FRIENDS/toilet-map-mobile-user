@@ -112,6 +112,7 @@ flutter:
     - assets/logo.png
     - assets/config/.env
     - assets/marker.png
+    - assets/search-marker.png
     - assets/default-avatar.png
     - assets/images/google-logo.png
     - assets/images/no-data.gif

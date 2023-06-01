@@ -77,6 +77,41 @@ class ToiletRepository {
     return null;
   }
 
+  Future<List<Toilet>?> getToiletsNearbyByLatLong(double lat, double long) async {
+    String? accessToken = await SharedPreferencesRepository().getAccessToken();
+    print('Do nearby' + long.toString());
+
+    final response = await http.get(
+      Uri.parse('${AppDomain.appDomain1}/api/toilets?current-latitude=${lat}&current-longitude=${long}'),
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+        HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print('hihi toilets info');
+      final responseJson = jsonDecode(response.body);
+      print(responseJson);
+      BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
+      print(baseResponse.data);
+      List<Toilet> toilets = (baseResponse.data as List).map(
+              (i) => Toilet.fromJson(i)).toList();
+      print("Toilet length successfully " + toilets.length.toString());
+      print("check Toilet 1 element" + toilets[0].toString());
+      return toilets;
+    }
+
+    if (response.statusCode == 204) {
+      List<Toilet> toilets = [];
+      print("Toilets list empty");
+      return toilets;
+    }
+
+    print("Toilets list get failed");
+    return null;
+  }
+
   Future<Toilet?> getNearestToilet() async {
     List<double?> latlong = await SharedPreferencesRepository().getCurrentLatLong();
     double lat = latlong[0]!;

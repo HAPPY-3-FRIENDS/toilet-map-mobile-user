@@ -10,6 +10,7 @@ class AppSize {
 class AppDomain {
   static const String appDomain1 = 'https://toilet-map.azurewebsites.net';
   static const String appDomain2 = 'https://toiletmap.azurewebsites.net';
+  static const String apiKey = 'ZXrUvqdTcl9AYCA8ZRbSoCqscAev0tBcFvpCS3QQ';
 }
 
 //App color
@@ -331,7 +332,11 @@ class AppText {
 
   static var blackText16 = TextStyle(fontSize: 16.sp, color: Colors.black);
 
+  static var blackText16Bold = TextStyle(fontSize: 16.sp, color: Colors.black, fontWeight: FontWeight.w700);
+
   static var blackText18 = TextStyle(fontSize: 18.sp, color: Colors.black);
+
+  static var blackText18Bold = TextStyle(fontSize: 18.sp, color: Colors.black, fontWeight: FontWeight.w700,);
 
   static var blackText20 = TextStyle(fontSize: 20.sp, color: Colors.black54);
 

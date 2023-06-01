@@ -203,36 +203,32 @@ class _HomeMainMapState extends State<HomeMainMap> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Container(
-                              child: SizedBox(
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, Routes.searchMainScreen);
+                              },
+                              child: Container(
                                 width: 250.w,
                                 height: 45.h,
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.zero,
-                                    isDense: true,
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20.r),
-                                        borderSide: BorderSide.none
-                                    ),
-                                    hintText: "Tìm kiếm địa chỉ",
-                                    prefixIcon: Icon(Icons.search),
-                                    prefixIconColor: AppColor.primaryColor1,
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Padding(padding: EdgeInsets.symmetric(horizontal: 15.w), child:
+                                    Icon(Icons.search, size: 20.w, color: AppColor.primaryColor1,),),
+                                    Text("Tìm kiếm địa chỉ", style: AppText.greyText18,),
+                                  ],
                                 ),
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.w),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 0.5,
-                                    blurRadius: 1,
-                                    offset: Offset(0, 0.5), // changes position of shadow
-                                  ),
-                                ],
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.w),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 0.5,
+                                      blurRadius: 1,
+                                      offset: Offset(0, 0.5), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             SizedBox(

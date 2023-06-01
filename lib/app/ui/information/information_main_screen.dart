@@ -288,6 +288,34 @@ class _InformationMainScreenState extends State<InformationMainScreen> {
                                           )
                                       ),
                                     ),
+                                  ),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  InkWell(
+                                    onTap: () {},
+                                    child: Container(
+                                      height: 60.h,
+                                      width: double.infinity,
+                                      color: Colors.white,
+                                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                                      child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Row(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Icon(Icons.apps_outlined, color: AppColor.primaryColor1, size: 20.w,),
+                                                  SizedBox(width: 10.w),
+                                                  Text("Ứng dụng liên kết", style: AppText.titleText2,),
+                                                ],
+                                              ),
+                                              Icon(Icons.arrow_forward_ios_outlined, size: 17.w, color: Colors.black38,),
+                                            ],
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          )
+                                      ),
+                                    ),
                                   )
                                 ],
                               ),
