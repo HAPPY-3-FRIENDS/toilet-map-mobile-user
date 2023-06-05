@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/models/toilet/toiletFacilities/toiletFacilities.dart';
 import 'package:toiletmap/app/repositories/toilet_repository.dart';
+import 'package:toiletmap/app/ui/home/home_main_bottom_panel/widget/announcement_list_frame.dart';
 import 'package:toiletmap/app/ui/home/home_main_bottom_panel/widget/toilet_in_list_frame.dart';
 
+import '../../../../models/announcement/announcement.dart';
 import '../../../../models/toilet/toilet.dart';
+import '../../../../repositories/announcement_repository.dart';
 import '../../../../utils/constants.dart';
 
 class PanelWidget extends StatelessWidget {
@@ -90,7 +93,6 @@ class PanelWidget extends StatelessWidget {
 
   Widget buildNearbyToiletList(){
     return SingleChildScrollView(
-
       child: Container(
         height: 530.h,
         child: (
@@ -123,6 +125,47 @@ class PanelWidget extends StatelessWidget {
                         });
                         print('hihihine: '+ list.length.toString());
 
+                        if (index == 0) {
+                          return Column(
+                            children: [
+                              ToiletInListFrame(
+                                toiletId: toilet.id,
+                                time: toilet.openTime + " - " + toilet.closeTime,
+                                toiletImagesList: toilet.toiletImageSources,
+                                toiletName: toilet.toiletName,
+                                address: toilet.address + ", " + toilet.ward + ", " + toilet.district + ", " + toilet.province,
+                                price: (toilet.free == false)
+                                    ? '${toilet.minPrice} - ${toilet.maxPrice} VND/lượt'
+                                    : 'Miễn phí',
+                                toiletImage: toilet.toiletImageSources[0],
+                                star: toilet.ratingStar,
+                                nearBy: toilet.nearBy,
+                                showerRoom: showerRoom,
+                                normalRoom: normalRoom,
+                                disabilityRoom: disabilityRoom,
+                                facilities: list,
+                              ),
+                              FutureBuilder<List<Announcement>?> (
+                                  future: AnnouncementRepository().getAnnouncement(),
+                                  builder: (context, snapshot)  {
+                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                      return const Center(
+                                          child: CircularProgressIndicator(
+                                              color: AppColor.primaryColor1,
+                                              strokeWidth: 2.0
+                                          )
+                                      );
+                                    }
+                                    if (snapshot.hasData) {
+                                      return AnnouncementListFrame(announcements: snapshot.data!,);
+                                    }
+                                    return Container();
+                                  }
+                              ),
+                              Container(height: 10.h, color: AppColor.appBackground,),
+                            ],
+                          );
+                        }
                         return ToiletInListFrame(
                           toiletId: toilet.id,
                           time: toilet.openTime + " - " + toilet.closeTime,

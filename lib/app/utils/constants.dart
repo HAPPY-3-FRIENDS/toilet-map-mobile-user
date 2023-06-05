@@ -21,6 +21,7 @@ class AppColor {
   static const Color gradientColor2 = Color(0xFF29ABE2);
   static const Color gradientColor3 = Color(0xFF004886);
   static const Color gradientColor4 = Color(0xFF68B2F4);
+  static const Color appBackground = Color(0xFFF1F1F1);
 }
 
 //App string
@@ -340,9 +341,15 @@ class AppText {
 
   static var blackText20 = TextStyle(fontSize: 20.sp, color: Colors.black54);
 
+  static var black100Text20 = TextStyle(fontSize: 20.sp, color: Colors.black);
+
   static var blackText22 = TextStyle(fontSize: 22.sp, color: Colors.black);
 
   static var primary1Text20 = TextStyle(fontSize: 20.sp, color: AppColor.primaryColor1);
+
+  static var primary1Text24 = TextStyle(fontSize: 24.sp, color: AppColor.primaryColor1);
+
+  static var primary1Text28 = TextStyle(fontSize: 28.sp, color: AppColor.primaryColor1, fontWeight: FontWeight.w500);
 }
 
 //App number

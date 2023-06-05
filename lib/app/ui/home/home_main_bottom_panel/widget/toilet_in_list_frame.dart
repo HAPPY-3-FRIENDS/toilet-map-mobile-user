@@ -253,7 +253,7 @@ class ToiletInListFrame extends StatelessWidget {
                     ],
                   )
               ),
-              Container(height: 10.h, color: AppColor.primaryColor2,)
+              Container(height: 10.h, color: AppColor.appBackground,)
             ],
           )
       );
@@ -435,7 +435,7 @@ class ToiletInListFrame extends StatelessWidget {
                   ],
                 )
             ),
-            Container(height: 10.h, color: AppColor.primaryColor2,)
+            Container(height: 10.h, color: AppColor.appBackground,)
           ],
         )
     );
