@@ -13,7 +13,7 @@ Announcement _$AnnouncementFromJson(Map<String, dynamic> json) => Announcement(
   json['imageSource'] as String,
   json['startDate'] as String?,
   json['endDate'] as String?,
-  json['description'] as String,
+  json['description'] as String?,
   json['type'] as String,
 );
 

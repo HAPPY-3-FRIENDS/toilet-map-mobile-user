@@ -9,7 +9,7 @@ class Announcement {
   String imageSource;
   String? startDate;
   String? endDate;
-  String description;
+  String? description;
   String type;
 
   Announcement(this.id, this.title, this.url, this.imageSource, this.startDate, this.endDate, this.description, this.type);

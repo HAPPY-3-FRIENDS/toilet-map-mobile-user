@@ -88,7 +88,7 @@ class AnnouncementMainScreen extends StatelessWidget {
                   children: [
                     Text(announcement.title, style: AppText.primary1Text28,),
                     SizedBox(height: 15.w,),
-                    Text(announcement.description, style: AppText.blackText20,),
+                    Text(announcement.description!, style: AppText.blackText20,),
                     SizedBox(height: 15.w,),
                     Text('Thời gian áp dụng: ', style: AppText.primary1Text24),
                     SizedBox(height: 5.w,),

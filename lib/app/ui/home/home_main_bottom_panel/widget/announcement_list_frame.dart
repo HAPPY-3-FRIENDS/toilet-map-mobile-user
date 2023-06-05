@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/models/announcement/announcement.dart';
 import 'package:toiletmap/app/repositories/announcement_repository.dart';
 import 'package:toiletmap/app/utils/routes.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../utils/constants.dart';
 
@@ -53,9 +56,16 @@ class _AnnouncementListFrameState extends State<AnnouncementListFrame> {
                   ),
                   imageBuilder: (context, imageProvider) => InkWell(
                     onTap: () {
-                      (item.type == "Internal")
-                          ? Navigator.pushNamed(context, Routes.announcementMainScreen, arguments: item)
-                          : null;
+                      if (item.type == "External") {
+                        final url = Uri.parse(item.url!);
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      }
+                      else {
+                        Navigator.pushNamed(context, Routes.announcementMainScreen, arguments: item);
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -89,13 +99,13 @@ class _AnnouncementListFrameState extends State<AnnouncementListFrame> {
           left: 0,
           right: 0,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: widget.announcements.asMap().entries.map((entry) {
               return GestureDetector(
                 onTap: () => carouselController.animateToPage(entry.key),
                 child: Container(
-                  width: currentIndex == entry.key ? 17.w : 7.w,
-                  height: 7.0.w,
+                  width: currentIndex == entry.key ? 7.w : 3.w,
+                  height: 3.0.w,
                   margin: EdgeInsets.symmetric(
                     horizontal: 3.0.w,
                   ),
