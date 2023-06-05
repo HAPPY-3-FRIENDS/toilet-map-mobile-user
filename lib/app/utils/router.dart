@@ -17,6 +17,7 @@ import '../ui/combo/buy_combo_main_screen.dart';
 import '../ui/direction/direction_main_screen.dart';
 import '../ui/history/history_main_screen.dart';
 import '../ui/information/information_change_name_screen.dart';
+import '../ui/information/information_linked_app_screen.dart';
 import '../ui/information/information_main_screen.dart';
 import '../ui/information/information_payment_screen.dart';
 import '../ui/information/information_service_price_screen.dart';
@@ -84,6 +85,8 @@ class Router {
       case 'AnnouncementMainScreen':
         final index = settings.arguments as Announcement;
         return MaterialPageRoute(builder: (_) => AnnouncementMainScreen(announcement: index,));
+      case 'InformationLinkedAppScreen':
+        return MaterialPageRoute(builder: (_) => const InformationLinkedAppScreen());
 
         default:
         return MaterialPageRoute(builder: (_) {

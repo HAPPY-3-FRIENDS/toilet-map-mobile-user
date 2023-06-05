@@ -293,7 +293,9 @@ class _InformationMainScreenState extends State<InformationMainScreen> {
                                     height: 5.h,
                                   ),
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.pushNamed(context, Routes.informationLinkedAppScreen);
+                                    },
                                     child: Container(
                                       height: 60.h,
                                       width: double.infinity,

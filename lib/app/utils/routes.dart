@@ -21,4 +21,5 @@ class Routes {
   static const String searchMainScreen = 'SearchMainScreen';
   static const String searchMapScreen = 'SearchMapScreen';
   static const String announcementMainScreen = 'AnnouncementMainScreen';
+  static const String informationLinkedAppScreen = 'InformationLinkedAppScreen';
 }
