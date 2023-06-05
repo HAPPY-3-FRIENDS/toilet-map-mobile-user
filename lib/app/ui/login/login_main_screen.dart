@@ -73,6 +73,15 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
       _controller2!.forward()
     });
 
+    Future.delayed(Duration(milliseconds: 7000)).then((value) async {
+        final prefs = await SharedPreferences.getInstance();
+        String? token = prefs.getString('accessToken');
+        print('cho nay in ra token: ' + token!);
+        if (token != null) {
+          Navigator.pushNamed(context, Routes.homeMainScreen);
+        }
+    });
+
     _controller3 = AnimationController(vsync: this,
         duration: Duration(milliseconds: 1500)
     );
