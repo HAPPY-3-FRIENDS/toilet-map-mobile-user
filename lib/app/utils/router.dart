@@ -24,6 +24,7 @@ import '../ui/information/information_service_price_screen.dart';
 import '../ui/login/create_account_screen.dart';
 import '../ui/money/top_up_money_main_screen.dart';
 import '../ui/navigation/navigation_test_screen.dart';
+import '../ui/nearby_list/nearby_list_main_screen.dart';
 import '../ui/rating/rating_list_screen.dart';
 import '../ui/rating/rating_main_screen.dart';
 import '../ui/search/search_main_screen.dart';
@@ -87,6 +88,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => AnnouncementMainScreen(announcement: index,));
       case 'InformationLinkedAppScreen':
         return MaterialPageRoute(builder: (_) => const InformationLinkedAppScreen());
+      case 'NearbyListMainScreen':
+        return MaterialPageRoute(builder: (_) => const NearbyListMainScreen());
 
         default:
         return MaterialPageRoute(builder: (_) {

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/models/announcement/announcement.dart';
@@ -55,13 +56,18 @@ class _AnnouncementListFrameState extends State<AnnouncementListFrame> {
                     ),
                   ),
                   imageBuilder: (context, imageProvider) => InkWell(
-                    onTap: () {
+                    onTap: () async {
                       if (item.type == "External") {
-                        final url = Uri.parse(item.url!);
-                        launchUrl(
-                          url,
-                          mode: LaunchMode.externalApplication,
-                        );
+                        bool isInstalled = await DeviceApps.isAppInstalled(item.url!);
+                        if (isInstalled) {
+                          DeviceApps.openApp(item.url!);
+                        } else {
+                          final url = Uri.parse('market://details?id=' + item.url!);
+                          launchUrl(
+                            url,
+                            mode: LaunchMode.externalApplication,
+                          );
+                        }
                       }
                       else {
                         Navigator.pushNamed(context, Routes.announcementMainScreen, arguments: item);

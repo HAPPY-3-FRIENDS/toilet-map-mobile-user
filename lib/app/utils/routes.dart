@@ -22,4 +22,5 @@ class Routes {
   static const String searchMapScreen = 'SearchMapScreen';
   static const String announcementMainScreen = 'AnnouncementMainScreen';
   static const String informationLinkedAppScreen = 'InformationLinkedAppScreen';
+  static const String nearbyListMainScreen = 'NearbyListMainScreen';
 }

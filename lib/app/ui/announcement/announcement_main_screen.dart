@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/models/announcement/announcement.dart';
+import 'package:toiletmap/app/utils/routes.dart';
 
 import '../../utils/constants.dart';
 
@@ -46,6 +47,24 @@ class AnnouncementMainScreen extends StatelessWidget {
           ),
         ),
 
+        bottomSheet:  Container(
+          height: 100.h,
+          color: Colors.white,
+          padding: EdgeInsets.all(20.w),
+          child: SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.nearbyListMainScreen);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColor.primaryColor1
+              ),
+              child: Text("Đi ngay", style: AppText.white100Text20,),
+            ),
+          )
+        ),
+
         body: SingleChildScrollView(
           child: Container(
             child: Column(
@@ -72,7 +91,7 @@ class AnnouncementMainScreen extends StatelessWidget {
                       ),
                     ),
                     imageBuilder: (context, imageProvider) => Container(
-                      height: 250.h,
+                      height: 150.h,
                       width: AppSize.widthScreen,
                       decoration: BoxDecoration(
                         image: DecorationImage(

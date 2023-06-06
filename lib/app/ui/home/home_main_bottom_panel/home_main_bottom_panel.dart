@@ -22,11 +22,11 @@ class _HomeMainBottomPanelState extends State<HomeMainBottomPanel> {
         child: SlidingUpPanel(
           panelSnapping: true,
           renderPanelSheet: true,
-
           minHeight: 80.h,
           borderRadius: BorderRadius.circular(10.r),
           color: Colors.transparent,
           backdropEnabled: true,
+
           panel: PanelWidget(),
           collapsed: Container(
             height: 80.h,
