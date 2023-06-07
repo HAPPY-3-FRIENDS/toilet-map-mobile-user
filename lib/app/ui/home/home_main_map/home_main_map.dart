@@ -29,6 +29,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
   @override
   void initState() {
     // TODO: implement initState
+    _getCurrentLocation();
     super.initState();
   }
 
@@ -136,6 +137,19 @@ class _HomeMainMapState extends State<HomeMainMap> {
     ),);
   }
 
+  _getCurrentLocation() {
+    Location location = Location();
+    location.getLocation().then(
+        (location) {
+          currentLatLng = LatLng(location.latitude!, location.longitude!);
+        }
+    );
+
+    location.onLocationChanged.listen((event) {
+      currentLatLng = LatLng(event.latitude!, event.longitude!);
+    });
+  }
+
   _onStyleLoadedCallback() async {
     print('current location ' + currentLatLng.latitude.toString() + " " + currentLatLng.longitude.toString());
 
@@ -165,7 +179,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   _initialCameraPosition =
-                      CameraPosition(target: LatLng(sharedPreferences.getDouble('latitude')!, sharedPreferences.getDouble('longtitude')!));
+                      CameraPosition(target: currentLatLng);
                   return Stack(
                     children: [
                       Container(
@@ -191,7 +205,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
                             child: Icon(Icons.my_location),
                             onPressed: () {
                               controller.animateCamera(
-                                  CameraUpdate.newCameraPosition(_initialCameraPosition));}
+                                  CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLatLng.latitude, currentLatLng.longitude))));}
                         ),
                       ),
 

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/main.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,16 +13,26 @@ import 'package:toiletmap/app/repositories/toilet_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_map/widget/bottom_sheet_toilet_info.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
-class DirectionMapFrame extends StatefulWidget {
-  int id;
+import '../../../models/place/place.dart';
+import '../../../models/place/prediction/prediction.dart';
+import '../../../models/placeDetail/place_detail.dart';
+import '../../../models/toilet/toilet.dart';
+import '../../../models/toilet/toiletFacilities/toiletFacilities.dart';
+import '../../../repositories/place_repository.dart';
+import '../../../utils/routes.dart';
 
-  DirectionMapFrame({required this.id,Key? key}) : super(key: key);
+class DirectionMapFrame extends StatefulWidget {
+  Toilet toilet;
+
+  DirectionMapFrame({required this.toilet,Key? key}) : super(key: key);
 
   @override
   State<DirectionMapFrame> createState() => _DirectionMapFrameState();
 }
 
 class _DirectionMapFrameState extends State<DirectionMapFrame> {
+  List<Prediction> data = [];
+  bool isSearch = false;
   late CameraPosition _initialCameraPosition;
   late MapboxMapController controller;
   late LatLng currentLatLng;
@@ -28,6 +41,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
   @override
   void initState() {
     // TODO: implement initState
+    _getCurrentLocation();
     super.initState();
   }
 
@@ -60,35 +74,6 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
     this.controller = controller;
   }
 
-  _symbolClick(Symbol symbol) async {
-    /*showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Chú ý'),
-          content: Text(symbol.data!['id'].toString()),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Xác nhận'),
-              onPressed: () {
-                _createPolyline(symbol.data!['lat'], symbol.data!['long']);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );*/
-
-    showModalBottomSheet(
-        shape: AppShapeBorder.shapeBorder2,
-        context: context,
-        builder: (BuildContext context) {
-          return BottomSheetToiletInfo(id: symbol.data!['id']);
-        }
-    );
-  }
-
   _loadSymbols(double lat, double long, int toiletId) async {
     await controller.addSymbol(
         SymbolOptions(
@@ -97,7 +82,6 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
           geometry: LatLng(lat, long),
           iconImage: 'assets/marker.png',
           iconSize: 1,
-          //fontNames: ['Roboto Regular'],
         ),
         {
           'id': toiletId,
@@ -107,9 +91,13 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
     );
   }
 
-  _createPolyline(double lat, double long) async {
-    count += 1;
-    var polyline = await MapRepository().getDirection(currentLatLng.latitude, currentLatLng.longitude, lat, long);
+  _createPolyline(double firstLat, double firstLng) async {
+    count +=1;
+
+    String way = 'way' + count.toString();
+    String line = 'line' + count.toString();
+    print('wayline: ' + way + ' ' + line);
+    var polyline = await MapRepository().getDirection(firstLat, firstLng, widget.toilet.latitude, widget.toilet.longitude);
 
     var fills = await {
       "type": "FeatureCollection",
@@ -126,8 +114,8 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
     };
     print("fills: " + fills.toString());
 
-    await controller.addSource("way${count}", GeojsonSourceProperties(data: fills));
-    await controller.addLineLayer("way${count}", "line${count}", LineLayerProperties(
+    await controller.addSource(way, GeojsonSourceProperties(data: fills));
+    await controller.addLineLayer(way, line, LineLayerProperties(
       lineColor:'#007AFF',
       lineCap: "round",
       lineJoin: "round",
@@ -138,21 +126,37 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
   _onStyleLoadedCallback() async {
     print('current location ' + currentLatLng.latitude.toString() + " " + currentLatLng.longitude.toString());
 
-    final symbol = await ToiletRepository().getToiletByToiletId(widget.id);
+    final symbol = widget.toilet;
 
     _loadSymbols(symbol!.latitude, symbol!.longitude, symbol!.id);
 
-    _createPolyline(symbol!.latitude, symbol!.longitude);
-    /*
-    update - dung de ghi de len cho symbol (ko phai xoa)
-    controller.updateSymbol(symbol1, SymbolOptions(
-      geometry: LatLng()
-    ));
-    */
+    _createPolyline(currentLatLng.latitude, currentLatLng.longitude);
+  }
+
+  _getCurrentLocation() {
+    Location location = Location();
+    location.getLocation().then(
+            (location) {
+          currentLatLng = LatLng(location.latitude!, location.longitude!);
+        }
+    );
+
+    location.onLocationChanged.listen((event) {
+      currentLatLng = LatLng(event.latitude!, event.longitude!);
+
+      if (isSearch == false) {
+        controller.animateCamera(
+            CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLatLng.latitude, currentLatLng.longitude))));
+        setState(() {
+        });
+      };
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    Toilet toilet;
+
     return Padding(
       padding: EdgeInsets.zero,
       child: Container(
@@ -163,36 +167,179 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   _initialCameraPosition =
-                      CameraPosition(target: LatLng(sharedPreferences.getDouble('latitude')!, sharedPreferences.getDouble('longtitude')!));
-                  return Stack(
-                    children: [
-                      Container(
-                        height: 600.h,
-                        width: 360.w,
-                        child: MapboxMap(
-                          //Link goong -> user goong map
-                          styleString: AppString.styleString,
-                          accessToken: 'pk.eyJ1Ijoiam5vb2xqb29sIiwiYSI6ImNsZjl1YTlseDB0ZWozeG8xNWlkc2UyazMifQ.fNwINfQKuqfP2daikOu8bw',
-                          initialCameraPosition: _initialCameraPosition,
-                          onMapCreated: _onMapCreated,
-                          onStyleLoadedCallback: _onStyleLoadedCallback,
-                          myLocationEnabled: true,
-                          myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
-                          minMaxZoomPreference: const MinMaxZoomPreference(15, 18),
+                      CameraPosition(target: currentLatLng);
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                            height: 130.h,
+                            color: Colors.white,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SizedBox(height: 10.h,),
+                                    Icon(Icons.circle_outlined, size: 17.w, color: Colors.black54,),
+                                    Icon(Icons.circle, size: 3.w, color: Colors.black54),
+                                    Icon(Icons.circle, size: 3.w, color: Colors.black54),
+                                    Icon(Icons.circle, size: 3.w, color: Colors.black54),
+                                    Icon(Icons.location_on_outlined, size: 20.w, color: Colors.red,),
+                                    SizedBox(height: 10.h,),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      width: 300.w,
+                                      height: 45.h,
+                                      child: Form(
+                                        child: TextFormField(
+                                          onChanged: (value) => setState(() => {
+                                            if (value != '') {
+                                              updateList(value)
+                                            } else {
+                                              data = [],
+                                              updateList(value),
+                                              if (isSearch == true) {
+                                                controller.removeLayer('line' + count.toString()),
+                                                controller.removeSource('way' + count.toString()),
+                                                _createPolyline(currentLatLng.latitude, currentLatLng.longitude),
+                                                isSearch = false
+                                              }
+                                            }
+                                          }),
+                                          decoration: InputDecoration(
+                                            contentPadding: EdgeInsets.only(
+                                                top: 0,
+                                                bottom: 0,
+                                                left: 10.w
+                                            ),
+                                            hintText: "Vị trí hiện tại",
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10.r),
+                                              borderSide: BorderSide(color: Colors.grey),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10.r),
+                                              borderSide: BorderSide(color: AppColor.primaryColor1),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 300.w,
+                                      height: 45.h,
+                                      child: Form(
+                                        child: TextFormField(
+                                          readOnly: true,
+                                          decoration: InputDecoration(
+                                            contentPadding: EdgeInsets.only(
+                                                top: 0,
+                                                bottom: 0,
+                                                left: 10.w
+                                            ),
+                                            hintStyle: AppText.primary1Text18,
+                                            hintText: widget.toilet.toiletName,
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10.r),
+                                              borderSide: BorderSide(color: Colors.grey),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            )
                         ),
-                      ),
+                        (data.length != 0)
+                        ? Container(
+                          height: 400.h,
+                          child: Expanded(
+                            child: ListView.builder(
+                                itemCount: data.length,
+                                itemBuilder: (context, index) => ListTile(
+                                  onTap: () async {
+                                    PlaceDetail? detail = await PlaceRepository().getPlaceDetail(data[index].place_id);
+                                    setState(() {
+                                      isSearch = true;
+                                    });
+                                    await controller.removeLayer('line' + count.toString());
+                                    await controller.removeSource('way' + count.toString());
+                                    await _createPolyline(detail!.result!.geometry.location.lat, detail!.result!.geometry.location.lng);
+                                    await controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(detail!.result!.geometry.location.lat, detail!.result!.geometry.location.lng))));
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                    setState(() {
+                                      data = [];
+                                    });
+                                    },
+                                  title: Text(data[index].description),
+                                )),
+                          ),)
+                        : Container(),
+                        Stack(
+                          children: [
+                            Container(
+                              height: 640.h,
+                              width: 360.w,
+                              child: MapboxMap(
+                                //Link goong -> user goong map
+                                styleString: AppString.styleString,
+                                accessToken: 'pk.eyJ1Ijoiam5vb2xqb29sIiwiYSI6ImNsZjl1YTlseDB0ZWozeG8xNWlkc2UyazMifQ.fNwINfQKuqfP2daikOu8bw',
+                                initialCameraPosition: _initialCameraPosition,
+                                onMapCreated: _onMapCreated,
+                                onStyleLoadedCallback: _onStyleLoadedCallback,
+                                myLocationEnabled: true,
+                                myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
+                                minMaxZoomPreference: const MinMaxZoomPreference(15, 18),
+                              ),
+                            ),
+                            Positioned(
+                              top: 430.h,
+                              left: 288.w,
+                              child:  FloatingActionButton(
+                                  child: Icon(Icons.my_location),
+                                  onPressed: () {
+                                    controller.animateCamera(
+                                        CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLatLng.latitude, currentLatLng.longitude))));}
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 100.w, right: 100.w, top: 550.h),
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: 50.h,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        elevation: 1,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.r))),
+                                    onPressed: () async {
+                                      Navigator.pushNamed(context, Routes.homeMainScreen);
 
-                      Positioned(
-                        top: 405.h,
-                        left: 288.w,
-                        child:  FloatingActionButton(
-                            child: Icon(Icons.my_location),
-                            onPressed: () {
-                              controller.animateCamera(
-                                  CameraUpdate.newCameraPosition(_initialCameraPosition));}
+                                      QuickAlert.show(
+                                          context: context,
+                                          type: QuickAlertType.info,
+                                          text: 'Buy two, get one free',
+                                          title: 'Hệ thống chỉ đường',
+                                          onConfirmBtnTap: () {
+                                            print('toilet id:: ');
+                                          }
+                                      );
+                                    },
+                                    child: Text("Hoàn tất", style: AppText.primary1Text20,)
+                                ),
+                              ),),
+                          ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 } else {
                   return Container(
@@ -211,4 +358,15 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
       ),
     );
   }
+
+  void updateList(String value) async {
+    Place? places = await PlaceRepository().getPlace(value);
+
+    setState(() {
+      data = places!.predictions!;
+    });
+
+  }
 }
+
+

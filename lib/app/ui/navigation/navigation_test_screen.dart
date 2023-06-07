@@ -1,6 +1,7 @@
 /*
 import 'package:flutter/material.dart';
 import 'package:flutter_mapbox_navigation/library.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 
 class NavigationTestScreen extends StatefulWidget {
   const NavigationTestScreen({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class NavigationTestScreen extends StatefulWidget {
 }
 
 class _NavigationTestScreenState extends State<NavigationTestScreen> {
+  late MapboxMap()
   late MapBoxNavigationViewController _controller;
   final cityhall = WayPoint(name: "City Hall", latitude: 42.886448, longitude: -78.878372);
   final downtown = WayPoint(name: "Downtown Buffalo", latitude: 42.8866177, longitude: -78.8814924);

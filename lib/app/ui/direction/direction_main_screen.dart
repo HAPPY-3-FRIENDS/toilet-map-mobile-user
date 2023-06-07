@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/ui/direction/widget/direction_bottom_panel.dart';
 import 'package:toiletmap/app/ui/direction/widget/direction_map_frame.dart';
 
+import '../../models/toilet/toilet.dart';
+import '../../repositories/toilet_repository.dart';
 import '../../utils/constants.dart';
 
 class DirectionMainScreen extends StatelessWidget {
@@ -31,7 +33,7 @@ class DirectionMainScreen extends StatelessWidget {
                   centerTitle: true,
                   toolbarHeight: 100.h,
                   backgroundColor: Colors.white,
-                  elevation: 1,
+                  elevation: 0,
 
                   iconTheme: IconThemeData(
                       color: AppColor.primaryColor1
@@ -40,15 +42,23 @@ class DirectionMainScreen extends StatelessWidget {
               ),
             ),
 
-            body: DirectionMapFrame(id: id,),
-            bottomSheet: BottomSheet(
-              enableDrag: false,
-              shape: AppShapeBorder.shapeBorder2,
-              builder: (BuildContext context) {
-                return DirectionBottomPanel(id: id,);
-              },
-              onClosing: () {  },
-            )
+            body: FutureBuilder<Toilet?> (
+                future: ToiletRepository().getToiletByToiletId(id),
+                builder: (context, snapshot)  {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                        child: CircularProgressIndicator(
+                            color: AppColor.primaryColor1,
+                            strokeWidth: 2.0
+                        )
+                    );
+                  }
+                  if (snapshot.hasData) {
+                    return DirectionMapFrame(toilet: snapshot.data!);
+                  }
+                  return Center(child: Text('Lỗi'));
+                }
+            ),
         )
     );
   }

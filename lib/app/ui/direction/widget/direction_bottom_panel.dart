@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:toiletmap/app/repositories/toilet_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_map/widget/images_frame.dart';
 
@@ -138,6 +139,16 @@ class DirectionBottomPanel extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(20.r))),
                           onPressed: () async {
                             Navigator.pushNamed(context, Routes.homeMainScreen);
+
+                            QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.info,
+                              text: 'Buy two, get one free',
+                              title: 'Hệ thống chỉ đường',
+                              onConfirmBtnTap: () {
+                                print('toilet id:: ' + id.toString());
+                              }
+                            );
                           },
                           child: Text("Hoàn tất", style: AppText.bottomSheetToiletInfo2,)
                       ),

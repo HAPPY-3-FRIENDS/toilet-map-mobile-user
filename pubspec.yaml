@@ -58,6 +58,7 @@ dependencies:
 
   flutter_spinkit: ^5.2.0
   awesome_dialog: ^3.0.2
+  quickalert: ^1.0.1
   group_button: ^5.2.2
 
   carousel_slider: ^4.2.1
