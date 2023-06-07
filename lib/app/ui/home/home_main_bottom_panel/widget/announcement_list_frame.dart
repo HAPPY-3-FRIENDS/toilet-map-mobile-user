@@ -57,7 +57,7 @@ class _AnnouncementListFrameState extends State<AnnouncementListFrame> {
                   ),
                   imageBuilder: (context, imageProvider) => InkWell(
                     onTap: () async {
-                      if (item.type == "External") {
+                      if (item.type == "External-App") {
                         bool isInstalled = await DeviceApps.isAppInstalled(item.url!);
                         if (isInstalled) {
                           DeviceApps.openApp(item.url!);
@@ -68,6 +68,12 @@ class _AnnouncementListFrameState extends State<AnnouncementListFrame> {
                             mode: LaunchMode.externalApplication,
                           );
                         }
+                      } else if (item.type == "External") {
+                        final url = Uri.parse(item.url!);
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
                       }
                       else {
                         Navigator.pushNamed(context, Routes.announcementMainScreen, arguments: item);
