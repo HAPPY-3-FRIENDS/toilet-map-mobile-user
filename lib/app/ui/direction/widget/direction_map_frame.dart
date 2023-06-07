@@ -323,15 +323,27 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                     onPressed: () async {
                                       Navigator.pushNamed(context, Routes.homeMainScreen);
 
-                                      QuickAlert.show(
-                                          context: context,
-                                          type: QuickAlertType.info,
-                                          text: 'Buy two, get one free',
-                                          title: 'Hệ thống chỉ đường',
-                                          onConfirmBtnTap: () {
-                                            print('toilet id:: ');
-                                          }
-                                      );
+                                      double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
+                                      double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);
+
+                                      double sum = (d1 + d2) * 1000000;
+
+                                      print('distance now: ' + sum.toString());
+
+                                      if (sum <= 0.3) {
+                                        QuickAlert.show(
+                                            context: context,
+                                            type: QuickAlertType.info,
+                                            text: 'Bạn hài lòng với hệ thống chỉ đường / định vị chứ? Hãy báo cáo chúng tôi nếu có bất kỳ vấn đề bất cập nào!',
+                                            title: 'Báo cáo hệ thống',
+
+                                            confirmBtnText: 'Báo cáo',
+                                            confirmBtnColor: Colors.orangeAccent,
+                                            onConfirmBtnTap: () {
+                                              Navigator.pushNamed(context, Routes.locationReportMainScreen, arguments: widget.toilet.id);
+                                            }
+                                        );
+                                      }
                                     },
                                     child: Text("Hoàn tất", style: AppText.primary1Text20,)
                                 ),

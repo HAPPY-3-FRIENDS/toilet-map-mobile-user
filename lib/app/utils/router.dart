@@ -21,6 +21,7 @@ import '../ui/information/information_linked_app_screen.dart';
 import '../ui/information/information_main_screen.dart';
 import '../ui/information/information_payment_screen.dart';
 import '../ui/information/information_service_price_screen.dart';
+import '../ui/location_report/location_report_main_screen.dart';
 import '../ui/login/create_account_screen.dart';
 import '../ui/money/top_up_money_main_screen.dart';
 import '../ui/navigation/navigation_test_screen.dart';
@@ -90,6 +91,9 @@ class Router {
         return MaterialPageRoute(builder: (_) => const InformationLinkedAppScreen());
       case 'NearbyListMainScreen':
         return MaterialPageRoute(builder: (_) => const NearbyListMainScreen());
+      case 'LocationReportMainScreen':
+        final index = settings.arguments as int;
+        return MaterialPageRoute(builder: (_) => LocationReportMainScreen(toiletId: index,));
 
         default:
         return MaterialPageRoute(builder: (_) {

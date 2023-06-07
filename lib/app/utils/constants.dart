@@ -10,7 +10,7 @@ class AppSize {
 class AppDomain {
   static const String appDomain1 = 'https://toilet-map.azurewebsites.net';
   static const String appDomain2 = 'https://toiletmap.azurewebsites.net';
-  static const String apiKey = 'ZXrUvqdTcl9AYCA8ZRbSoCqscAev0tBcFvpCS3QQ';
+  static const String apiKey = 'OnwCCr1HHOeOCqofMVaXBaf9t82lC25Vqsm6iJJa';
 }
 
 //App color

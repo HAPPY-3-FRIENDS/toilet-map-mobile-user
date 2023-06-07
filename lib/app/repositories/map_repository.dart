@@ -15,7 +15,7 @@ import '../models/position/position.dart';
 class MapRepository {
   Future<List<List<num>>?> getDirection(double firstLat, double firstLong, double secondLat, double secondLong) async {
     final response = await http.get(
-        Uri.parse('https://rsapi.goong.io/Direction?origin=${firstLat.toString()},${firstLong.toString()}&destination=${secondLat.toString()},${secondLong.toString()}&vehicle=car&api_key=ZXrUvqdTcl9AYCA8ZRbSoCqscAev0tBcFvpCS3QQ'),
+        Uri.parse('https://rsapi.goong.io/Direction?origin=${firstLat.toString()},${firstLong.toString()}&destination=${secondLat.toString()},${secondLong.toString()}&vehicle=car&api_key=${AppDomain.apiKey}'),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
         }

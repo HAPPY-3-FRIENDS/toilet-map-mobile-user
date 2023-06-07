@@ -318,7 +318,7 @@ class _InformationMainScreenState extends State<InformationMainScreen> {
                                           )
                                       ),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
