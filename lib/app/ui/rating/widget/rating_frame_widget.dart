@@ -7,6 +7,7 @@ import 'package:toiletmap/app/ui/toilet_detail/widget/image_full_widget.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 import '../../../models/rating/rating.dart';
+import '../../../utils/routes.dart';
 
 class RatingFrameWidget extends StatelessWidget {
   final Rating rating;
@@ -30,33 +31,12 @@ class RatingFrameWidget extends StatelessWidget {
                     ? CachedNetworkImage(
                     imageUrl: rating.avatar!,
                     placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Container(
-                      height: 12.w,
-                      width: 12.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6.w),
-                          border: Border.all(color: Color(0xFFF1F1F1), width: 1.w),
-                          color: Color(0xFFF1F1F1)
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.error_outline_rounded, size: 10.w, color: Colors.black54,)
-                        ],
-                      ),
-                    ),
-                    imageBuilder: (context, imageProvider) => Container(
-                      height: 12.w,
-                      width: 12.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.w),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )
+                    errorWidget: (context, url, error) => CircleAvatar(
+                      radius: 12.w,
+                      backgroundImage: AssetImage('assets/default-avatar.png'),),
+                    imageBuilder: (context, imageProvider) => CircleAvatar(
+                      radius: 12.w,
+                      backgroundImage: imageProvider),
                 )
                     : CircleAvatar(
                   radius: 12.w,
@@ -96,7 +76,31 @@ class RatingFrameWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Icon(Icons.more_horiz, size: 16.w, color: Colors.grey,),
+                      InkWell(
+                        onTapDown: (details) async {
+                          double left = details.globalPosition.dx;
+                          double top = details.globalPosition.dy;
+                          double right = 360.w - details.globalPosition.dx;
+                          double bottom = 900.h - details.globalPosition.dy;
+
+                          await showMenu<String>(
+                            context: context,
+                            position: RelativeRect.fromLTRB(left, top, right, bottom),
+                            items: [
+                              PopupMenuItem<String>(
+                                value: "Báo cáo",
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, Routes.ratingReportMainScreen, arguments: rating);
+                                  },
+                                  child: Text('Báo cáo'),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                        child: Icon(Icons.more_horiz, size: 16.w, color: Colors.grey,),
+                      ),
                     ],
                   ),
                   SizedBox(height: 5.h,),

@@ -24,4 +24,5 @@ class Routes {
   static const String informationLinkedAppScreen = 'InformationLinkedAppScreen';
   static const String nearbyListMainScreen = 'NearbyListMainScreen';
   static const String locationReportMainScreen = 'LocationReportMainScreen';
+  static const String ratingReportMainScreen = 'RatingReportMainScreen';
 }
