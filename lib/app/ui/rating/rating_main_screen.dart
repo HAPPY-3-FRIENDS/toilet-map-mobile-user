@@ -69,7 +69,7 @@ class _RatingMainScreenState extends State<RatingMainScreen> {
             child: Column(
               children: [
                 RatingMainInformationFrame(toiletId: widget.checkin.toiletId),
-                Container(height: 5.h, color: Color(0xFFF1F1F1),),
+                Container(height: 2.h, color: Color(0xFFF1F1F1),),
                 RatingMainRatingFrame(checkin: widget.checkin),
               ],
             ),
