@@ -103,7 +103,6 @@ class _RatingMainRatingFrameState extends State<RatingMainRatingFrame> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
