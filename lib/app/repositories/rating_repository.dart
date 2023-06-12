@@ -68,7 +68,7 @@ class RatingRepository {
     return null;
   }
 
-  Future<Rating?> postRating(toiletId, star, comment, checkInId, imageSources) async {
+  Future<Rating?> postRating(toiletId, star, comment, checkInId, imageSources, ratingCommonComments) async {
     int? accountId = await SharedPreferencesRepository().getAccountId();
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
 
@@ -86,6 +86,7 @@ class RatingRepository {
           "accountId": accountId,
           "checkInId": checkInId,
           "imageSources": imageSources,
+          "ratingCommonComments": ratingCommonComments,
         })
     );
     print('response ne: ' + response.body);

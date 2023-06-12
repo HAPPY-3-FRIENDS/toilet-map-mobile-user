@@ -31,12 +31,20 @@ class _RatingMainRatingFrameState extends State<RatingMainRatingFrame> {
   String comment = '';
   int star = 0;
   List<String> imageSources = [];
-  List<Map<String, String>> imageSS = [];
+  List<String> ratingCommonComments = [];
   int status = 0;
   late Timer _timer;
+  late Future<List<CommonComment>?> future;
 
   final ImagePicker imagePicker = ImagePicker();
   List<XFile> imageFileList = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    future = CommonCommentRepository().getCommonComments();
+  }
 
   void selectImages() async {
     final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
@@ -131,7 +139,65 @@ class _RatingMainRatingFrameState extends State<RatingMainRatingFrame> {
             SizedBox(height: 20.h,),
             Text("Báo cáo nhà vệ sinh", style: AppText.blackText20,),
             SizedBox(height: 10.h,),
-            const CommonCommentsFrame(),
+            FutureBuilder<List<CommonComment>?> (
+            future: future,
+            builder: (context, snapshot)  {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                    child: CircularProgressIndicator(
+                        color: AppColor.primaryColor1,
+                        strokeWidth: 2.0
+                    )
+                );
+              }
+              if (snapshot.hasData) {
+                List<String> comments = [];
+                snapshot.data!.forEach((element) {
+                  if (element.status == "Hiển thị") {
+                    comments.add(element.name);
+                  }
+                });
+
+                return GroupButton(
+                  onSelected: (value, index, isSelected) {
+                    print('index ne' + value);
+                    if (isSelected == false) {
+                      print('sau tru: ' + ratingCommonComments.length.toString());
+                      setState(() {
+                        ratingCommonComments.remove(value);
+                      });
+                    } else {
+                      print('sau cong: ' + ratingCommonComments.length.toString());
+                      setState(() {
+                        ratingCommonComments.add(value);
+                      });
+                    }
+                  },
+                  isRadio: false,
+                  maxSelected: comments.length,
+                  options: GroupButtonOptions(
+                    selectedColor: AppColor.primaryColor2,
+                    unselectedColor: Colors.white,
+                    selectedBorderColor: AppColor.primaryColor1,
+                    unselectedBorderColor: AppColor.primaryColor2,
+                    borderRadius: BorderRadius.circular(10.r),
+                    elevation: 0,
+                    selectedShadow: [],
+                    unselectedShadow: [],
+                    mainGroupAlignment: MainGroupAlignment.start,
+                    crossGroupAlignment: CrossGroupAlignment.center,
+                    selectedTextStyle: AppText.blackText16,
+                    groupingType: GroupingType.wrap,
+                    unselectedTextStyle: AppText.blackText16,
+                    runSpacing: 0,
+                    spacing: 5.w,
+                  ),
+
+                  buttons: comments,
+                );
+              }
+              return Center(child: Text('Lỗi'));
+            }),
             (imageFileList.length != 0)
             ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -304,9 +370,10 @@ class _RatingMainRatingFrameState extends State<RatingMainRatingFrame> {
                     );
                   }
                   else {
-                    print("Hinh nè: " + imageSources.length.toString());
-                    Rating? rating = await RatingRepository().postRating(widget.checkin.toiletId, star, comment, widget.checkin.id, imageSources);
+                    print("Hinh nè: " + ratingCommonComments.last);
+                    Rating? rating = await RatingRepository().postRating(widget.checkin.toiletId, star, comment, widget.checkin.id, imageSources, ratingCommonComments);
                       if (rating != null) {
+                        print("rating nef nef: " + rating.toJson().toString());
                         Navigator.pushNamed(context, Routes.homeMainScreen);
                       } else {
                         showDialog<void>(

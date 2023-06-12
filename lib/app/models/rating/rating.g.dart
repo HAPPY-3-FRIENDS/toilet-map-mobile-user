@@ -16,6 +16,9 @@ Rating _$RatingFromJson(Map<String, dynamic> json) => Rating(
       ?.map((e) => e as String?)
       ?.toList(),
   json['avatar'] as String?,
+  (json['ratingCommonComments'] as List<dynamic>?)
+      ?.map((e) => e as String?)
+      ?.toList(),
 );
 
 Map<String, dynamic> _$RatingToJson(Rating instance) => <String, dynamic>{
@@ -26,4 +29,5 @@ Map<String, dynamic> _$RatingToJson(Rating instance) => <String, dynamic>{
   'dateTime': instance.dateTime,
   'imageSources': instance.imageSources,
   'avatar': instance.avatar,
+  'ratingCommonComments': instance.ratingCommonComments,
 };
