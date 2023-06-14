@@ -37,18 +37,7 @@ class PanelWidgetSearch extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Text("Nhà vệ sinh gần đây", style: AppText.titleText2,),
-                          InkWell(
-                            onTap: () {},
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5.w),
-                              child: Icon(Icons.refresh, size: 15.w,),
-                            ),
-                          ),
-                        ],
-                      ),
+                      Text("Nhà vệ sinh gần đây", style: AppText.titleText2,),
                       InkWell(
                         onTap: () {
                           showDialog<void>(

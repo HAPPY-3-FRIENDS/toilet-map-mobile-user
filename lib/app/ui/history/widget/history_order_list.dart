@@ -42,6 +42,11 @@ class _HistoryOrderListState extends State<HistoryOrderList> {
         onRefresh: () async {
           // Replace this delay with the code to be executed during refresh
           // and return a Future when code finishs execution.
+          setState(() {
+            posts = [];
+            page = 1;
+          });
+          _fetchPosts(page);
           return Future<void>.delayed(const Duration(seconds: 3));
         },
         // Pull from top to show refresh indicator.

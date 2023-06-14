@@ -24,6 +24,14 @@ class SharedPreferencesRepository {
     ];
   }
 
+  Future setCurrentLatLong(lat, long) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    return [
+      sharedPreferences.setDouble("latitude", lat),
+      sharedPreferences.setDouble("longtitude", long),
+    ];
+  }
+
   Future<List<String>?> getPayment() async {
     print('test get payment');
     final sharedPreferences = await SharedPreferences.getInstance();
