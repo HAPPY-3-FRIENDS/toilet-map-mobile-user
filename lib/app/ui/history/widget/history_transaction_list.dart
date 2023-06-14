@@ -7,8 +7,9 @@ import '../../../models/transaction/transaction.dart';
 import '../../../utils/constants.dart';
 
 class HistoryTransactionList extends StatefulWidget {
+  int transaction;
 
-  HistoryTransactionList({Key? key}) : super(key: key);
+  HistoryTransactionList({Key? key, required this.transaction}) : super(key: key);
 
   @override
   State<HistoryTransactionList> createState() => _HistoryTransactionListState();
@@ -32,42 +33,8 @@ class _HistoryTransactionListState extends State<HistoryTransactionList> {
 
   @override
   Widget build(BuildContext context) {
-    FutureBuilder<int?>(
-      future: TransactionRepository().countTransactionsByAccountId(),
-      builder: (context, snapshot){
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          print("ham nay bi goi lai");
-          return const Center(
-            child: CircularProgressIndicator(
-              color: AppColor.primaryColor1,
-              strokeWidth: 2.0,
-            ),
-          );
-        }
-        if(snapshot.hasData){
-          print("check okok");
-          if (snapshot.data! == 0) {
-            return Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  SizedBox(height: 10.h,),
-                  SizedBox(height: 200.w, width: 200.w,
-                    child: Image(image: AssetImage('assets/images/no-data.gif'),),),
-                  SizedBox(height: 10.h,),
-                  Text('Bạn chưa có lịch sử nào', style: AppText.detailText2)
-                ],
-              ),
-            );
-          }
-        }
-        return const Center(
-          child: Text('Lỗi'),
-        );
-      },
-    );
-
-    return RefreshIndicator(
+    return (widget.transaction != 0)
+    ? RefreshIndicator(
         key: _refreshIndicatorKey,
         color: AppColor.primaryColor1,
         backgroundColor: Colors.white,
@@ -97,6 +64,18 @@ class _HistoryTransactionListState extends State<HistoryTransactionList> {
             },
           ),
         )
+    )
+    : Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          SizedBox(height: 10.h,),
+          SizedBox(height: 200.w, width: 200.w,
+            child: Image(image: AssetImage('assets/images/no-data.gif'),),),
+          SizedBox(height: 10.h,),
+          Text('Bạn chưa có lịch sử nào', style: AppText.detailText2)
+        ],
+      ),
     );
   }
 

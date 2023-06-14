@@ -7,8 +7,9 @@ import '../../../repositories/order_repository.dart';
 import '../../../utils/constants.dart';
 
 class HistoryOrderList extends StatefulWidget {
+  int order;
 
-  HistoryOrderList({Key? key}) : super(key: key);
+  HistoryOrderList({Key? key, required this.order}) : super(key: key);
 
   @override
   State<HistoryOrderList> createState() => _HistoryOrderListState();
@@ -32,42 +33,8 @@ class _HistoryOrderListState extends State<HistoryOrderList> {
 
   @override
   Widget build(BuildContext context) {
-    FutureBuilder<int?>(
-      future: OrderRepository().countOrdersByAccountId(),
-      builder: (context, snapshot){
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          print("ham nay bi goi lai");
-          return const Center(
-            child: CircularProgressIndicator(
-              color: AppColor.primaryColor1,
-              strokeWidth: 2.0,
-            ),
-          );
-        }
-        if(snapshot.hasData){
-          print("check okok");
-          if (snapshot.data! == 0) {
-            return Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  SizedBox(height: 10.h,),
-                  SizedBox(height: 200.w, width: 200.w,
-                    child: Image(image: AssetImage('assets/images/no-data.gif'),),),
-                  SizedBox(height: 10.h,),
-                  Text('Bạn chưa có lịch sử nào', style: AppText.detailText2)
-                ],
-              ),
-            );
-          }
-        }
-        return const Center(
-          child: Text('Lỗi'),
-        );
-      },
-    );
-
-    return RefreshIndicator(
+    return (widget.order != 0)
+    ? RefreshIndicator(
         key: _refreshIndicatorKey,
         color: AppColor.primaryColor1,
         backgroundColor: Colors.white,
@@ -97,6 +64,18 @@ class _HistoryOrderListState extends State<HistoryOrderList> {
             },
           ),
         )
+    )
+    : Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          SizedBox(height: 10.h,),
+          SizedBox(height: 200.w, width: 200.w,
+            child: Image(image: AssetImage('assets/images/no-data.gif'),),),
+          SizedBox(height: 10.h,),
+          Text('Bạn chưa có lịch sử nào', style: AppText.detailText2)
+        ],
+      ),
     );
   }
 

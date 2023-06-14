@@ -49,7 +49,8 @@ class Router {
         final index = settings.arguments as ComboArgument;
         return MaterialPageRoute(builder: (_) => BuyComboMainScreen(comboArgument: index,));
       case 'HistoryMainScreen':
-        return MaterialPageRoute(builder: (_) => const HistoryMainScreen());
+        final index = settings.arguments as List<int>;
+        return MaterialPageRoute(builder: (_) => HistoryMainScreen(list: index,));
       case 'InformationMainScreen':
         return MaterialPageRoute(builder: (_) => const InformationMainScreen());
       case 'ToiletDetailMainScreen':

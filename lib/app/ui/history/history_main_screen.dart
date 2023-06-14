@@ -5,11 +5,13 @@ import 'package:toiletmap/app/ui/history/widget/history_order_list.dart';
 import 'package:toiletmap/app/ui/history/widget/history_transaction_list.dart';
 import 'package:toiletmap/app/ui/home/home_main_screen.dart';
 
+import '../../repositories/checkin_repository.dart';
 import '../../utils/constants.dart';
 
 class HistoryMainScreen extends StatefulWidget {
+  List<int> list;
 
-  const HistoryMainScreen({Key? key}) : super(key: key);
+  HistoryMainScreen({Key? key, required this.list}) : super(key: key);
 
   @override
   State<HistoryMainScreen> createState() => _HistoryMainScreenState();
@@ -105,9 +107,9 @@ class _HistoryMainScreenState extends State<HistoryMainScreen> with TickerProvid
                   child: TabBarView(
                     controller: tabController,
                     children: [
-                      HistoryCheckinList(),
-                      HistoryTransactionList(),
-                      HistoryOrderList()
+                      HistoryCheckinList(checkin: widget.list[0]),
+                      HistoryTransactionList(transaction: widget.list[2]),
+                      HistoryOrderList(order: widget.list[1],)
                     ],
                   ))
             ],

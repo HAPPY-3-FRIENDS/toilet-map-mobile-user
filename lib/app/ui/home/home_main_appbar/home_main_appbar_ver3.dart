@@ -10,6 +10,9 @@ import 'package:toiletmap/app/ui/login/login_main_screen.dart';
 
 import '../../../models/userInfo/user_info.dart';
 import '../../../repositories/auth_repository.dart';
+import '../../../repositories/checkin_repository.dart';
+import '../../../repositories/order_repository.dart';
+import '../../../repositories/transaction_repository.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/routes.dart';
 import '../../login/login_otp_confirmation_screen.dart';
@@ -59,8 +62,11 @@ class _HomeMainAppbarVer3State extends State<HomeMainAppbarVer3> {
 
         actions: [
           InkWell(
-            onTap: () => {
-              Navigator.pushNamed(context, Routes.historyMainScreen).then((_) => setState(() {})),
+            onTap: () async {
+              int? checkin = await CheckinRepository().countCheckinsByAccountId();
+              int? order = await OrderRepository().countOrdersByAccountId();
+              int? transaction = await TransactionRepository().countTransactionsByAccountId();
+              Navigator.pushNamed(context, Routes.historyMainScreen, arguments: [checkin!, order!, transaction!]).then((_) => setState(() {}));
             },
             child: (HomeMainScreen.newCheckins != 0)
               ? Align(
