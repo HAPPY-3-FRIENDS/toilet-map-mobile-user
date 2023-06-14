@@ -58,7 +58,7 @@ class _LocationReportMainScreenState extends State<LocationReportMainScreen> {
             child: Column(
               children: [
                 RatingMainInformationFrame(toiletId: widget.toiletId),
-                LocationReportContentFrame(),
+                LocationReportContentFrame(toiletId: widget.toiletId),
               ],
             )
           )

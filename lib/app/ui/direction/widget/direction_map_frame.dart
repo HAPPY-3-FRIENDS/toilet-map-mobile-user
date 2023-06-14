@@ -21,6 +21,7 @@ import '../../../models/toilet/toilet.dart';
 import '../../../models/toilet/toiletFacilities/toiletFacilities.dart';
 import '../../../repositories/place_repository.dart';
 import '../../../utils/routes.dart';
+import '../../location_report/widget/location_report_dialog.dart';
 
 class DirectionMapFrame extends StatefulWidget {
   Toilet toilet;
@@ -332,18 +333,13 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                       print('distance now: ' + sum.toString());
 
                                       if (sum <= 0.3) {
-                                        QuickAlert.show(
-                                            context: context,
-                                            type: QuickAlertType.info,
-                                            text: 'Bạn hài lòng với hệ thống chỉ đường / định vị chứ? Hãy báo cáo chúng tôi nếu có bất kỳ vấn đề bất cập nào!',
-                                            title: 'Báo cáo hệ thống',
-
-                                            confirmBtnText: 'Báo cáo',
-                                            confirmBtnColor: Colors.orangeAccent,
-                                            onConfirmBtnTap: () {
-                                              Navigator.pushNamed(context, Routes.locationReportMainScreen, arguments: widget.toilet.id);
-                                            }
-                                        );
+                                        AwesomeDialog(
+                                          context: context,
+                                          dialogType: DialogType.noHeader,
+                                          showCloseIcon: true,
+                                          animType: AnimType.topSlide,
+                                          body: LocationReportDialog(id: widget.toilet.id,),
+                                        )..show();
                                       }
                                     },
                                     child: Text("Hoàn tất", style: AppText.primary1Text20,)

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:toiletmap/app/repositories/report_repository.dart';
 import 'package:toiletmap/app/utils/routes.dart';
 
 import '../../utils/constants.dart';
 
 class LocationReportContentFrame extends StatefulWidget {
-  const LocationReportContentFrame({Key? key}) : super(key: key);
+  int toiletId;
+
+  LocationReportContentFrame({Key? key, required this.toiletId}) : super(key: key);
 
   @override
   State<LocationReportContentFrame> createState() => _LocationReportContentFrameState();
@@ -27,8 +32,8 @@ class _LocationReportContentFrameState extends State<LocationReportContentFrame>
               InkWell(
                 onTap: () {
                   setState(() {
-                    if (reportContent != 'Nhà vệ sinh không tồn tại/không mở cửa') {
-                      reportContent = 'Nhà vệ sinh không tồn tại/không mở cửa';
+                    if (reportContent != 'Nhà vệ sinh không tồn tại') {
+                      reportContent = 'Nhà vệ sinh không tồn tại';
                     } else {
                       reportContent = '';
                     }
@@ -43,8 +48,8 @@ class _LocationReportContentFrameState extends State<LocationReportContentFrame>
                       alignment: Alignment.centerLeft,
                       child: Row(
                         children: [
-                          Text("Nhà vệ sinh không tồn tại/không mở cửa", style: AppText.titleText2,),
-                          (reportContent == 'Nhà vệ sinh không tồn tại/không mở cửa')
+                          Text("Nhà vệ sinh không tồn tại", style: AppText.titleText2,),
+                          (reportContent == 'Nhà vệ sinh không tồn tại')
                               ? Icon(Icons.check, size: 17.w, color: AppColor.primaryColor1,)
                               : SizedBox(),
                         ],
@@ -57,8 +62,8 @@ class _LocationReportContentFrameState extends State<LocationReportContentFrame>
               InkWell(
                 onTap: () {
                   setState(() {
-                    if (reportContent != "Nhà vệ sinh quá xa vị trí trên bản đồ") {
-                      reportContent = "Nhà vệ sinh quá xa vị trí trên bản đồ";
+                    if (reportContent != "Nhà vệ sinh không mở cửa") {
+                      reportContent = "Nhà vệ sinh không mở cửa";
                     } else {
                       reportContent = '';
                     }
@@ -73,8 +78,8 @@ class _LocationReportContentFrameState extends State<LocationReportContentFrame>
                       alignment: Alignment.centerLeft,
                       child: Row(
                         children: [
-                          Text("Nhà vệ sinh quá xa vị trí trên bản đồ", style: AppText.titleText2,),
-                          (reportContent == "Nhà vệ sinh quá xa vị trí trên bản đồ")
+                          Text("Nhà vệ sinh không mở cửa", style: AppText.titleText2,),
+                          (reportContent == "Nhà vệ sinh không mở cửa")
                               ? Icon(Icons.check, size: 17.w, color: AppColor.primaryColor1,)
                               : SizedBox(),
                         ],
@@ -87,8 +92,8 @@ class _LocationReportContentFrameState extends State<LocationReportContentFrame>
               InkWell(
                 onTap: () {
                   setState(() {
-                    if (reportContent != "Đường đi xa hơn thực tế") {
-                      reportContent = "Đường đi xa hơn thực tế";
+                    if (reportContent != "Nhà vệ sinh không đúng vị trí định vị") {
+                      reportContent = "Nhà vệ sinh không đúng vị trí định vị";
                     } else {
                       reportContent = '';
                     }
@@ -103,8 +108,8 @@ class _LocationReportContentFrameState extends State<LocationReportContentFrame>
                       alignment: Alignment.centerLeft,
                       child: Row(
                         children: [
-                          Text("Đường đi xa hơn thực tế", style: AppText.titleText2,),
-                          (reportContent == "Đường đi xa hơn thực tế")
+                          Text("Nhà vệ sinh không đúng vị trí định vị", style: AppText.titleText2,),
+                          (reportContent == "Nhà vệ sinh không đúng vị trí định vị")
                               ? Icon(Icons.check, size: 17.w, color: AppColor.primaryColor1,)
                               : SizedBox(),
                         ],
@@ -126,7 +131,19 @@ class _LocationReportContentFrameState extends State<LocationReportContentFrame>
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.r))),
                 onPressed: () async {
+                  String? string = await ReportRepository().postLocationReport(widget.toiletId, reportContent);
+
                   Navigator.pushNamed(context, Routes.homeMainScreen);
+                  QuickAlert.show(
+                    context: context,
+                    type: QuickAlertType.success,
+                    title: "Cảm ơn bạn đã báo cáo!",
+                    confirmBtnColor: AppColor.primaryColor1,
+                    confirmBtnText: "Đóng",
+                    barrierDismissible: true,
+                    autoCloseDuration: Duration(seconds: 5),
+                    text: 'Cảm ơn bạn đã báo cáo! Báo cáo này sẽ giúp chúng tôi nâng cấp chất lượng hệ thống hơn!',
+                  );
                 },
                 child: Text("Gửi", style: TextStyle(color: Colors.black),)
             ),

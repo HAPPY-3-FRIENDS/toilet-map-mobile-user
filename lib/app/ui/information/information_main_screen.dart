@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
+import 'package:toiletmap/app/ui/location_report/widget/location_report_dialog.dart';
 import 'package:toiletmap/app/ui/login/login_main_screen.dart';
 import 'package:toiletmap/app/utils/routes.dart';
 
@@ -296,36 +297,7 @@ class _InformationMainScreenState extends State<InformationMainScreen> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      int choose = 0;
-
-                                      AwesomeDialog(
-                                        context: context,
-                                        dialogType: DialogType.noHeader,
-                                        animType: AnimType.rightSlide,
-                                        title: 'Đánh giá hệ thống',
-                                        desc: 'Bạn hài lòng với hệ thống chỉ đường/định vị chứ?',
-                                        body: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                IconButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        choose = 1;
-                                                      });
-                                                      print("clcik");
-                                                    },
-                                                    icon: FaIcon(FontAwesomeIcons.faceFrown, size: 80.w, color: (choose == 0) ? Colors.grey : Colors.amber,),
-                                                ),
-                                                FaIcon(FontAwesomeIcons.faceSmile, size: 80.w),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        btnCancelOnPress: () {},
-                                        btnOkOnPress: () {},
-                                      )..show();
+                                      Navigator.pushNamed(context, Routes.informationLinkedAppScreen);
                                     },
                                     child: Container(
                                       height: 60.h,
