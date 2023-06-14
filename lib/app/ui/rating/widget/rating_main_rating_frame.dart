@@ -31,7 +31,7 @@ class _RatingMainRatingFrameState extends State<RatingMainRatingFrame> {
   String comment = '';
   int star = 0;
   List<String> imageSources = [];
-  List<String> ratingCommonComments = [];
+  List<int> ratingCommonComments = [];
   int status = 0;
   late Timer _timer;
   late Future<List<CommonComment>?> future;
@@ -150,10 +150,10 @@ class _RatingMainRatingFrameState extends State<RatingMainRatingFrame> {
                 );
               }
               if (snapshot.hasData) {
-                List<String> comments = [];
+                List<CommonComment> comments = [];
                 snapshot.data!.forEach((element) {
                   if (element.status == "Hiển thị") {
-                    comments.add(element.name);
+                    comments.add(element);
                   }
                 });
 
@@ -163,12 +163,20 @@ class _RatingMainRatingFrameState extends State<RatingMainRatingFrame> {
                     if (isSelected == false) {
                       print('sau tru: ' + ratingCommonComments.length.toString());
                       setState(() {
-                        ratingCommonComments.remove(value);
+                        comments.forEach((element) {
+                          if (element.name == value) {
+                            ratingCommonComments.remove(element.id);
+                          }
+                        });
                       });
                     } else {
                       print('sau cong: ' + ratingCommonComments.length.toString());
                       setState(() {
-                        ratingCommonComments.add(value);
+                        comments.forEach((element) {
+                          if (element.name == value) {
+                            ratingCommonComments.add(element.id);
+                          }
+                        });
                       });
                     }
                   },
@@ -192,7 +200,7 @@ class _RatingMainRatingFrameState extends State<RatingMainRatingFrame> {
                     spacing: 5.w,
                   ),
 
-                  buttons: comments,
+                  buttons: (comments as List<CommonComment>).map((e) => e.name as String).toList(),
                 );
               }
               return Center(child: Text('Lỗi'));
@@ -369,7 +377,7 @@ class _RatingMainRatingFrameState extends State<RatingMainRatingFrame> {
                     );
                   }
                   else {
-                    print("Hinh nè: " + ratingCommonComments.last);
+                    print("Hinh nè: " + ratingCommonComments.length.toString());
                     Rating? rating = await RatingRepository().postRating(widget.checkin.toiletId, star, comment, widget.checkin.id, imageSources, ratingCommonComments);
                       if (rating != null) {
                         print("rating nef nef: " + rating.toJson().toString());

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toiletmap/app/models/jwt/jwt.dart';
+import 'package:toiletmap/app/repositories/auth_repository.dart';
 import 'package:toiletmap/app/ui/login/widget/login_main_appbar.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
@@ -76,6 +79,20 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
     Future.delayed(Duration(milliseconds: 7000)).then((value) async {
         final prefs = await SharedPreferences.getInstance();
         String? token = prefs.getString('accessToken');
+
+        Map<String, dynamic> load = Jwt.parseJwt(token!);
+        JWT jwt = JWT.fromJson(load);
+        int tokenDate = jwt.exp;
+        int nowDate = (DateTime.now().toUtc().millisecondsSinceEpoch / 1000).ceil();
+
+        print("token Date" + tokenDate.toString());
+        print("nơ Date" + nowDate.toString());
+
+        if (nowDate > tokenDate) {
+          token = null;
+          await prefs.clear();
+        }
+
         print('cho nay in ra token: ' + token!);
         if (token != null) {
           Navigator.pushNamed(context, Routes.homeMainScreen);

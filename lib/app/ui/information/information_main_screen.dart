@@ -1,5 +1,7 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
@@ -294,7 +296,36 @@ class _InformationMainScreenState extends State<InformationMainScreen> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      Navigator.pushNamed(context, Routes.informationLinkedAppScreen);
+                                      int choose = 0;
+
+                                      AwesomeDialog(
+                                        context: context,
+                                        dialogType: DialogType.noHeader,
+                                        animType: AnimType.rightSlide,
+                                        title: 'Đánh giá hệ thống',
+                                        desc: 'Bạn hài lòng với hệ thống chỉ đường/định vị chứ?',
+                                        body: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        choose = 1;
+                                                      });
+                                                      print("clcik");
+                                                    },
+                                                    icon: FaIcon(FontAwesomeIcons.faceFrown, size: 80.w, color: (choose == 0) ? Colors.grey : Colors.amber,),
+                                                ),
+                                                FaIcon(FontAwesomeIcons.faceSmile, size: 80.w),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        btnCancelOnPress: () {},
+                                        btnOkOnPress: () {},
+                                      )..show();
                                     },
                                     child: Container(
                                       height: 60.h,

@@ -86,7 +86,7 @@ class RatingRepository {
           "accountId": accountId,
           "checkInId": checkInId,
           "imageSources": imageSources,
-          "ratingCommonComments": ratingCommonComments,
+          "commonComments": ratingCommonComments,
         })
     );
     print('response ne: ' + response.body);
