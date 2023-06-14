@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/utils/constants.dart';
@@ -17,20 +18,40 @@ class ImagesFrame extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.r),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: NetworkImage("https://static.asianpaints.com/content/dam/asianpaintsbeautifulhomes/spaces/bathrooms/modern-toilet-design-ideas-for-contemporary-homes/Title-modern-toile-design-idea.jpg"),
+              image: AssetImage('assets/images/toilet-detail-no-image.png'),
             ),
           ),
         );
       case 1:
-        return Container(
-          height: 200.h,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.r),
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(imageSource[0]),
+        return CachedNetworkImage(
+            imageUrl: imageSource[0],
+            placeholder: (context, url) => SizedBox(
+              child: Center(
+                  child: CircularProgressIndicator()
+              ),
+              height: 20.w,
+              width: 20.w,
             ),
-          ),
+            errorWidget: (context, url, error) => Container(
+              height: 200.h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.r),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                ),
+              ),
+            ),
+            imageBuilder: (context, imageProvider) => Container(
+              height: 200.h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.r),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: imageProvider,
+                ),
+              ),
+            ),
         );
       case 2:
         return Container(
@@ -40,18 +61,40 @@ class ImagesFrame extends StatelessWidget {
             children: [
               Expanded(
                   flex: 1,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10.r),
-                          bottomLeft: Radius.circular(10.r)
+                  child: CachedNetworkImage(
+                      imageUrl: imageSource[0],
+                      placeholder: (context, url) => SizedBox(
+                        child: Center(
+                            child: CircularProgressIndicator()
+                        ),
+                        height: 20.w,
+                        width: 20.w,
                       ),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(imageSource[0])
+                      errorWidget: (context, url, error) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.r),
+                              bottomLeft: Radius.circular(10.r)
+                          ),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                          ),
+                        ),
                       ),
-                    ),
-                  )
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.r),
+                              bottomLeft: Radius.circular(10.r)
+                          ),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: imageProvider
+                          ),
+                        ),
+                      )
+                  ),
               ),
               VerticalDivider(
                 width: 5,
@@ -59,18 +102,40 @@ class ImagesFrame extends StatelessWidget {
               ),
               Expanded(
                   flex: 1,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10.r),
-                          bottomRight: Radius.circular(10.r)
+                  child: CachedNetworkImage(
+                      imageUrl: imageSource[1],
+                      placeholder: (context, url) => SizedBox(
+                        child: Center(
+                            child: CircularProgressIndicator()
+                        ),
+                        height: 20.w,
+                        width: 20.w,
                       ),
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(imageSource[1])
+                      errorWidget: (context, url, error) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10.r),
+                              bottomRight: Radius.circular(10.r)
+                          ),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                          ),
+                        ),
                       ),
-                    ),
-                  )
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10.r),
+                              bottomRight: Radius.circular(10.r)
+                          ),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: imageProvider
+                          ),
+                        ),
+                      )
+                  ),
               ),
             ],
           ),
@@ -83,18 +148,40 @@ class ImagesFrame extends StatelessWidget {
             children: [
               Expanded(
                   flex: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10.r),
-                          bottomLeft: Radius.circular(10.r)
+                  child: CachedNetworkImage(
+                      imageUrl: imageSource[0],
+                      placeholder: (context, url) => SizedBox(
+                        child: Center(
+                            child: CircularProgressIndicator()
+                        ),
+                        height: 20.w,
+                        width: 20.w,
                       ),
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(imageSource[0])
+                      errorWidget: (context, url, error) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.r),
+                              bottomLeft: Radius.circular(10.r)
+                          ),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                          ),
+                        ),
                       ),
-                    ),
-                  )
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.r),
+                              bottomLeft: Radius.circular(10.r)
+                          ),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: imageProvider
+                          ),
+                        ),
+                      )
+                  ),
               ),
               VerticalDivider(
                 width: 5,
@@ -106,32 +193,74 @@ class ImagesFrame extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10.r),
+                      child: CachedNetworkImage(
+                          imageUrl: imageSource[1],
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
                           ),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[1])
+                          errorWidget: (context, url, error) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10.r),
+                              ),
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                              ),
+                            ),
                           ),
-                        ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10.r),
+                              ),
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: imageProvider
+                              ),
+                            ),
+                          ),
                       ),
-                    ),
+                      ),
                     Divider(
                       height: 5,
                       color: Colors.white,
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(10.r)
+                      child: CachedNetworkImage(
+                        imageUrl: imageSource[2],
+                        placeholder: (context, url) => SizedBox(
+                          child: Center(
+                              child: CircularProgressIndicator()
                           ),
-                          image: DecorationImage(
+                          height: 20.w,
+                          width: 20.w,
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.r),
+                            ),
+                            image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[2])
+                              image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                            ),
+                          ),
+                        ),
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.r),
+                            ),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: imageProvider
+                            ),
                           ),
                         ),
                       ),
@@ -150,18 +279,40 @@ class ImagesFrame extends StatelessWidget {
             children: [
               Expanded(
                   flex: 3,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10.r),
-                          bottomLeft: Radius.circular(10.r)
+                  child: CachedNetworkImage(
+                      imageUrl: imageSource[0],
+                      placeholder: (context, url) => SizedBox(
+                        child: Center(
+                            child: CircularProgressIndicator()
+                        ),
+                        height: 20.w,
+                        width: 20.w,
                       ),
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(imageSource[0])
+                      errorWidget: (context, url, error) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.r),
+                              bottomLeft: Radius.circular(10.r)
+                          ),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                          ),
+                        ),
                       ),
-                    ),
-                  )
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.r),
+                              bottomLeft: Radius.circular(10.r)
+                          ),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: imageProvider
+                          ),
+                        ),
+                      )
+                  ),
               ),
               VerticalDivider(
                 width: 5,
@@ -173,14 +324,35 @@ class ImagesFrame extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
+                      child: CachedNetworkImage(
+                        imageUrl: imageSource[1],
+                        placeholder: (context, url) => SizedBox(
+                          child: Center(
+                              child: CircularProgressIndicator()
+                          ),
+                          height: 20.w,
+                          width: 20.w,
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
                               topRight: Radius.circular(10.r),
-                          ),
-                          image: DecorationImage(
+                            ),
+                            image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[1])
+                              image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                            ),
+                          ),
+                        ),
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10.r),
+                            ),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: imageProvider
+                            ),
                           ),
                         ),
                       ),
@@ -191,11 +363,29 @@ class ImagesFrame extends StatelessWidget {
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
+                      child: CachedNetworkImage(
+                        imageUrl: imageSource[2],
+                        placeholder: (context, url) => SizedBox(
+                          child: Center(
+                              child: CircularProgressIndicator()
+                          ),
+                          height: 20.w,
+                          width: 20.w,
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[2])
+                              image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                            ),
+                          ),
+                        ),
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: imageProvider
+                            ),
                           ),
                         ),
                       ),
@@ -206,14 +396,35 @@ class ImagesFrame extends StatelessWidget {
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(10.r)
+                      child: CachedNetworkImage(
+                        imageUrl: imageSource[3],
+                        placeholder: (context, url) => SizedBox(
+                          child: Center(
+                              child: CircularProgressIndicator()
                           ),
-                          image: DecorationImage(
+                          height: 20.w,
+                          width: 20.w,
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.r),
+                            ),
+                            image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[3])
+                              image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                            ),
+                          ),
+                        ),
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.r),
+                            ),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: imageProvider
+                            ),
                           ),
                         ),
                       ),
@@ -232,18 +443,40 @@ class ImagesFrame extends StatelessWidget {
             children: [
               Expanded(
                   flex: 3,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10.r),
-                        bottomLeft: Radius.circular(10.r)
+                  child: CachedNetworkImage(
+                      imageUrl: imageSource[0],
+                      placeholder: (context, url) => SizedBox(
+                        child: Center(
+                            child: CircularProgressIndicator()
+                        ),
+                        height: 20.w,
+                        width: 20.w,
                       ),
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(imageSource[0])
+                      errorWidget: (context, url, error) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.r),
+                              bottomLeft: Radius.circular(10.r)
+                          ),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                          ),
+                        ),
                       ),
-                    ),
-                  )
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.r),
+                              bottomLeft: Radius.circular(10.r)
+                          ),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: imageProvider
+                          ),
+                        ),
+                      )
+                  ),
               ),
               VerticalDivider(
                 width: 5,
@@ -255,60 +488,133 @@ class ImagesFrame extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10.r),
+                      child: CachedNetworkImage(
+                        imageUrl: imageSource[1],
+                        placeholder: (context, url) => SizedBox(
+                          child: Center(
+                              child: CircularProgressIndicator()
                           ),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[1])
-                          ),
+                          height: 20.w,
+                          width: 20.w,
                         ),
-                      ),
-                    ),
-                    Divider(
-                      height: 5,
-                      color: Colors.white,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[2])
-                          ),
-                        ),
-                      ),
-                    ),
-                    Divider(
-                      height: 5,
-                      color: Colors.white,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(10.r),
-                          ),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[3])
-                          ),
-                        ),
-                        child: Container(
+                        errorWidget: (context, url, error) => Container(
                           decoration: BoxDecoration(
-                            color: Colors.black38,
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10.r),
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                            ),
+                          ),
+                        ),
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10.r),
+                            ),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: imageProvider
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Divider(
+                      height: 5,
+                      color: Colors.white,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: CachedNetworkImage(
+                        imageUrl: imageSource[2],
+                        placeholder: (context, url) => SizedBox(
+                          child: Center(
+                              child: CircularProgressIndicator()
+                          ),
+                          height: 20.w,
+                          width: 20.w,
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                            ),
+                          ),
+                        ),
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: imageProvider
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Divider(
+                      height: 5,
+                      color: Colors.white,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: CachedNetworkImage(
+                        imageUrl: imageSource[3],
+                        placeholder: (context, url) => SizedBox(
+                          child: Center(
+                              child: CircularProgressIndicator()
+                          ),
+                          height: 20.w,
+                          width: 20.w,
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(10.r),
                             ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                            ),
                           ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            '+ ' + (imageSource.length - 4).toString(),
-                            style: TextStyle(fontSize: 20.sp, color: Colors.white),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black38,
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(10.r),
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              '+ ' + (imageSource.length - 4).toString(),
+                              style: TextStyle(fontSize: 20.sp, color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.r),
+                            ),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: imageProvider
+                            ),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black38,
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(10.r),
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              '+ ' + (imageSource.length - 4).toString(),
+                              style: TextStyle(fontSize: 20.sp, color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
