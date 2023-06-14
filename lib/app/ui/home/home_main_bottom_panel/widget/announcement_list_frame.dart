@@ -44,15 +44,37 @@ class _AnnouncementListFrameState extends State<AnnouncementListFrame> {
                     height: 20.w,
                     width: 20.w,
                   ),
-                  errorWidget: (context, url, error) => Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text("Lỗi tải ảnh", style: AppText.detailText3,),
-                        SizedBox(height: 20.h,),
-                        Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
-                      ],
+                  errorWidget: (context, url, error) => InkWell(
+                    onTap: () async {
+                      if (item.type == "External-App") {
+                        bool isInstalled = await DeviceApps.isAppInstalled(item.url!);
+                        if (isInstalled) {
+                          DeviceApps.openApp(item.url!);
+                        } else {
+                          final url = Uri.parse('market://details?id=' + item.url!);
+                          launchUrl(
+                            url,
+                            mode: LaunchMode.externalApplication,
+                          );
+                        }
+                      } else if (item.type == "External") {
+                        final url = Uri.parse(item.url!);
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      }
+                      else {
+                        Navigator.pushNamed(context, Routes.announcementMainScreen, arguments: item);
+                      }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/announcement-no-image.png"),
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
                     ),
                   ),
                   imageBuilder: (context, imageProvider) => InkWell(

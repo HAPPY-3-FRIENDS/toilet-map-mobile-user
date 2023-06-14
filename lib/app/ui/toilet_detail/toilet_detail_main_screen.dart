@@ -118,14 +118,11 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
                                       width: 20.w,
                                     ),
                                     errorWidget: (context, url, error) => Container(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Text("Lỗi tải ảnh", style: AppText.detailText3,),
-                                          SizedBox(height: 20.h,),
-                                          Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
-                                        ],
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                                          fit: BoxFit.fitHeight,
+                                        ),
                                       ),
                                     ),
                                     imageBuilder: (context, imageProvider) => Container(

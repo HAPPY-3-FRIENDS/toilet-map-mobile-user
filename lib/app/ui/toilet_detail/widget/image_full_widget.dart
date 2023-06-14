@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,10 +37,32 @@ class _ImageFullWidgetState extends State<ImageFullWidget> {
             child: CarouselSlider(
               items: widget.images
                   .map(
-                    (item) => Image.network(
-                  item!,
-                  fit: BoxFit.fitHeight,
-                ),
+                    (item) => CachedNetworkImage(
+                        imageUrl: item!,
+                        placeholder: (context, url) => SizedBox(
+                          child: Center(
+                              child: CircularProgressIndicator()
+                          ),
+                          height: 20.w,
+                          width: 20.w,
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                              fit: BoxFit.fitHeight,
+                            ),
+                          ),
+                        ),
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.fitHeight,
+                            ),
+                          ),
+                        )
+                    ),
               )
                   .toList(),
               carouselController: carouselController,

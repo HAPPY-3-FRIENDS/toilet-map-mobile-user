@@ -90,18 +90,11 @@ class ToiletInListFrame extends StatelessWidget {
                           height: 200.h,
                           width: 130.w,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.r),
-                              border: Border.all(color: Color(0xFFF1F1F1), width: 2.w),
-                              color: Color(0xFFF1F1F1)
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text("Lỗi tải ảnh", style: AppText.detailText3,),
-                              SizedBox(height: 20.h,),
-                              Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
-                            ],
+                            borderRadius: BorderRadius.circular(10.r),
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/nearby-toilets-no-image.png"),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                           imageBuilder: (context, imageProvider) => Container(
@@ -292,17 +285,10 @@ class ToiletInListFrame extends StatelessWidget {
                           width: 130.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(color: Color(0xFFF1F1F1), width: 2.w),
-                            color: Color(0xFFF1F1F1)
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text("Lỗi tải ảnh", style: AppText.detailText3,),
-                              SizedBox(height: 20.h,),
-                              Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
-                            ],
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/nearby-toilets-no-image.png"),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         imageBuilder: (context, imageProvider) => Container(
