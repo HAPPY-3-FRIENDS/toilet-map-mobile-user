@@ -217,6 +217,13 @@ class AppText {
     color: Colors.black,
   );
 
+  static var appbarText3 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 16.sp,
+    color: Colors.black,
+    fontStyle: FontStyle.italic,
+  );
+
   static var appbarQRButtonText1 = TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 18.sp,

@@ -142,6 +142,16 @@ class _ActionFrameState extends State<ActionFrame> {
                                     ),
                                   ),
                                 ],
+                              ), flex: 1,),
+                              Expanded(child: Padding(
+                                padding: EdgeInsets.only(left: 2.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image(image: AssetImage('assets/logo-circle.png'), height: 15.w, width: 15.w,),
+                                    Text(' : Ký hiệu Nhà vệ sinh', style: AppText.appbarText3,),
+                                  ],
+                                ),
                               ), flex: 1,)
                             ],
                           );
