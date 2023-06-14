@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:location/location.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/main.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -256,6 +257,12 @@ class _HomeMainMapState extends State<HomeMainMap> {
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
                                 ),
                                 onPressed: () async {
+                                  QuickAlert.show(
+                                    context: context,
+                                    type: QuickAlertType.loading,
+                                    title: 'Đang tải dữ liệu',
+                                  );
+
                                   Toilet? toilet = await ToiletRepository().getNearestToilet();
                                   if (toilet == null) {
                                     showDialog<void>(
@@ -276,6 +283,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
                                       },
                                     );
                                   }
+                                  Navigator.pop(context);
                                   Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
                                 },
                                 child: Text('Khẩn cấp', style: AppText.titleText1),

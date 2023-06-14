@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
 import 'package:toiletmap/app/ui/location_report/widget/location_report_dialog.dart';
@@ -10,6 +11,9 @@ import 'package:toiletmap/app/ui/login/login_main_screen.dart';
 import 'package:toiletmap/app/utils/routes.dart';
 
 import '../../models/userInfo/user_info.dart';
+import '../../repositories/checkin_repository.dart';
+import '../../repositories/order_repository.dart';
+import '../../repositories/transaction_repository.dart';
 import '../../utils/constants.dart';
 import '../login/login_otp_confirmation_screen.dart';
 
@@ -236,8 +240,17 @@ class _InformationMainScreenState extends State<InformationMainScreen> {
                                     height: 5.h,
                                   ),
                                   InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, Routes.historyMainScreen);
+                                    onTap: () async {
+                                      QuickAlert.show(
+                                        context: context,
+                                        type: QuickAlertType.loading,
+                                        title: 'Đang tải dữ liệu',
+                                      );
+                                      int? checkin = await CheckinRepository().countCheckinsByAccountId();
+                                      int? order = await OrderRepository().countOrdersByAccountId();
+                                      int? transaction = await TransactionRepository().countTransactionsByAccountId();
+                                      Navigator.pop(context);
+                                      Navigator.pushNamed(context, Routes.historyMainScreen, arguments: [checkin!, order!, transaction!]).then((_) => setState(() {}));
                                     },
                                     child: Container(
                                       height: 60.h,

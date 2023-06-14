@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
@@ -63,9 +65,15 @@ class _HomeMainAppbarVer3State extends State<HomeMainAppbarVer3> {
         actions: [
           InkWell(
             onTap: () async {
+              QuickAlert.show(
+                context: context,
+                type: QuickAlertType.loading,
+                title: 'Đang tải dữ liệu',
+              );
               int? checkin = await CheckinRepository().countCheckinsByAccountId();
               int? order = await OrderRepository().countOrdersByAccountId();
               int? transaction = await TransactionRepository().countTransactionsByAccountId();
+              Navigator.pop(context);
               Navigator.pushNamed(context, Routes.historyMainScreen, arguments: [checkin!, order!, transaction!]).then((_) => setState(() {}));
             },
             child: (HomeMainScreen.newCheckins != 0)

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/models/jwt/jwt.dart';
 import 'package:toiletmap/app/repositories/auth_repository.dart';
@@ -77,6 +79,12 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
     });
 
     Future.delayed(Duration(milliseconds: 7000)).then((value) async {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.loading,
+        title: 'Đang tải dữ liệu',
+      );
+
         final prefs = await SharedPreferences.getInstance();
         String? token = prefs.getString('accessToken');
 
@@ -92,6 +100,8 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
           token = null;
           await prefs.clear();
         }
+
+        Navigator.pop(context);
 
         print('cho nay in ra token: ' + token!);
         if (token != null) {

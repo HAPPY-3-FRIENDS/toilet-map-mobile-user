@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/models/accessToken/access_token.dart';
 import 'package:toiletmap/app/repositories/auth_repository.dart';
@@ -116,6 +118,11 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
                               borderRadius: BorderRadius.circular(10.r))),
                       onPressed: () async {
                         try {
+                          QuickAlert.show(
+                            context: context,
+                            type: QuickAlertType.loading,
+                            title: 'Đang tải dữ liệu',
+                          );
                           //open 2 code to build apk
                           PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: LoginMainScreen.verify, smsCode: code);
                           await auth.signInWithCredential(credential);
@@ -126,6 +133,9 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
                           //prefs.setString("accessToken", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNjg1NDEyNzgyLCJleHAiOjE2ODYwMTc1ODIsInVzZXJuYW1lIjoiMDg0OTY2Njk1NyIsInJvbGUiOiJVc2VyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVXNlciJ9XX0.9JdU94M_XH2evBF8pvLhULJoevgUxK3AaQByXGLPw3lxFSKMnfe7KR-o-JGeOWiYBk7TEA3kj9jE8JD8_5cEgQ");
 
                           AccessToken? accessToken = await AuthRepository().authPhoneLogin();
+
+                          Navigator.pop(context);
+
                           if (accessToken == null ) {
                             Navigator.pushNamed(context, Routes.createAccountScreen);
                           } else {
