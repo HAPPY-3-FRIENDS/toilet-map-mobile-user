@@ -6,6 +6,7 @@ import 'package:toiletmap/app/ui/rating/widget/rating_frame_widget.dart';
 import 'package:toiletmap/app/models/toilet/toiletArgument2.dart';
 
 import '../../models/rating/rating.dart';
+import '../../models/rating/rating_response.dart';
 import '../../utils/constants.dart';
 
 class RatingListScreen extends StatefulWidget {
@@ -161,9 +162,9 @@ class _RatingListScreenState extends State<RatingListScreen> {
                       itemCount: isLoadingMore ? posts.length + 1 : posts.length,
                       controller: scrollController,
                       itemBuilder: (BuildContext context, int index) {
-                        Rating rating = posts[index];
+                        RatingResponse rating = posts[index];
                         if (index < posts.length) {
-                          Rating rating = posts[index];
+                          RatingResponse rating = posts[index];
                           return Column(
                             children: [
                               Container(height: 2.h, color: Color(0xFFF1F1F1),),
@@ -207,7 +208,7 @@ class _RatingListScreenState extends State<RatingListScreen> {
   }
 
   Future<void> _fetchPosts(int page) async {
-    List<Rating>? set = await RatingRepository().getRatingsByToiletId(widget.toiletArgument2.id, page);
+    List<RatingResponse>? set = await RatingRepository().getRatingsByToiletId(widget.toiletArgument2.id, page);
     setState(() {
       posts = posts + set!;
     });

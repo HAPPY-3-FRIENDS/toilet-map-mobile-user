@@ -88,24 +88,28 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
         final prefs = await SharedPreferences.getInstance();
         String? token = prefs.getString('accessToken');
 
-        Map<String, dynamic> load = Jwt.parseJwt(token!);
-        JWT jwt = JWT.fromJson(load);
-        int tokenDate = jwt.exp;
-        int nowDate = (DateTime.now().toUtc().millisecondsSinceEpoch / 1000).ceil();
+        if (token == null) {
+          Navigator.pop(context);
+        } else {
+          Map<String, dynamic> load = Jwt.parseJwt(token!);
+          JWT jwt = JWT.fromJson(load);
+          int tokenDate = jwt.exp;
+          int nowDate = (DateTime.now().toUtc().millisecondsSinceEpoch / 1000).ceil();
 
-        print("token Date" + tokenDate.toString());
-        print("nơ Date" + nowDate.toString());
+          print("token Date" + tokenDate.toString());
+          print("nơ Date" + nowDate.toString());
 
-        if (nowDate > tokenDate) {
-          token = null;
-          await prefs.clear();
-        }
+          if (nowDate > tokenDate) {
+            token = null;
+            await prefs.clear();
+          }
 
-        Navigator.pop(context);
-
-        print('cho nay in ra token: ' + token!);
-        if (token != null) {
-          Navigator.pushNamed(context, Routes.homeMainScreen);
+          print('cho nay in ra token: ' + token!);
+          if (token != null) {
+            Navigator.pushNamed(context, Routes.homeMainScreen);
+          } else {
+            Navigator.pop(context);
+          }
         }
     });
 
@@ -179,7 +183,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
-                            height: 25.h
+                            height: 60.h
                         ),
                         Container(
                           height: 60.h,
@@ -202,6 +206,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                                         SizedBox(
                                           width: 35.w,
                                           child: TextField(
+                                            readOnly: true,
                                             controller: countryController,
                                             keyboardType: TextInputType.number,
                                             decoration: InputDecoration(
@@ -257,6 +262,16 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                                     } else {
                                       sharedPreferences = await SharedPreferences.getInstance();
 
+                                      QuickAlert.show(
+                                        context: context,
+                                        type: QuickAlertType.loading,
+                                        title: 'Đang tải dữ liệu',
+                                      );
+
+                                      if (phone[0] == '0') {
+                                        phone = phone.substring(1);
+                                      }
+
                                       await FirebaseAuth.instance.verifyPhoneNumber(
                                         phoneNumber: '${countryController.text + phone}',
                                         verificationCompleted: (PhoneAuthCredential credential) {},
@@ -266,7 +281,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                                             builder: (BuildContext context) {
                                               return AlertDialog(
                                                 title: const Text('Lỗi'),
-                                                content: const Text('Số điện thoại không hợp lệ'),
+                                                content: Text('Số điện thoại không hợp lệ ${phone}'),
                                                 actions: <Widget>[
                                                   TextButton(
                                                     child: const Text('Xác nhận'),
@@ -286,6 +301,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                                           }
                                           sharedPreferences.setString("username", phone);
                                           print('loginmain ' +phone);
+                                          Navigator.of(context).pop();
                                           Navigator.pushNamed(context, Routes.loginOTPConfirmationScreen);
                                         },
                                         codeAutoRetrievalTimeout: (String verificationId) {},
@@ -296,7 +312,8 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                             ],
                           ),
                         ),
-                        SizedBox(
+
+                        /*SizedBox(
                             height: 60.h
                         ),
                         Container(
@@ -333,8 +350,8 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                         ),
                         SizedBox(
                             height: 20.h
-                        ),
-                        IconButton(iconSize: 20.w ,onPressed: () {}, icon: Image.asset('assets/images/google-logo.png'),)
+                        ),*/
+                        //IconButton(iconSize: 20.w ,onPressed: () {}, icon: Image.asset('assets/images/google-logo.png'),)
                       ],
                     ),
                   ),),

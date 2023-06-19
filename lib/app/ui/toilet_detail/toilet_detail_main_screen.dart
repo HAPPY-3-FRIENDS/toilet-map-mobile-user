@@ -9,6 +9,7 @@ import 'package:toiletmap/app/ui/toilet_detail/widget/toilet_rating_frame.dart';
 import 'package:toiletmap/app/ui/toilet_detail/widget/toilet_rating_list_frame.dart';
 
 import '../../models/rating/rating.dart';
+import '../../models/rating/rating_response.dart';
 import '../../models/toilet/toiletArgument.dart';
 import '../../utils/constants.dart';
 import '../../utils/routes.dart';
@@ -28,7 +29,7 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
   final CarouselController carouselController = CarouselController();
   int currentIndex = 0;
   late Future<int?> _future;
-  late Future<List<Rating>?> _future2;
+  late Future<List<RatingResponse>?> _future2;
 
   @override
   void initState() {
@@ -207,7 +208,7 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
                         }
                         return Center(child: Text('Lỗi'));
                       }),
-                FutureBuilder<List<Rating>?> (
+                FutureBuilder<List<RatingResponse>?> (
                     future: _future2,
                     builder: (context, snapshot)  {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -219,22 +220,23 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
                         );
                       }
                       if (snapshot.hasData) {
-                        return ToiletRatingListFrame(ratings: snapshot!.data!);
-                      }
-                      if (!snapshot.hasData) {
-                        return Container(
-                          width: double.infinity,
-                          color: Colors.white,
-                          child: Column(
-                            children: [
-                              SizedBox(height: 10.h,),
-                              SizedBox(height: 100.w, width: 100.w,
-                                child: Image(image: AssetImage('assets/images/no-data.gif'),),),
-                              SizedBox(height: 5.h,),
-                              Text('Chưa có đánh giá nào', style: AppText.detailText2)
-                            ],
-                          ),
-                        );
+                        if (snapshot.data!.length > 0) {
+                          return ToiletRatingListFrame(ratings: snapshot!.data!);
+                        } else {
+                          return Container(
+                            width: double.infinity,
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                                SizedBox(height: 10.h,),
+                                SizedBox(height: 100.w, width: 100.w,
+                                  child: Image(image: AssetImage('assets/images/no-data.gif'),),),
+                                SizedBox(height: 5.h,),
+                                Text('Chưa có đánh giá nào', style: AppText.detailText2)
+                              ],
+                            ),
+                          );
+                        }
                       }
                       return Center(child: Text('Lỗi'));
                     }),

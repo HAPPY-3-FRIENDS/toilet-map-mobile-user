@@ -15,6 +15,7 @@ Checkin _$CheckinFromJson(Map<String, dynamic> json) => Checkin(
       json['turn'] as int?,
       json['id'] as int,
       json['status'] as String?,
+      json['username'] as String,
     );
 
 Map<String, dynamic> _$CheckinToJson(Checkin instance) => <String, dynamic>{
@@ -25,5 +26,6 @@ Map<String, dynamic> _$CheckinToJson(Checkin instance) => <String, dynamic>{
       'balance': instance.balance,
       'turn': instance.turn,
       'id': instance.id,
-      'status': instance.status
+      'status': instance.status,
+      'username': instance.username
     };

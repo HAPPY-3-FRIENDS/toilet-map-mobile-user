@@ -325,7 +325,7 @@ class _InformationMainScreenState extends State<InformationMainScreen> {
                                                 children: [
                                                   Icon(Icons.apps_outlined, color: AppColor.primaryColor1, size: 20.w,),
                                                   SizedBox(width: 10.w),
-                                                  Text("Ứng dụng liên kết", style: AppText.titleText2,),
+                                                  Text("Tiện ích", style: AppText.titleText2,),
                                                 ],
                                               ),
                                               Icon(Icons.arrow_forward_ios_outlined, size: 17.w, color: Colors.black38,),

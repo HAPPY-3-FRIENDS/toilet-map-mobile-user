@@ -13,6 +13,7 @@ import 'package:toiletmap/app/ui/login/login_otp_confirmation_screen.dart';
 
 import '../models/checkin/checkin.dart';
 import '../models/rating/rating.dart';
+import '../models/rating/rating_response.dart';
 import '../ui/announcement/announcement_main_screen.dart';
 import '../ui/combo/buy_combo_main_screen.dart';
 import '../ui/direction/direction_main_screen.dart';
@@ -98,7 +99,7 @@ class Router {
         final index = settings.arguments as int;
         return MaterialPageRoute(builder: (_) => LocationReportMainScreen(toiletId: index,));
       case 'RatingReportMainScreen':
-        final index = settings.arguments as Rating;
+        final index = settings.arguments as RatingResponse;
         return MaterialPageRoute(builder: (_) => RatingReportMainScreen(rating: index,));
 
         default:

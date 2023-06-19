@@ -6,10 +6,11 @@ import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 
 import '../models/baseResponse/base_response.dart';
 import '../models/rating/rating.dart';
+import '../models/rating/rating_response.dart';
 import '../utils/constants.dart';
 
 class RatingRepository {
-  Future<List<Rating>?> getRatingsByToiletId(int id, int page) async {
+  Future<List<RatingResponse>?> getRatingsByToiletId(int id, int page) async {
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
 
     final response = await http.get(
@@ -25,15 +26,15 @@ class RatingRepository {
       final responseJson = jsonDecode(response.body);
       print(responseJson);
       BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
-      List<Rating> ratings = (baseResponse.data as List).map(
-              (i) => Rating.fromJson(i)).toList();
+      List<RatingResponse> ratings = (baseResponse.data as List).map(
+              (i) => RatingResponse.fromJson(i)).toList();
       print("Rating successfully 2");
       print("Rating successfully " + ratings[0].toString());
       return ratings;
     }
 
     if (response.statusCode == 204) {
-      List<Rating> ratings = [];
+      List<RatingResponse> ratings = [];
       print("Rating list empty");
       return ratings;
     }

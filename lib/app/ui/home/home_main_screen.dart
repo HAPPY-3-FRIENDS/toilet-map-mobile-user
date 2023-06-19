@@ -43,6 +43,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
 
   _initClient() async {
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
+
     setState(() {
       client = StompClient(
           config: StompConfig.SockJS(
@@ -57,15 +58,17 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     client.activate();
   }
 
-  void onConnect(StompFrame connectFrame) {
+  void onConnect(StompFrame connectFrame) async {
+    String? phone = await SharedPreferencesRepository().getUsername();
+
     print("connect websocket oke");
     client.subscribe(
         destination: '/topic/check-in',
         callback: (StompFrame frame) {
           Map<String, dynamic> result = json.decode(frame.body!);
           Checkin checkin = Checkin.fromJson(result);
-          setState(() {
-            if (checkin.id != lastCheckinId) {
+          if (checkin.id != lastCheckinId && checkin.username == phone) {
+            setState(() {
               lastCheckinId = checkin.id;
               HomeMainScreen.newCheckins += 1;
               print("Có in ko + " + QRCodeBuilder.qrCode.toString());
@@ -107,8 +110,8 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                     Navigator.pushNamed(context, Routes.ratingMainScreen, arguments: checkin).then((_) => setState(() {}));
                   }
               ).show();
-            }
-          });
+            });
+          }
           print('id ne ' + checkin.id.toString());
         });
   }

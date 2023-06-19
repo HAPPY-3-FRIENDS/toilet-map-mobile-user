@@ -30,7 +30,7 @@ class InformationLinkedAppScreen extends StatelessWidget {
                   ),
                 ),
 
-                title: Text('Ứng dụng liên kết'),
+                title: Text('Tiện ích'),
                 titleTextStyle: AppText.appbarTitleText2,
                 centerTitle: true,
                 toolbarHeight: 100.h,
@@ -50,7 +50,7 @@ class InformationLinkedAppScreen extends StatelessWidget {
                 padding: EdgeInsets.all(20.w),
                 child: GridView(
                   children: [
-                    InkWell(
+                    /*InkWell(
                       onTap: () {
                         final url = Uri.parse('market://details?id=com.facebook.katana');
                         launchUrl(
@@ -98,6 +98,44 @@ class InformationLinkedAppScreen extends StatelessWidget {
                       },
                       child: CachedNetworkImage(
                           imageUrl: 'https://scontent.fsgn8-4.fna.fbcdn.net/v/t39.30808-6/351809798_678204167479571_5816338215040382418_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=730e14&_nc_ohc=qNfbknJ9NjEAX9Jbqn5&_nc_ht=scontent.fsgn8-4.fna&oh=00_AfBTRI-tYTbscyq11MI1f6vz_jmPe53ZWzW-MW_iispyiQ&oe=64834162',
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                SizedBox(height: 20.h,),
+                                Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                              ],
+                            ),
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                      ),
+                    ),*/
+                    InkWell(
+                      onTap: () {
+                        final url = Uri.parse('https://thanhtoan.dichvucongichquan1.com/payment?dv=CI1');
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl: 'https://scontent.fsgn8-4.fna.fbcdn.net/v/t39.30808-6/353633957_3538358736400428_8611613524933424250_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=7IxwL8q9VGAAX9jw10m&_nc_ht=scontent.fsgn8-4.fna&oh=00_AfDX6oNe9ChzO0_bxIPJeWrJUXc28sjjuzE0eVqPca8Kdg&oe=648F2F1F',
                           placeholder: (context, url) => SizedBox(
                             child: Center(
                                 child: CircularProgressIndicator()

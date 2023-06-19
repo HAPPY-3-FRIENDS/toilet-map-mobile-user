@@ -7,10 +7,11 @@ import 'package:toiletmap/app/ui/toilet_detail/widget/image_full_widget.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 import '../../../models/rating/rating.dart';
+import '../../../models/rating/rating_response.dart';
 import '../../../utils/routes.dart';
 
 class RatingFrameWidget extends StatelessWidget {
-  final Rating rating;
+  final RatingResponse rating;
 
   RatingFrameWidget({Key? key, required this.rating}) : super(key: key);
 

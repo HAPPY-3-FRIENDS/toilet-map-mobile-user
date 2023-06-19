@@ -28,12 +28,12 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) => MaterialApp(
-        title: "Nhà vệ sinh công cộng",
+        title: "Nhà vệ sinh cộng đồng",
         theme: ThemeData(
           fontFamily: 'Roboto',
         ),
         debugShowCheckedModeBanner: false,
-        home: Center(child: Text('Dự án Nhà vệ sinh công cộng')),
+        home: Center(child: Text('Dự án Nhà vệ sinh cộng đồng')),
         //change to main to build apk
         initialRoute: Routes.loginMainScreen,
         onGenerateRoute: router.Router.generateRoute,

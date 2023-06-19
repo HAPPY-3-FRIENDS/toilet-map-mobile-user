@@ -4,11 +4,12 @@ import 'package:toiletmap/app/ui/location_report/location_report_content_frame.d
 import 'package:toiletmap/app/ui/rating_report/rating_report_content_frame.dart';
 
 import '../../models/rating/rating.dart';
+import '../../models/rating/rating_response.dart';
 import '../../utils/constants.dart';
 import '../rating/widget/rating_main_information_frame.dart';
 
 class RatingReportMainScreen extends StatefulWidget {
-  Rating rating;
+  RatingResponse rating;
 
   RatingReportMainScreen({Key? key, required this.rating}) : super(key: key);
 
