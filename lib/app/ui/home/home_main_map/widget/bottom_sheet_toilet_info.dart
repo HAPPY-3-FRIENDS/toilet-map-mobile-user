@@ -30,10 +30,24 @@ class BottomSheetToiletInfo extends StatelessWidget {
           }
           if (snapshot.hasData) {
 
-            int showerRoom = snapshot.data!.toiletFacilities[0].quantity;
-            int normalRoom = snapshot.data!.toiletFacilities[1].quantity;
-            int disabilityRoom = snapshot.data!.toiletFacilities[2].quantity;
+            int showerRoom = 0;
+            int normalRoom = 0;
+            int disabilityRoom = 0;
             List<ToiletFacilities> list = [];
+
+            snapshot.data!.toiletFacilities.forEach((element) {
+              if (element.facilityName == "Phòng vệ sinh") {
+                normalRoom = element.quantity;
+              }
+              if (element.facilityName == "Phòng vệ sinh dành cho người khuyết tật") {
+                disabilityRoom = element.quantity;
+              }
+              if (element.facilityName == "Phòng tắm") {
+                showerRoom = element.quantity;
+              }
+            });
+
+
             snapshot.data!.toiletFacilities.forEach((element) {
               if (element.facilityType != "Phòng" && element.quantity > 0) {
                 list.add(element);

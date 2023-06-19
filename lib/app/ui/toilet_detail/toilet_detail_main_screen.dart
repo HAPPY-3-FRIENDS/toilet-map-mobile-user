@@ -101,83 +101,7 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
             child: Column(
               children: [
                 Container(
-                  child: Stack(
-                    children: [
-                      Container(
-                        color: Colors.white,
-                        height: 300.h,
-                        child: CarouselSlider(
-                          items: widget.toiletArgument!.toiletImagesList
-                              .map(
-                                (item) => CachedNetworkImage(
-                                    imageUrl: item,
-                                    placeholder: (context, url) => SizedBox(
-                                      child: Center(
-                                          child: CircularProgressIndicator()
-                                      ),
-                                      height: 20.w,
-                                      width: 20.w,
-                                    ),
-                                    errorWidget: (context, url, error) => Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage('assets/images/toilet-detail-no-image.png'),
-                                          fit: BoxFit.fitHeight,
-                                        ),
-                                      ),
-                                    ),
-                                    imageBuilder: (context, imageProvider) => Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.fitHeight,
-                                        ),
-                                      ),
-                                    )
-                                ),
-                          )
-                              .toList(),
-                          carouselController: carouselController,
-                          options: CarouselOptions(
-                            scrollPhysics: const BouncingScrollPhysics(),
-                            autoPlay: true,
-                            height: 300.h,
-                            viewportFraction: 1,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                currentIndex = index;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 10.h,
-                        left: 0,
-                        right: 0,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: imageList.asMap().entries.map((entry) {
-                            return GestureDetector(
-                              onTap: () => carouselController.animateToPage(entry.key),
-                              child: Container(
-                                width: currentIndex == entry.key ? 17.w : 7.w,
-                                height: 7.0.w,
-                                margin: EdgeInsets.symmetric(
-                                  horizontal: 3.0.w,
-                                ),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    color: currentIndex == entry.key
-                                        ? AppColor.primaryColor1
-                                        : Colors.white),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: DetailImagesFrame(imageSource: widget.toiletArgument!.toiletImagesList,)
                 ),
                 ToiletInformationFrame(
                   nearBy: widget.toiletArgument.nearBy!,
@@ -220,25 +144,21 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
                         );
                       }
                       if (snapshot.hasData) {
-                        if (snapshot.data!.length > 0) {
-                          return ToiletRatingListFrame(ratings: snapshot!.data!);
-                        } else {
-                          return Container(
-                            width: double.infinity,
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                SizedBox(height: 10.h,),
-                                SizedBox(height: 100.w, width: 100.w,
-                                  child: Image(image: AssetImage('assets/images/no-data.gif'),),),
-                                SizedBox(height: 5.h,),
-                                Text('Chưa có đánh giá nào', style: AppText.detailText2)
-                              ],
-                            ),
-                          );
-                        }
+                        return ToiletRatingListFrame(ratings: snapshot!.data!);
                       }
-                      return Center(child: Text('Lỗi'));
+                      return Container(
+                        width: double.infinity,
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            SizedBox(height: 10.h,),
+                            SizedBox(height: 100.w, width: 100.w,
+                              child: Image(image: AssetImage('assets/images/no-data.gif'),),),
+                            SizedBox(height: 5.h,),
+                            Text('Chưa có đánh giá nào', style: AppText.detailText2)
+                          ],
+                        ),
+                      );
                     }),
                 Container(
                   height: 80.h,

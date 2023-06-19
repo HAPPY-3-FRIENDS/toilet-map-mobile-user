@@ -1,404 +1,100 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
-class DetailImagesFrame extends StatelessWidget {
+class DetailImagesFrame extends StatefulWidget {
   List<String> imageSource;
 
   DetailImagesFrame({required this.imageSource, Key? key}) : super(key: key);
 
   @override
+  State<DetailImagesFrame> createState() => _DetailImagesFrameState();
+}
+
+class _DetailImagesFrameState extends State<DetailImagesFrame> {
+  final CarouselController carouselController = CarouselController();
+  int currentIndex = 0;
+
+  @override
   Widget build(BuildContext context) {
-    switch (imageSource.length) {
-      case 0:
-        return Container(
-          height: AppSize.heightScreen / 3,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage("https://static.asianpaints.com/content/dam/asianpaintsbeautifulhomes/spaces/bathrooms/modern-toilet-design-ideas-for-contemporary-homes/Title-modern-toile-design-idea.jpg"),
+    return Stack(
+      children: [
+        Container(
+          color: Colors.white,
+          height: 300.h,
+          child: CarouselSlider(
+            items: widget.imageSource
+                .map(
+                  (item) => CachedNetworkImage(
+                  imageUrl: item,
+                  placeholder: (context, url) => SizedBox(
+                    child: Center(
+                        child: CircularProgressIndicator()
+                    ),
+                    height: 20.w,
+                    width: 20.w,
+                  ),
+                  errorWidget: (context, url, error) => Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/toilet-detail-no-image.png'),
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
+                  ),
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
+                  )
+              ),
+            )
+                .toList(),
+            carouselController: carouselController,
+            options: CarouselOptions(
+              scrollPhysics: const BouncingScrollPhysics(),
+              autoPlay: true,
+              height: 300.h,
+              viewportFraction: 1,
+              onPageChanged: (index, reason) {
+                setState(() {
+                  currentIndex = index;
+                });
+              },
             ),
           ),
-        );
-      case 1:
-        return Container(
-          height: AppSize.heightScreen / 3,
-          color: Colors.white,
-          child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(imageSource[0]),
-                ),
-              ),
-          ),
-        );
-      case 2:
-        return Container(
-          height: AppSize.heightScreen / 3,
-          color: Colors.white,
+        ),
+        Positioned(
+          bottom: 10.h,
+          left: 0,
+          right: 0,
           child: Row(
-            children: [
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(imageSource[0])
-                      ),
-                    ),
-                  )
-              ),
-              VerticalDivider(
-                width: 3,
-                color: Colors.white,
-              ),
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(imageSource[1])
-                      ),
-                    ),
-                  )
-              ),
-            ],
-          ),
-        );
-      case 3:
-        return Container(
-          height: AppSize.heightScreen / 3,
-          color: Colors.white,
-          child: Row(
-            children: [
-              Expanded(
-                  flex: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(imageSource[0])
-                      ),
-                    ),
-                  )
-              ),
-              VerticalDivider(
-                width: 3,
-                color: Colors.white,
-              ),
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[1])
-                          ),
-                        ),
-                      ),
-                    ),
-                    Divider(
-                      height: 3,
-                      color: Colors.white,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[2])
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      case 4:
-        return Container(
-          height: AppSize.heightScreen / 3,
-          color: Colors.white,
-          child: Column(
-            children: [
-              Expanded(
-                  flex: 1,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(imageSource[0])
-                            ),
-                          ),
-                        ),
-                      ),
-                      VerticalDivider(
-                        width: 3,
-                        color: Colors.white,
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(imageSource[1])
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: widget.imageSource.asMap().entries.map((entry) {
+              return GestureDetector(
+                onTap: () => carouselController.animateToPage(entry.key),
+                child: Container(
+                  width: currentIndex == entry.key ? 17.w : 7.w,
+                  height: 7.0.w,
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 3.0.w,
                   ),
-              ),
-              Divider(
-                height: 3,
-                color: Colors.white,
-              ),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[2])
-                          ),
-                        ),
-                      ),
-                    ),
-                    VerticalDivider(
-                      width: 3,
-                      color: Colors.white,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[3])
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.r),
+                      color: currentIndex == entry.key
+                          ? AppColor.primaryColor1
+                          : Colors.white),
                 ),
-              ),
-            ],
+              );
+            }).toList(),
           ),
-        );
-      case 5:
-        return Container(
-          height: AppSize.heightScreen / 3,
-          color: Colors.white,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[0])
-                          ),
-                        ),
-                      ),
-                    ),
-                    VerticalDivider(
-                      width: 3,
-                      color: Colors.white,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[1])
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 3,
-                color: Colors.white,
-              ),
-              Expanded(
-                flex: 2,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[2])
-                          ),
-                        ),
-                      ),
-                    ),
-                    VerticalDivider(
-                      width: 3,
-                      color: Colors.white,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[3])
-                          ),
-                        ),
-                      ),
-                    ),
-                    VerticalDivider(
-                      width: 3,
-                      color: Colors.white,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[4])
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      default:
-        return Container(
-          height: AppSize.heightScreen / 3,
-          color: Colors.white,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[0])
-                          ),
-                        ),
-                      ),
-                    ),
-                    VerticalDivider(
-                      width: 3,
-                      color: Colors.white,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[1])
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 3,
-                color: Colors.white,
-              ),
-              Expanded(
-                flex: 2,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[2])
-                          ),
-                        ),
-                      ),
-                    ),
-                    VerticalDivider(
-                      width: 3,
-                      color: Colors.white,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[3])
-                          ),
-                        ),
-                      ),
-                    ),
-                    VerticalDivider(
-                      width: 3,
-                      color: Colors.white,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(imageSource[4])
-                          ),
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          color: Colors.black38,
-                          child: Text(
-                            '+ ' + (imageSource.length - 4).toString(),
-                            style: TextStyle(fontSize: AppNumber.h35, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-    }
+        ),
+      ],
+    );
   }
 }
