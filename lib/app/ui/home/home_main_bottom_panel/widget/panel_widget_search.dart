@@ -97,15 +97,27 @@ class PanelWidgetSearch extends StatelessWidget {
                     );
                   }
                   if (snapshot.hasData) {
+                    int showerRoom = 0;
+                    int normalRoom = 0;
+                    int disabilityRoom = 0;
+
                     return ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext context, int index) {
                         Toilet toilet = snapshot.data![index];
-                        int showerRoom = toilet.toiletFacilities[0].quantity;
-                        int normalRoom = toilet.toiletFacilities[1].quantity;
-                        int disabilityRoom = toilet.toiletFacilities[2].quantity;
+                        toilet.toiletFacilities.forEach((element) {
+                          if (element.facilityName == "Phòng vệ sinh") {
+                            normalRoom = element.quantity;
+                          }
+                          if (element.facilityName == "Phòng vệ sinh dành cho người khuyết tật") {
+                            disabilityRoom = element.quantity;
+                          }
+                          if (element.facilityName == "Phòng tắm") {
+                            showerRoom = element.quantity;
+                          }
+                        });
                         List<ToiletFacilities> list = [];
                         toilet.toiletFacilities.forEach((element) {
                           if (element.facilityType != "Phòng" && element.quantity > 0) {
@@ -130,6 +142,8 @@ class PanelWidgetSearch extends StatelessWidget {
                           normalRoom: normalRoom,
                           disabilityRoom: disabilityRoom,
                           facilities: list,
+                          duration: toilet.duration!,
+                          distance: toilet.distance!,
                         );
                       },
                     );

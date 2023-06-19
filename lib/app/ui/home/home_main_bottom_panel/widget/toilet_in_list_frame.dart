@@ -22,6 +22,8 @@ class ToiletInListFrame extends StatelessWidget {
   int normalRoom;
   int disabilityRoom;
   List<ToiletFacilities> facilities;
+  String duration;
+  String distance;
 
   ToiletInListFrame({
     required this.toiletId,
@@ -37,6 +39,8 @@ class ToiletInListFrame extends StatelessWidget {
     required this.normalRoom,
     required this.disabilityRoom,
     required this.facilities,
+    required this.duration,
+    required this.distance,
 
     Key? key}) : super(key: key);
 
@@ -78,7 +82,7 @@ class ToiletInListFrame extends StatelessWidget {
               Container(
                   decoration: AppBoxDecoration.boxDecoration1,
                   padding: EdgeInsets.all(10.r),
-                  height: 220.h,
+                  height: 210.h,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -87,7 +91,7 @@ class ToiletInListFrame extends StatelessWidget {
                         imageUrl: toiletImage,
                         placeholder: (context, url) => CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Container(
-                          height: 200.h,
+                          height: 190.h,
                           width: 130.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.r),
@@ -98,7 +102,7 @@ class ToiletInListFrame extends StatelessWidget {
                           ),
                         ),
                           imageBuilder: (context, imageProvider) => Container(
-                            height: 200.h,
+                            height: 190.h,
                             width: 130.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.r),
@@ -112,8 +116,8 @@ class ToiletInListFrame extends StatelessWidget {
                       SizedBox(width: 3.w,),
                       Expanded(child: Container(
                         padding: EdgeInsets.only(left: 5.w),
-                        height: 200.h,
-                        width: 95.w,
+                        height: 180.h,
+                        width: 90.w,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,8 +158,7 @@ class ToiletInListFrame extends StatelessWidget {
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 4.5.w),
                                     child: Text(
-                                      address, style: AppText.detailText3,
-                                      maxLines: 2,
+                                      distance + ' - ' + duration, style: AppText.detailText3,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
@@ -272,7 +275,7 @@ class ToiletInListFrame extends StatelessWidget {
             Container(
                 decoration: AppBoxDecoration.boxDecoration1,
                 padding: EdgeInsets.all(10.r),
-                height: 220.h,
+                height: 200.h,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -281,7 +284,7 @@ class ToiletInListFrame extends StatelessWidget {
                         imageUrl: toiletImage,
                         placeholder: (context, url) => CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Container(
-                          height: 200.h,
+                          height: 190.h,
                           width: 130.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.r),
@@ -292,7 +295,7 @@ class ToiletInListFrame extends StatelessWidget {
                           ),
                         ),
                         imageBuilder: (context, imageProvider) => Container(
-                          height: 200.h,
+                          height: 190.h,
                           width: 130.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.r),
@@ -306,8 +309,8 @@ class ToiletInListFrame extends StatelessWidget {
                     SizedBox(width: 3.w,),
                     Expanded(child: Container(
                       padding: EdgeInsets.only(left: 5.w),
-                      height: 200.h,
-                      width: 95.w,
+                      height: 180.h,
+                      width: 90.w,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -348,8 +351,7 @@ class ToiletInListFrame extends StatelessWidget {
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 4.5.w),
                                   child: Text(
-                                    address, style: AppText.detailText3,
-                                    maxLines: 2,
+                                    distance + ' - ' + duration, style: AppText.detailText3,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),

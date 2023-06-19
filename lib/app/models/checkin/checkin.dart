@@ -11,7 +11,7 @@ class Checkin {
   int? turn;
   int id;
   String? status;
-  String username;
+  String? username;
 /*
   @JsonKey(includeFromJson: false, includeToJson: false)
   String? fullName;
