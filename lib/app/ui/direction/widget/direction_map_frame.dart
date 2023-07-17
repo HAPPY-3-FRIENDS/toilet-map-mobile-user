@@ -149,7 +149,20 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
       if (isSearch == false) {
         controller.animateCamera(
             CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLatLng.latitude, currentLatLng.longitude))));
-        setState(() {
+        setState(() async {
+          double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
+          double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);
+
+          double sum = (d1 + d2) * 1000000;
+
+          if (sum >= 0.1) {
+            await _createPolyline(currentLatLng.latitude, currentLatLng.longitude);
+            await controller.removeLayer('line' + (count-1).toString());
+            await controller.removeSource('way' + (count-1).toString());
+          } else {
+            await controller.removeLayer('line' + count.toString());
+            await controller.removeSource('way' + count.toString());
+          }
         });
       };
     });
