@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
@@ -14,6 +15,7 @@ import 'package:toiletmap/app/ui/home/home_main_bottom_panel/home_main_bottom_pa
 import 'package:toiletmap/app/ui/home/home_main_map/home_main_map.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
+import '../../models/transaction/transaction.dart';
 import '../../utils/routes.dart';
 import 'home_main_appbar/home_main_appbar.dart';
 import 'home_main_appbar/home_main_appbar_ver2.dart';
@@ -31,6 +33,7 @@ class HomeMainScreen extends StatefulWidget {
 
 class _HomeMainScreenState extends State<HomeMainScreen> {
   late StompClient client;
+  late StompClient client2;
   late int lastCheckinId;
 
   _initRatingNew() async {
@@ -54,9 +57,20 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
             webSocketConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
           )
       );
+
+      client2 = StompClient(
+          config: StompConfig.SockJS(
+            url: 'https://toilet-map.azurewebsites.net/ws-message',
+            onConnect: onConnect2,
+            onWebSocketError: (dynamic error) => print(error.toString()),
+            stompConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
+            webSocketConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
+          )
+      );
     });
 
     client.activate();
+    client2.activate();
   }
 
   void onConnect(StompFrame connectFrame) async {
@@ -117,6 +131,58 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
         });
   }
 
+  void onConnect2(StompFrame connectFrame) async {
+    String? phone = await SharedPreferencesRepository().getUsername();
+
+    print("connect websocket oke");
+    client.subscribe(
+        destination: '/topic/payment',
+        callback: (StompFrame frame) async {
+          Map<String, dynamic> result = json.decode(frame.body!);
+          Transaction transaction = Transaction.fromJson(result);
+          {
+            setState(() {
+              if (QRCodeBuilder.qrCode == true) {
+                Navigator.pop(context);
+              }
+              AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.success,
+                  animType: AnimType.topSlide,
+                  btnOkText: 'Xác nhận',
+                  //btnOkColor: AppColor.primaryColor1,
+                  showCloseIcon: true,
+                  body: Container(
+                      height: 60.h,
+                      color: Colors.white,
+                      child: Padding(
+                        padding: EdgeInsets.all(16.w),
+                        child: RichText(
+                          text: TextSpan(
+                              text: 'Nạp thành công ',
+                              style: TextStyle(fontSize: 16.sp, color: Colors.black),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(transaction.total) + " VNĐ",
+                                  style: TextStyle(
+                                    fontSize: 18.sp,
+                                    color: AppColor.primaryColor1,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ]
+                          ),
+                        ),
+                      )
+                  ),
+                  btnOkOnPress: () async {
+                  }
+              ).show();
+            });
+          }
+        });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -130,6 +196,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     // TODO: implement deactivate
     super.deactivate();
     client.deactivate();
+    client2.deactivate();
   }
 
   @override
@@ -137,6 +204,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     // TODO: implement dispose
     super.dispose();
     client.deactivate();
+    client2.deactivate();
   }
 
   @override
