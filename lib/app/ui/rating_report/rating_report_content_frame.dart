@@ -156,7 +156,7 @@ class _RatingReportContentFrameState extends State<RatingReportContentFrame> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.r))),
                 onPressed: () async {
-                  Navigator.pushNamed(context, Routes.homeMainScreen);
+                  Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
                 },
                 child: Text("Gửi", style: TextStyle(color: Colors.black),)
             ),

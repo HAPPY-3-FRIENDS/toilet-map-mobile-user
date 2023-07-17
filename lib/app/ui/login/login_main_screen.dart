@@ -106,7 +106,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
 
           print('cho nay in ra token: ' + token!);
           if (token != null) {
-            Navigator.pushNamed(context, Routes.homeMainScreen);
+            Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
           } else {
             Navigator.pop(context);
           }

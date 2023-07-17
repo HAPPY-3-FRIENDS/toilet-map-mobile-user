@@ -39,7 +39,7 @@ class _NearbyListMainScreenState extends State<NearbyListMainScreen> {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, Routes.homeMainScreen);
+                      Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
                     },
                     icon: Icon(
                       Icons.home_rounded,

@@ -114,7 +114,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             );
                           } else {
                             await AuthRepository().createUserWithPhone(name);
-                            await Navigator.pushNamed(context, Routes.homeMainScreen);
+                            await Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
                           }
                         } catch (e) {
                           showDialog<void>(

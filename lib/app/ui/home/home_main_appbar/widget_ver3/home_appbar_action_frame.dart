@@ -255,6 +255,25 @@ class _ActionFrameState extends State<ActionFrame> {
                                     ),
                                   ),
                                 ],
+                              ), flex: 1,),
+                              Expanded(child: Padding(
+                                padding: EdgeInsets.only(left: 2.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: () => showDialog(
+                                        barrierDismissible: true,
+                                        context: context,
+                                        builder: (_) => Center(
+                                          child: Image(image: AssetImage('assets/logo-circle.png'), height: 250.w, width: 250.w,),
+                                        ),
+                                      ),
+                                      child: Image(image: AssetImage('assets/logo-circle.png'), height: 15.w, width: 15.w,),
+                                    ),
+                                    Text(' : Ký hiệu Nhà vệ sinh', style: AppText.appbarText3,),
+                                  ],
+                                ),
                               ), flex: 1,)
                             ],
                           );

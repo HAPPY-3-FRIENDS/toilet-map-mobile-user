@@ -55,6 +55,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
           )
       );
     });
+
     client.activate();
   }
 
@@ -64,10 +65,10 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     print("connect websocket oke");
     client.subscribe(
         destination: '/topic/check-in',
-        callback: (StompFrame frame) {
+        callback: (StompFrame frame) async {
           Map<String, dynamic> result = json.decode(frame.body!);
           Checkin checkin = Checkin.fromJson(result);
-          if (checkin.id != lastCheckinId && checkin.username == phone) {
+          if (checkin.id != lastCheckinId && checkin.username == phone) await {
             setState(() {
               lastCheckinId = checkin.id;
               HomeMainScreen.newCheckins += 1;
@@ -110,8 +111,8 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                     Navigator.pushNamed(context, Routes.ratingMainScreen, arguments: checkin).then((_) => setState(() {}));
                   }
               ).show();
-            });
-          }
+            })
+          };
           print('id ne ' + checkin.id.toString());
         });
   }
@@ -122,6 +123,20 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     super.initState();
     _initRatingNew();
     _initClient();
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
+    client.deactivate();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    client.deactivate();
   }
 
   @override

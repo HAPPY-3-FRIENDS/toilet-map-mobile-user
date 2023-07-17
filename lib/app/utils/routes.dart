@@ -25,4 +25,5 @@ class Routes {
   static const String nearbyListMainScreen = 'NearbyListMainScreen';
   static const String locationReportMainScreen = 'LocationReportMainScreen';
   static const String ratingReportMainScreen = 'RatingReportMainScreen';
+  static const String VNPayView = 'VNPayView';
 }

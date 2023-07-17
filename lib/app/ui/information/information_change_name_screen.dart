@@ -112,7 +112,7 @@ class _InformationChangeNameScreenState extends State<InformationChangeNameScree
                           );
                         } else {
                           await UserInfoRepository().patchUserInfoChangeName(name);
-                          Navigator.pushNamed(context, Routes.homeMainScreen);
+                          Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
                         }
                       } catch (e) {
                         showDialog<void>(

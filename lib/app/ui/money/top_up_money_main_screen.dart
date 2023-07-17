@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:group_button/group_button.dart';
 import 'package:intl/intl.dart';
+import 'package:toiletmap/app/repositories/money_repository.dart';
 import 'package:toiletmap/app/utils/constants.dart';
+import 'package:toiletmap/app/utils/routes.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class TopUpMoneyMainScreen extends StatefulWidget {
   const TopUpMoneyMainScreen({Key? key}) : super(key: key);
@@ -86,7 +90,42 @@ class _TopUpMoneyMainScreenState extends State<TopUpMoneyMainScreen> {
                   width: double.infinity,
                   height: 60.h,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (money1 != 0) {
+                        String? paymentUrl = await MoneyRepository().postVNPay(money1);
+                        final url = Uri.parse(paymentUrl!);
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.inAppWebView,
+                        );
+                      } else if (money2 != 0) {
+                        String? paymentUrl = await MoneyRepository().postVNPay(money2);
+                        /*final url = Uri.parse(paymentUrl!);
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.inAppWebView,
+                        );*/
+                        Navigator.pushNamed(context, Routes.VNPayView, );
+                      } else {
+                        showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Chú ý'),
+                              content: const Text('Vui lòng chọn số tiền!'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Xác nhận'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
                     child: Text("Nạp tiền", style: AppText.white100Text20,),
                   ),
                 )

@@ -26,6 +26,7 @@ import '../ui/information/information_service_price_screen.dart';
 import '../ui/location_report/location_report_main_screen.dart';
 import '../ui/login/create_account_screen.dart';
 import '../ui/money/top_up_money_main_screen.dart';
+import '../ui/money/vnpay_screen.dart';
 import '../ui/navigation/navigation_test_screen.dart';
 import '../ui/nearby_list/nearby_list_main_screen.dart';
 import '../ui/rating/rating_list_screen.dart';
@@ -101,6 +102,8 @@ class Router {
       case 'RatingReportMainScreen':
         final index = settings.arguments as RatingResponse;
         return MaterialPageRoute(builder: (_) => RatingReportMainScreen(rating: index,));
+      case 'VNPayView':
+        return MaterialPageRoute(builder: (_) => VNPayScreen());
 
         default:
         return MaterialPageRoute(builder: (_) {

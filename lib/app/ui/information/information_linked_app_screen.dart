@@ -128,14 +128,14 @@ class InformationLinkedAppScreen extends StatelessWidget {
                     ),*/
                     InkWell(
                       onTap: () {
-                        final url = Uri.parse('https://thanhtoan.dichvucongichquan1.com/payment?dv=CI1');
+                        final url = Uri.parse('https://dichvucongichquan1.com/san-pham/chat-thai-sinh-hoat/');
                         launchUrl(
                           url,
                           mode: LaunchMode.externalApplication,
                         );
                       },
                       child: CachedNetworkImage(
-                          imageUrl: 'https://scontent.fsgn8-4.fna.fbcdn.net/v/t39.30808-6/353633957_3538358736400428_8611613524933424250_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=7IxwL8q9VGAAX9jw10m&_nc_ht=scontent.fsgn8-4.fna&oh=00_AfDX6oNe9ChzO0_bxIPJeWrJUXc28sjjuzE0eVqPca8Kdg&oe=648F2F1F',
+                          imageUrl: 'https://dichvucongichquan1.com/wp-content/uploads/2021/04/sp11-1.png',
                           placeholder: (context, url) => SizedBox(
                             child: Center(
                                 child: CircularProgressIndicator()
@@ -155,17 +155,603 @@ class InformationLinkedAppScreen extends StatelessWidget {
                             ),
                           ),
                           imageBuilder: (context, imageProvider) => Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  height: 60.h,
+                                  width: 60.w,
+                                ),
+                                SizedBox(height: 5.h,),
+                                Text('Thu Gom Chất Thải Sinh Hoạt', textAlign: TextAlign.center, style: TextStyle(
+                                  color: Colors.green, fontSize: 18.sp
+                                ),),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final url = Uri.parse('https://dichvucongichquan1.com/san-pham/chat-thai-nguy-hai/');
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl: 'https://dichvucongichquan1.com/wp-content/uploads/2021/04/sp10.png',
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                SizedBox(height: 20.h,),
+                                Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                              ],
+                            ),
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  height: 60.h,
+                                  width: 60.w,
+                                ),
+                                SizedBox(height: 5.h,),
+                                Text('Thu Gom Chất Thải Nguy Hại', textAlign: TextAlign.center, style: TextStyle(
+                                    color: Colors.green, fontSize: 18.sp
+                                ),),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final url = Uri.parse('https://dichvucongichquan1.com/san-pham/cong-vien-cay-xanh/');
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl: 'https://dichvucongichquan1.com/wp-content/uploads/2021/04/sp9.png',
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                SizedBox(height: 20.h,),
+                                Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                              ],
+                            ),
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  height: 60.h,
+                                  width: 60.w,
+                                ),
+                                SizedBox(height: 5.h,),
+                                Text('Công Viên - Cây Xanh', textAlign: TextAlign.center, style: TextStyle(
+                                    color: Colors.green, fontSize: 18.sp
+                                ),),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final url = Uri.parse('https://dichvucongichquan1.com/san-pham/thoat-nuoc-do-thi/');
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl: 'https://dichvucongichquan1.com/wp-content/uploads/2021/04/sp7.png',
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                SizedBox(height: 20.h,),
+                                Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                              ],
+                            ),
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  height: 60.h,
+                                  width: 60.w,
+                                ),
+                                SizedBox(height: 5.h,),
+                                Text('Thoát Nước Đô Thị', textAlign: TextAlign.center, style: TextStyle(
+                                    color: Colors.green, fontSize: 18.sp
+                                ),),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final url = Uri.parse('https://dichvucongichquan1.com/san-pham/nha-ve-sinh-luu-dong/');
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl: 'https://dichvucongichquan1.com/wp-content/uploads/2021/04/sp8.png',
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                SizedBox(height: 20.h,),
+                                Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                              ],
+                            ),
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  height: 60.h,
+                                  width: 60.w,
+                                ),
+                                SizedBox(height: 5.h,),
+                                Text('Nhà Vệ Sinh Lưu Động', textAlign: TextAlign.center, style: TextStyle(
+                                    color: Colors.green, fontSize: 18.sp
+                                ),),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final url = Uri.parse('https://dichvucongichquan1.com/san-pham/hut-ham-cau/');
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl: 'https://dichvucongichquan1.com/wp-content/uploads/2021/04/sp6.png',
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                SizedBox(height: 20.h,),
+                                Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                              ],
+                            ),
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  height: 60.h,
+                                  width: 60.w,
+                                ),
+                                SizedBox(height: 5.h,),
+                                Text('Hút Hầm Cầu', textAlign: TextAlign.center, style: TextStyle(
+                                    color: Colors.green, fontSize: 18.sp
+                                ),),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final url = Uri.parse('https://dichvucongichquan1.com/san-pham/quan-ly-nha/');
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl: 'https://dichvucongichquan1.com/wp-content/uploads/2021/04/sp5.png',
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                SizedBox(height: 20.h,),
+                                Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                              ],
+                            ),
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  height: 60.h,
+                                  width: 60.w,
+                                ),
+                                SizedBox(height: 5.h,),
+                                Text('Quản Lý Nhà', textAlign: TextAlign.center, style: TextStyle(
+                                    color: Colors.green, fontSize: 18.sp
+                                ),),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final url = Uri.parse('https://dichvucongichquan1.com/san-pham/thu-gom-van-chuyen-rac/');
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl: 'https://dichvucongichquan1.com/wp-content/uploads/2021/04/sp4.png',
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                SizedBox(height: 20.h,),
+                                Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                              ],
+                            ),
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  height: 60.h,
+                                  width: 60.w,
+                                ),
+                                SizedBox(height: 5.h,),
+                                Text('Phục Vụ Vệ Sinh Sự Kiện Lễ Hội', textAlign: TextAlign.center, style: TextStyle(
+                                    color: Colors.green, fontSize: 18.sp
+                                ),),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final url = Uri.parse('https://dichvucongichquan1.com/san-pham/thu-gom-xa-ban/');
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl: 'https://dichvucongichquan1.com/wp-content/uploads/2021/04/sp2.png',
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                SizedBox(height: 20.h,),
+                                Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                              ],
+                            ),
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  height: 60.h,
+                                  width: 60.w,
+                                ),
+                                SizedBox(height: 5.h,),
+                                Text('Thu Gom Chất Thải Sinh Hoạt', textAlign: TextAlign.center, style: TextStyle(
+                                    color: Colors.green, fontSize: 18.sp
+                                ),),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final url = Uri.parse('https://dichvucongichquan1.com/san-pham/thu-gom-xa-ban/');
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl: 'https://dichvucongichquan1.com/wp-content/uploads/2021/04/sp2.png',
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                SizedBox(height: 20.h,),
+                                Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                              ],
+                            ),
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  height: 60.h,
+                                  width: 60.w,
+                                ),
+                                SizedBox(height: 5.h,),
+                                Text('Thu Gom Xà Bần', textAlign: TextAlign.center, style: TextStyle(
+                                    color: Colors.green, fontSize: 18.sp
+                                ),),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final url = Uri.parse('https://dichvucongichquan1.com/san-pham/kinh-doanh-thung-rac-composite/');
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl: 'https://dichvucongichquan1.com/wp-content/uploads/2021/04/sp1.png',
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                SizedBox(height: 20.h,),
+                                Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                              ],
+                            ),
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  height: 60.h,
+                                  width: 60.w,
+                                ),
+                                SizedBox(height: 5.h,),
+                                Text('Kinh Doanh Thùng Rác Composite', textAlign: TextAlign.center, style: TextStyle(
+                                    color: Colors.green, fontSize: 18.sp
+                                ),),
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final url = Uri.parse('https://dichvucongichquan1.com/san-pham/thu-tien-rac-sinh-hoat-tien-nha-snhh/');
+                        launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl: 'https://dichvucongichquan1.com/wp-content/uploads/2021/05/icon-thu-tien-rac-01.png',
+                          placeholder: (context, url) => SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            ),
+                            height: 20.w,
+                            width: 20.w,
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Lỗi tải ảnh", style: AppText.detailText3,),
+                                SizedBox(height: 20.h,),
+                                Icon(Icons.error_outline_rounded, size: 20.w, color: Colors.black54,)
+                              ],
+                            ),
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  height: 60.h,
+                                  width: 60.w,
+                                ),
+                                SizedBox(height: 5.h,),
+                                Text('Thu Tiền Rác Sinh Hoạt & Tiền Nhà SHNN', textAlign: TextAlign.center, style: TextStyle(
+                                    color: Colors.green, fontSize: 18.sp
+                                ),),
+                              ],
                             ),
                           )
                       ),
                     ),
                   ],
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 30.w, crossAxisSpacing: 20.w),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisSpacing: 20.w, crossAxisSpacing: 15.w),
                 ),
               )
           )
