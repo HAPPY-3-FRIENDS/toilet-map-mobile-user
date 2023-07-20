@@ -103,7 +103,8 @@ class Router {
         final index = settings.arguments as RatingResponse;
         return MaterialPageRoute(builder: (_) => RatingReportMainScreen(rating: index,));
       case 'VNPayView':
-        return MaterialPageRoute(builder: (_) => VNPayScreen());
+        final index = settings.arguments as String;
+        return MaterialPageRoute(builder: (_) => VNPayScreen(url: index,));
 
         default:
         return MaterialPageRoute(builder: (_) {

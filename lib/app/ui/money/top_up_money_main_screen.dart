@@ -93,11 +93,7 @@ class _TopUpMoneyMainScreenState extends State<TopUpMoneyMainScreen> {
                     onPressed: () async {
                       if (money1 != 0) {
                         String? paymentUrl = await MoneyRepository().postVNPay(money1);
-                        final url = Uri.parse(paymentUrl!);
-                        launchUrl(
-                          url,
-                          mode: LaunchMode.inAppWebView,
-                        );
+                        Navigator.pushNamed(context, Routes.VNPayView, arguments: paymentUrl!);
                       } else if (money2 != 0) {
                         String? paymentUrl = await MoneyRepository().postVNPay(money2);
                         /*final url = Uri.parse(paymentUrl!);
@@ -105,7 +101,7 @@ class _TopUpMoneyMainScreenState extends State<TopUpMoneyMainScreen> {
                           url,
                           mode: LaunchMode.inAppWebView,
                         );*/
-                        Navigator.pushNamed(context, Routes.VNPayView, );
+                        Navigator.pushNamed(context, Routes.VNPayView, arguments: paymentUrl!);
                       } else {
                         showDialog<void>(
                           context: context,

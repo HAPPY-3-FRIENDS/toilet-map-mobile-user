@@ -140,6 +140,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
         callback: (StompFrame frame) async {
           Map<String, dynamic> result = json.decode(frame.body!);
           Transaction transaction = Transaction.fromJson(result);
+          if (transaction.accountId == await SharedPreferencesRepository().getAccountId())
           {
             setState(() {
               if (QRCodeBuilder.qrCode == true) {
@@ -149,34 +150,38 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                   context: context,
                   dialogType: DialogType.success,
                   animType: AnimType.topSlide,
-                  btnOkText: 'Xác nhận',
+                  dismissOnBackKeyPress: true,
+                  autoDismiss: true,
+                  dismissOnTouchOutside: true,
                   //btnOkColor: AppColor.primaryColor1,
                   showCloseIcon: true,
                   body: Container(
-                      height: 60.h,
+                      height: 100.h,
                       color: Colors.white,
                       child: Padding(
                         padding: EdgeInsets.all(16.w),
-                        child: RichText(
-                          text: TextSpan(
-                              text: 'Nạp thành công ',
-                              style: TextStyle(fontSize: 16.sp, color: Colors.black),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(transaction.total) + " VNĐ",
-                                  style: TextStyle(
-                                    fontSize: 18.sp,
-                                    color: AppColor.primaryColor1,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ]
-                          ),
-                        ),
+                        child: Column(
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                  text: 'Tài khoản của bạn đã được nạp thành công ',
+                                  style: TextStyle(fontSize: 16.sp, color: Colors.black),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(transaction.total) + " VNĐ",
+                                      style: TextStyle(
+                                        fontSize: 18.sp,
+                                        color: AppColor.primaryColor1,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ]
+                              ),
+                            ),
+                          ],
+                        )
                       )
                   ),
-                  btnOkOnPress: () async {
-                  }
               ).show();
             });
           }
