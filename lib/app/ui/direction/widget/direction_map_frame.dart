@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,11 +42,30 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
   late LatLng currentLatLng;
   static int count = 0;
 
+  late Timer timer;
+  bool isPopup = false;
+
   @override
   void initState() {
     // TODO: implement initState
     _getCurrentLocation();
     super.initState();
+    timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
+      _getPopup();
+    });
+  }
+
+  void _getPopup() async {
+    String? status = await ToiletRepository().getToiletStatus(widget.toilet.id);
+    if (status! == 'Not available') {
+      setState(() {
+        isPopup = true;
+      });
+    } else {
+      setState(() {
+        isPopup = false;
+      });
+    }
   }
 
   Future<CameraPosition> initializeLocationAndSave() async {
@@ -315,7 +336,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                               ),
                             ),
                             Positioned(
-                              top: 430.h,
+                              top: (isPopup) ? 400.h : 430.h,
                               left: 288.w,
                               child:  FloatingActionButton(
                                   child: Icon(Icons.my_location),
@@ -325,39 +346,128 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 100.w, right: 100.w, top: 550.h),
-                              child: SizedBox(
-                                width: double.infinity,
-                                height: 50.h,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Colors.white,
-                                        elevation: 1,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10.r))),
-                                    onPressed: () async {
-                                      Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                                padding: (isPopup)
+                                    ? EdgeInsets.only(left: 20.w, right: 20.w, top: 500.h)
+                                    : EdgeInsets.only(left: 30.w, right: 30.w, top: 550.h),
+                                child: (isPopup)
+                                    ? Column(
+                                  children: [
+                                    Text('Nhà vệ sinh có thể đang quá tải, bạn có muốn được chỉ đường tới nhà vệ sinh khác gần đây không?', style: AppText.blackText18Bold,),
+                                    SizedBox(height: 10.h,),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SizedBox(
+                                          width: 145.w,
+                                          height: 50.h,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  primary: AppColor.primaryColor1,
+                                                  elevation: 1,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(10.r))),
+                                              onPressed: () async {
+                                                QuickAlert.show(
+                                                  context: context,
+                                                  type: QuickAlertType.loading,
+                                                  title: 'Đang tải dữ liệu',
+                                                );
 
-                                      double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
-                                      double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);
+                                                Toilet? toilet = await ToiletRepository().getNearestToilet();
+                                                if (toilet == null) {
+                                                  showDialog<void>(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: const Text('Chú ý'),
+                                                        content: const Text('Không tìm thấy nhà vệ sinh phù hợp!'),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            child: const Text('Xác nhận'),
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop();
+                                                            },
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                }
+                                                Navigator.pop(context);
+                                                Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
+                                              },
+                                              child: Text("Tới NVS khác", style: AppText.white100Text20,)
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 145.w,
+                                          height: 50.h,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  primary: Colors.white,
+                                                  elevation: 1,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(10.r))),
+                                              onPressed: () async {
+                                                Navigator.pushNamed(context, Routes.homeMainScreen);
 
-                                      double sum = (d1 + d2) * 1000000;
+                                                double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
+                                                double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);
 
-                                      print('distance now: ' + sum.toString());
+                                                double sum = (d1 + d2) * 1000000;
 
-                                      if (sum <= 0.3) {
-                                        AwesomeDialog(
-                                          context: context,
-                                          dialogType: DialogType.noHeader,
-                                          showCloseIcon: true,
-                                          animType: AnimType.topSlide,
-                                          body: LocationReportDialog(id: widget.toilet.id,),
-                                        )..show();
-                                      }
-                                    },
-                                    child: Text("Hoàn tất", style: AppText.primary1Text20,)
+                                                print('distance now: ' + sum.toString());
+
+                                                if (sum <= 0.3) {
+                                                  AwesomeDialog(
+                                                    context: context,
+                                                    dialogType: DialogType.noHeader,
+                                                    showCloseIcon: true,
+                                                    animType: AnimType.topSlide,
+                                                    body: LocationReportDialog(id: widget.toilet.id,),
+                                                  )..show();
+                                                }
+                                              },
+                                              child: Text("Hoàn tất", style: AppText.primary1Text20,)
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                )
+                                    : SizedBox(
+                                  width: double.infinity,
+                                  height: 50.h,
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Colors.white,
+                                          elevation: 1,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10.r))),
+                                      onPressed: () async {
+                                        Navigator.pushNamed(context, Routes.homeMainScreen);
+
+                                        double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
+                                        double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);
+
+                                        double sum = (d1 + d2) * 1000000;
+
+                                        print('distance now: ' + sum.toString());
+
+                                        if (sum <= 0.3) {
+                                          AwesomeDialog(
+                                            context: context,
+                                            dialogType: DialogType.noHeader,
+                                            showCloseIcon: true,
+                                            animType: AnimType.topSlide,
+                                            body: LocationReportDialog(id: widget.toilet.id,),
+                                          )..show();
+                                        }
+                                      },
+                                      child: Text("Hoàn tất", style: AppText.primary1Text20,)
+                                  ),
                                 ),
-                              ),),
+                            )
                           ],
                         ),
                       ],
