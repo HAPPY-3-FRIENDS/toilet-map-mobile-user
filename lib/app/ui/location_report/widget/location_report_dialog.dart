@@ -8,8 +8,9 @@ import '../../../utils/routes.dart';
 
 class LocationReportDialog extends StatefulWidget {
   int id;
+  int waitTime;
 
-  LocationReportDialog({Key? key, required this.id}) : super(key: key);
+  LocationReportDialog({Key? key, required this.id, required this.waitTime}) : super(key: key);
 
   @override
   State<LocationReportDialog> createState() => _LocationReportDialogState();
@@ -20,9 +21,11 @@ class _LocationReportDialogState extends State<LocationReportDialog> {
 
   @override
   Widget build(BuildContext context) {
+    print("check wait time: " + widget.waitTime.toString());
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
-      height: (choose != 1) ? 200.h : 300.h,
+      height: (choose != 1) ? 220.h : 320.h,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -57,6 +60,31 @@ class _LocationReportDialogState extends State<LocationReportDialog> {
                 ),
               ),
             ],
+          ),
+          (widget.waitTime == 0)
+          ? Container()
+          : Container(
+            height: 50.h,
+            child: Column(
+              children: [
+                RichText(
+                  text: TextSpan(
+                      text: 'Có vẻ nhà vệ sinh đang đầy. Thời gian chờ ước tính là ',
+                      style: TextStyle(fontSize: 16.sp, color: Colors.black),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: widget.waitTime.toString() + " phút!",
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ]
+                  ),
+                ),
+              ],
+            ),
           ),
           (choose == 1)
           ? Container(

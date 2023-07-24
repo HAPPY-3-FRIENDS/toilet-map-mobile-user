@@ -159,4 +159,23 @@ class ToiletRepository {
     }
     return null;
   }
+
+  Future<int?> getToiletWaitTime(int id) async {
+    String? accessToken = await SharedPreferencesRepository().getAccessToken();
+
+    final response = await http.get(
+      Uri.parse('${AppDomain.appDomain1}/api/toilets/wait/${id}'),
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+        HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = jsonDecode(response.body);
+      BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
+      return baseResponse.data;
+    }
+    return null;
+  }
 }
