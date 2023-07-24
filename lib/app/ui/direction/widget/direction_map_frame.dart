@@ -14,6 +14,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:toiletmap/app/repositories/map_repository.dart';
 import 'package:toiletmap/app/repositories/toilet_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_map/widget/bottom_sheet_toilet_info.dart';
+import 'package:toiletmap/app/ui/home/home_main_screen.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 import '../../../models/place/place.dart';
@@ -37,6 +38,7 @@ class DirectionMapFrame extends StatefulWidget {
 class _DirectionMapFrameState extends State<DirectionMapFrame> {
   List<Prediction> data = [];
   bool isSearch = false;
+  bool isOnThisPage = true;
   late CameraPosition _initialCameraPosition;
   late MapboxMapController controller;
   late LatLng currentLatLng;
@@ -167,22 +169,23 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
     location.onLocationChanged.listen((event) {
       currentLatLng = LatLng(event.latitude!, event.longitude!);
 
-      if (isSearch == false) {
+      if (isSearch == false && isOnThisPage == true) {
         controller.animateCamera(
             CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLatLng.latitude, currentLatLng.longitude))));
-        setState(() async {
-          double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
-          double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);
 
-          double sum = (d1 + d2) * 1000000;
+        double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
+        double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);
 
+        double sum = (d1 + d2) * 1000000;
+
+        setState(() {
           if (sum >= 0.1) {
-            await _createPolyline(currentLatLng.latitude, currentLatLng.longitude);
-            await controller.removeLayer('line' + (count-1).toString());
-            await controller.removeSource('way' + (count-1).toString());
+            _createPolyline(currentLatLng.latitude, currentLatLng.longitude);
+            controller.removeLayer('line' + (count-1).toString());
+            controller.removeSource('way' + (count-1).toString());
           } else {
-            await controller.removeLayer('line' + count.toString());
-            await controller.removeSource('way' + count.toString());
+            controller.removeLayer('line' + count.toString());
+            controller.removeSource('way' + count.toString());
           }
         });
       };
@@ -393,8 +396,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                     },
                                                   );
                                                 }
-                                                Navigator.pop(context);
-                                                Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
+                                                Navigator.pushReplacementNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
                                               },
                                               child: Text("Tới NVS khác", style: AppText.white100Text20,)
                                           ),
@@ -409,6 +411,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius: BorderRadius.circular(10.r))),
                                               onPressed: () async {
+                                                isOnThisPage = false;
                                                 String? status = await ToiletRepository().getToiletStatus(widget.toilet.id);
                                                 int? waitTime = await ToiletRepository().getToiletWaitTime(widget.toilet.id);
 
@@ -421,7 +424,6 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
 
                                                 if (sum <= 0.3) {
                                                   if (status! == "Not available") {
-                                                    Navigator.pushNamed(context, Routes.homeMainScreen);
                                                     AwesomeDialog(
                                                       context: context,
                                                       dialogType: DialogType.noHeader,
@@ -429,9 +431,8 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                       dismissOnTouchOutside: true,
                                                       animType: AnimType.topSlide,
                                                       body: LocationReportDialog(id: widget.toilet.id, waitTime: waitTime!),
-                                                    )..show();
+                                                    )..show().then((value) => Navigator.pushNamed(context, Routes.homeMainScreen));
                                                   } else {
-                                                    Navigator.pushNamed(context, Routes.homeMainScreen);
                                                     AwesomeDialog(
                                                       context: context,
                                                       dismissOnTouchOutside: true,
@@ -439,7 +440,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                       showCloseIcon: true,
                                                       animType: AnimType.topSlide,
                                                       body: LocationReportDialog(id: widget.toilet.id, waitTime: 0),
-                                                    )..show();
+                                                    )..show().then((value) => Navigator.pushNamed(context, Routes.homeMainScreen));
                                                   }
                                                 } else {
                                                   Navigator.pushNamed(context, Routes.homeMainScreen);
@@ -462,6 +463,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                           shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(10.r))),
                                       onPressed: () async {
+                                        isOnThisPage = false;
                                         String? status = await ToiletRepository().getToiletStatus(widget.toilet.id);
                                         int? waitTime = await ToiletRepository().getToiletWaitTime(widget.toilet.id);
 
@@ -474,7 +476,6 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
 
                                         if (sum <= 0.3) {
                                           if (status! == "Not available") {
-                                            Navigator.pushNamed(context, Routes.homeMainScreen);
                                             AwesomeDialog(
                                               context: context,
                                               dismissOnTouchOutside: true,
@@ -482,9 +483,8 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                               showCloseIcon: true,
                                               animType: AnimType.topSlide,
                                               body: LocationReportDialog(id: widget.toilet.id, waitTime: waitTime!),
-                                            )..show();
+                                            )..show().then((value) => Navigator.pushNamed(context, Routes.homeMainScreen));
                                           } else {
-                                            Navigator.pushNamed(context, Routes.homeMainScreen);
                                             AwesomeDialog(
                                               context: context,
                                               dismissOnTouchOutside: true,
@@ -492,7 +492,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                               showCloseIcon: true,
                                               animType: AnimType.topSlide,
                                               body: LocationReportDialog(id: widget.toilet.id, waitTime: 0),
-                                            )..show();
+                                            )..show().then((value) => Navigator.pushNamed(context, Routes.homeMainScreen));
                                           }
                                         } else {
                                           Navigator.pushNamed(context, Routes.homeMainScreen);
