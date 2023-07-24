@@ -50,7 +50,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     setState(() {
       client = StompClient(
           config: StompConfig.SockJS(
-            url: 'https://toilet-map.azurewebsites.net/ws-message',
+            url: '${AppString.appDomain}/ws-message',
             onConnect: onConnect,
             onWebSocketError: (dynamic error) => print(error.toString()),
             stompConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
@@ -60,7 +60,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
 
       client2 = StompClient(
           config: StompConfig.SockJS(
-            url: 'https://toilet-map.azurewebsites.net/ws-message',
+            url: '${AppString.appDomain}/ws-message',
             onConnect: onConnect2,
             onWebSocketError: (dynamic error) => print(error.toString()),
             stompConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},

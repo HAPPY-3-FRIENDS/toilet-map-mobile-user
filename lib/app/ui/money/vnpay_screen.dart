@@ -47,7 +47,7 @@ class _VNPayScreenState extends State<VNPayScreen> {
                 print("vnPayJson status: " + vnPayJson.status.toString());
 
                 if (vnPayJson.status == 200) {
-                  Navigator.pushNamed(context, Routes.homeMainScreen);
+                  Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
                   AwesomeDialog(
                       context: context,
                       dialogType: DialogType.success,

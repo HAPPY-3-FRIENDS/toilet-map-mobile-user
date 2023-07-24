@@ -409,7 +409,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius: BorderRadius.circular(10.r))),
                                               onPressed: () async {
-                                                Navigator.pushNamed(context, Routes.homeMainScreen);
+                                                Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
 
                                                 double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
                                                 double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);
@@ -445,7 +445,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                           shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(10.r))),
                                       onPressed: () async {
-                                        Navigator.pushNamed(context, Routes.homeMainScreen);
+                                        Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
 
                                         double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
                                         double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);

@@ -102,7 +102,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                             }
                             AccessToken? token = await AuthRepository().authPhoneLogin();
                             if (token != null) {
-                              Navigator.pushNamed(context, Routes.homeMainScreen);
+                              Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
                             } else {
                               Navigator.pushNamed(context, Routes.loginMainScreen);
                             }
