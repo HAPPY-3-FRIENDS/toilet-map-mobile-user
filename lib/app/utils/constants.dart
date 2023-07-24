@@ -8,8 +8,7 @@ class AppSize {
 }
 
 class AppDomain {
-  static const String appDomain1 = 'https://toilet-map.azurewebsites.net';
-  static const String appDomain2 = 'https://toiletmap.azurewebsites.net';
+  static  String appDomain1 = 'http://172.16.17.36:8081';
   static const String apiKey = 'OnwCCr1HHOeOCqofMVaXBaf9t82lC25Vqsm6iJJa';
 }
 
@@ -27,7 +26,7 @@ class AppColor {
 //App string
 class AppString {
   static const String appName = "Toilet Map - Nhà Vệ Sinh Công Cộng";
-  static const String appDomain = "https://toilet-map.azurewebsites.net";
+  static String appDomain = "http://172.16.17.36:8081";
   static const String loginSuccessfully = "Đăng nhập thành công";
   static const String styleString = "https://tiles.goong.io/assets/goong_light_v2.json?api_key=Rx4uWeCguGjTpjupmAlqdMUJV9iKW1rLiiGLtfdt";
 }

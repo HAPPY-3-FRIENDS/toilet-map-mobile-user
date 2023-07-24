@@ -26,4 +26,5 @@ class Routes {
   static const String locationReportMainScreen = 'LocationReportMainScreen';
   static const String ratingReportMainScreen = 'RatingReportMainScreen';
   static const String VNPayView = 'VNPayView';
+  static const String configScreen = 'ConfigScreen';
 }

@@ -63,6 +63,9 @@ class _HomeMainAppbarVer3State extends State<HomeMainAppbarVer3> {
             }),
 
         actions: [
+          IconButton(onPressed: () {
+            Navigator.pushNamed(context, Routes.configScreen);
+          }, icon: Icon(Icons.add, color: Colors.transparent,)),
           InkWell(
             onTap: () async {
               QuickAlert.show(

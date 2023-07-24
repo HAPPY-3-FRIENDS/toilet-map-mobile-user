@@ -96,7 +96,7 @@ class _PaymentMethodChangingState extends State<PaymentMethodChanging> {
                 if (widget.methodId != _service) {
                   await UserInfoRepository().patchUserInfoChangePaymentMethod();
                 }
-                Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                Navigator.pushNamed(context, Routes.homeMainScreen);
               }
           ).show();
         },

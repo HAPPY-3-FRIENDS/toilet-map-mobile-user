@@ -16,6 +16,7 @@ import '../models/rating/rating.dart';
 import '../models/rating/rating_response.dart';
 import '../ui/announcement/announcement_main_screen.dart';
 import '../ui/combo/buy_combo_main_screen.dart';
+import '../ui/config/config_screen.dart';
 import '../ui/direction/direction_main_screen.dart';
 import '../ui/history/history_main_screen.dart';
 import '../ui/information/information_change_name_screen.dart';
@@ -105,6 +106,8 @@ class Router {
       case 'VNPayView':
         final index = settings.arguments as String;
         return MaterialPageRoute(builder: (_) => VNPayScreen(url: index,));
+      case 'ConfigScreen':
+        return MaterialPageRoute(builder: (_) => ConfigScreen());
 
         default:
         return MaterialPageRoute(builder: (_) {
