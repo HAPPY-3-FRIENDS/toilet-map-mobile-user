@@ -8,7 +8,7 @@ class AppSize {
 }
 
 class AppDomain {
-  static  String appDomain1 = 'http://172.16.17.36:8081';
+  static  String appDomain1 = "http://192.168.137.152:8081";
   static String apiKey = 'OnwCCr1HHOeOCqofMVaXBaf9t82lC25Vqsm6iJJa';
   static const String apiKey1 = 'OnwCCr1HHOeOCqofMVaXBaf9t82lC25Vqsm6iJJa';
   static const String apiKey2 = 'AbbqpehNgoWQ49P9hjoVNBOGcMEsP9FeNa4i9kfv';
@@ -28,7 +28,7 @@ class AppColor {
 //App string
 class AppString {
   static const String appName = "Toilet Map - Nhà Vệ Sinh Công Cộng";
-  static String appDomain = "http://172.16.17.36:8081";
+  static String appDomain = "http://192.168.137.152:8081";
   static const String loginSuccessfully = "Đăng nhập thành công";
   static String styleString = "https://tiles.goong.io/assets/goong_light_v2.json?api_key=Rx4uWeCguGjTpjupmAlqdMUJV9iKW1rLiiGLtfdt";
 }

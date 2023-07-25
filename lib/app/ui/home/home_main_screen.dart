@@ -24,6 +24,7 @@ import 'home_main_bottom_panel/widget/panel_widget.dart';
 
 class HomeMainScreen extends StatefulWidget {
   static int newCheckins = 0;
+  static bool activeWebSocket = false;
 
   const HomeMainScreen({Key? key}) : super(key: key);
 
@@ -47,30 +48,32 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
   _initClient() async {
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
 
-    setState(() {
-      client = StompClient(
-          config: StompConfig.SockJS(
-            url: '${AppString.appDomain}/ws-message',
-            onConnect: onConnect,
-            onWebSocketError: (dynamic error) => print(error.toString()),
-            stompConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
-            webSocketConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
-          )
-      );
+    if (HomeMainScreen.activeWebSocket == false) {
+      setState(() {
+        client = StompClient(
+            config: StompConfig.SockJS(
+              url: '${AppString.appDomain}/ws-message',
+              onConnect: onConnect,
+              onWebSocketError: (dynamic error) => print(error.toString()),
+              stompConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
+              webSocketConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
+            )
+        );
+        client2 = StompClient(
+            config: StompConfig.SockJS(
+              url: '${AppString.appDomain}/ws-message',
+              onConnect: onConnect2,
+              onWebSocketError: (dynamic error) => print(error.toString()),
+              stompConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
+              webSocketConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
+            )
+        );
+        HomeMainScreen.activeWebSocket = true;
+      });
 
-      client2 = StompClient(
-          config: StompConfig.SockJS(
-            url: '${AppString.appDomain}/ws-message',
-            onConnect: onConnect2,
-            onWebSocketError: (dynamic error) => print(error.toString()),
-            stompConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
-            webSocketConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
-          )
-      );
-    });
-
-    client.activate();
-    client2.activate();
+      client.activate();
+      client2.activate();
+    }
   }
 
   void onConnect(StompFrame connectFrame) async {

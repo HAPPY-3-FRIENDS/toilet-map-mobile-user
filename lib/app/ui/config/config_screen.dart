@@ -150,8 +150,8 @@ class _ConfigScreenState extends State<ConfigScreen> {
                             }
                             print("API xai: " + AppDomain.apiKey);
                             if (ip == "") {
-                              AppDomain.appDomain1 = "http://172.16.17.36:8081";
-                              AppString.appDomain = "http://172.16.17.36:8081";
+                              AppDomain.appDomain1 = "http://192.168.137.152:8081";
+                              AppString.appDomain = "http://192.168.137.152:8081";
                             } else {
                               AppDomain.appDomain1 = "http://" + ip + ":8081";
                               AppString.appDomain = "http://" + ip + ":8081";
