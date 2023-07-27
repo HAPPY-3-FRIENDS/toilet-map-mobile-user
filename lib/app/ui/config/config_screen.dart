@@ -8,6 +8,7 @@ import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/utils/routes.dart';
 
 import '../../utils/constants.dart';
+import '../home/home_main_screen.dart';
 
 class ConfigScreen extends StatefulWidget {
   const ConfigScreen({Key? key}) : super(key: key);
@@ -150,15 +151,16 @@ class _ConfigScreenState extends State<ConfigScreen> {
                             }
                             print("API xai: " + AppDomain.apiKey);
                             if (ip == "") {
-                              AppDomain.appDomain1 = "http://192.168.137.152:8081";
-                              AppString.appDomain = "http://192.168.137.152:8081";
+                              AppDomain.appDomain1 = "http://192.168.137.1:8081";
+                              AppString.appDomain = "http://192.168.137.1:8081";
                             } else {
                               AppDomain.appDomain1 = "http://" + ip + ":8081";
                               AppString.appDomain = "http://" + ip + ":8081";
                             }
+                            HomeMainScreen.activeWebSocket = false;
                             AccessToken? token = await AuthRepository().authPhoneLogin();
                             if (token != null) {
-                              Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                              Navigator.pushNamed(context, Routes.homeMainScreen);
                             } else {
                               Navigator.pushNamed(context, Routes.loginMainScreen);
                             }

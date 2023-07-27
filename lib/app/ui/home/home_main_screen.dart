@@ -25,6 +25,7 @@ import 'home_main_bottom_panel/widget/panel_widget.dart';
 class HomeMainScreen extends StatefulWidget {
   static int newCheckins = 0;
   static bool activeWebSocket = false;
+  static String lastIp = 'http://192.168.137.1:8081';
 
   const HomeMainScreen({Key? key}) : super(key: key);
 
@@ -49,6 +50,11 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
 
     if (HomeMainScreen.activeWebSocket == false) {
+      if (HomeMainScreen.lastIp != AppString.appDomain) {
+        client.deactivate();
+        client2.deactivate();
+      }
+
       setState(() {
         client = StompClient(
             config: StompConfig.SockJS(
@@ -197,22 +203,6 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     super.initState();
     _initRatingNew();
     _initClient();
-  }
-
-  @override
-  void deactivate() {
-    // TODO: implement deactivate
-    super.deactivate();
-    client.deactivate();
-    client2.deactivate();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    client.deactivate();
-    client2.deactivate();
   }
 
   @override

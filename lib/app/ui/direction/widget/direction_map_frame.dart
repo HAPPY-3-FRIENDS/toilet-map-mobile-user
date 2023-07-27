@@ -38,6 +38,7 @@ class DirectionMapFrame extends StatefulWidget {
 class _DirectionMapFrameState extends State<DirectionMapFrame> {
   List<Prediction> data = [];
   bool isSearch = false;
+  bool isSeeking = false;
   bool isOnThisPage = true;
   late CameraPosition _initialCameraPosition;
   late MapboxMapController controller;
@@ -50,10 +51,13 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
   @override
   void initState() {
     // TODO: implement initState
-    _getCurrentLocation();
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
+    _getCurrentLocation();
+    Timer.periodic(Duration(seconds: 15), (Timer t) {
       _getPopup();
+    });
+    Timer.periodic(Duration(seconds: 5), (Timer t) {
+      _getCurrentLocation();
     });
   }
 
@@ -154,11 +158,9 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
     final symbol = widget.toilet;
 
     _loadSymbols(symbol!.latitude, symbol!.longitude, symbol!.id);
-
-    _createPolyline(currentLatLng.latitude, currentLatLng.longitude);
   }
 
-  _getCurrentLocation() {
+  _getCurrentLocation() async {
     Location location = Location();
     location.getLocation().then(
             (location) {
@@ -166,30 +168,53 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
         }
     );
 
-    location.onLocationChanged.listen((event) {
-      currentLatLng = LatLng(event.latitude!, event.longitude!);
+    String? status = await ToiletRepository().getToiletStatus(widget.toilet.id);
+    int? waitTime = await ToiletRepository().getToiletWaitTime(widget.toilet.id);
 
-      if (isSearch == false && isOnThisPage == true) {
-        controller.animateCamera(
-            CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLatLng.latitude, currentLatLng.longitude))));
+    if (isSearch == false && isOnThisPage == true) {
+      controller.animateCamera(
+          CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLatLng.latitude, currentLatLng.longitude))));
 
-        double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
-        double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);
+      double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
+      double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);
 
-        double sum = (d1 + d2) * 1000000;
+      double sum = (d1 + d2) * 1000000;
 
-        setState(() {
-          if (sum >= 0.1) {
-            _createPolyline(currentLatLng.latitude, currentLatLng.longitude);
-            controller.removeLayer('line' + (count-1).toString());
-            controller.removeSource('way' + (count-1).toString());
+      setState(() {
+        if (sum >= 0.1) {
+          _createPolyline(currentLatLng.latitude, currentLatLng.longitude);
+          controller.removeLayer('line' + (count-1).toString());
+          controller.removeSource('way' + (count-1).toString());
+        } else if (isSeeking == false) {
+          controller.removeLayer('line' + count.toString());
+          controller.removeSource('way' + count.toString());
+
+          isOnThisPage = false;
+          Navigator.pushNamed(context, Routes.homeMainScreen);
+          if (status! == "Not available") {
+            Navigator.pushNamed(context, Routes.homeMainScreen);
+            AwesomeDialog(
+              context: context,
+              dialogType: DialogType.noHeader,
+              showCloseIcon: true,
+              dismissOnTouchOutside: true,
+              animType: AnimType.topSlide,
+              body: LocationReportDialog(id: widget.toilet.id, waitTime: waitTime!),
+            )..show();
           } else {
-            controller.removeLayer('line' + count.toString());
-            controller.removeSource('way' + count.toString());
+            Navigator.pushNamed(context, Routes.homeMainScreen);
+            AwesomeDialog(
+              context: context,
+              dismissOnTouchOutside: true,
+              dialogType: DialogType.noHeader,
+              showCloseIcon: true,
+              animType: AnimType.topSlide,
+              body: LocationReportDialog(id: widget.toilet.id, waitTime: 0),
+            )..show();
           }
-        });
-      };
-    });
+        }
+      });
+    };
   }
 
   @override
@@ -370,6 +395,8 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius: BorderRadius.circular(10.r))),
                                               onPressed: () async {
+                                                isSeeking = true;
+
                                                 QuickAlert.show(
                                                   context: context,
                                                   type: QuickAlertType.loading,
@@ -388,6 +415,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                           TextButton(
                                                             child: const Text('Xác nhận'),
                                                             onPressed: () {
+                                                              isSeeking = false;
                                                               Navigator.of(context).pop();
                                                             },
                                                           ),
@@ -395,8 +423,9 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                       );
                                                     },
                                                   );
+                                                } else {
+                                                  Navigator.pushReplacementNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
                                                 }
-                                                Navigator.pushReplacementNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
                                               },
                                               child: Text("Tới NVS khác", style: AppText.white100Text20,)
                                           ),
@@ -412,41 +441,9 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                       borderRadius: BorderRadius.circular(10.r))),
                                               onPressed: () async {
                                                 isOnThisPage = false;
-                                                String? status = await ToiletRepository().getToiletStatus(widget.toilet.id);
-                                                int? waitTime = await ToiletRepository().getToiletWaitTime(widget.toilet.id);
-
-                                                double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
-                                                double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);
-
-                                                double sum = (d1 + d2) * 1000000;
-
-                                                print('distance now: ' + sum.toString());
-
-                                                if (sum <= 0.3) {
-                                                  if (status! == "Not available") {
-                                                    AwesomeDialog(
-                                                      context: context,
-                                                      dialogType: DialogType.noHeader,
-                                                      showCloseIcon: true,
-                                                      dismissOnTouchOutside: true,
-                                                      animType: AnimType.topSlide,
-                                                      body: LocationReportDialog(id: widget.toilet.id, waitTime: waitTime!),
-                                                    )..show().then((value) => Navigator.pushNamed(context, Routes.homeMainScreen));
-                                                  } else {
-                                                    AwesomeDialog(
-                                                      context: context,
-                                                      dismissOnTouchOutside: true,
-                                                      dialogType: DialogType.noHeader,
-                                                      showCloseIcon: true,
-                                                      animType: AnimType.topSlide,
-                                                      body: LocationReportDialog(id: widget.toilet.id, waitTime: 0),
-                                                    )..show().then((value) => Navigator.pushNamed(context, Routes.homeMainScreen));
-                                                  }
-                                                } else {
-                                                  Navigator.pushNamed(context, Routes.homeMainScreen);
-                                                }
+                                                Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
                                               },
-                                              child: Text("Hoàn tất", style: AppText.primary1Text20,)
+                                              child: Text("Ngừng chỉ đường", style: AppText.primary1Text20,)
                                           ),
                                         ),
                                       ],
@@ -464,39 +461,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                               borderRadius: BorderRadius.circular(10.r))),
                                       onPressed: () async {
                                         isOnThisPage = false;
-                                        String? status = await ToiletRepository().getToiletStatus(widget.toilet.id);
-                                        int? waitTime = await ToiletRepository().getToiletWaitTime(widget.toilet.id);
-
-                                        double d1 = (widget.toilet.longitude - currentLatLng.longitude)*(widget.toilet.longitude - currentLatLng.longitude);
-                                        double d2 = (widget.toilet.latitude - currentLatLng.latitude)*(widget.toilet.latitude - currentLatLng.latitude);
-
-                                        double sum = (d1 + d2) * 1000000;
-
-                                        print('distance now: ' + sum.toString());
-
-                                        if (sum <= 0.3) {
-                                          if (status! == "Not available") {
-                                            AwesomeDialog(
-                                              context: context,
-                                              dismissOnTouchOutside: true,
-                                              dialogType: DialogType.noHeader,
-                                              showCloseIcon: true,
-                                              animType: AnimType.topSlide,
-                                              body: LocationReportDialog(id: widget.toilet.id, waitTime: waitTime!),
-                                            )..show().then((value) => Navigator.pushNamed(context, Routes.homeMainScreen));
-                                          } else {
-                                            AwesomeDialog(
-                                              context: context,
-                                              dismissOnTouchOutside: true,
-                                              dialogType: DialogType.noHeader,
-                                              showCloseIcon: true,
-                                              animType: AnimType.topSlide,
-                                              body: LocationReportDialog(id: widget.toilet.id, waitTime: 0),
-                                            )..show().then((value) => Navigator.pushNamed(context, Routes.homeMainScreen));
-                                          }
-                                        } else {
-                                          Navigator.pushNamed(context, Routes.homeMainScreen);
-                                        }
+                                        Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
                                       },
                                       child: Text("Hoàn tất", style: AppText.primary1Text20,)
                                   ),
