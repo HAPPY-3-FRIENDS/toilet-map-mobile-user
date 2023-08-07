@@ -53,13 +53,10 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getCurrentLocation();
     Timer.periodic(Duration(seconds: 15), (Timer t) {
       _getPopup();
     });
-    Timer.periodic(Duration(seconds: 5), (Timer t) {
-      _getCurrentLocation();
-    });
+    DirectionMapFrame.isOnThisPage = true;
   }
 
   void _getPopup() async {
@@ -102,6 +99,10 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
 
   _onMapCreated(MapboxMapController controller) async {
     this.controller = controller;
+
+    Timer.periodic(Duration(seconds: 5), (Timer t) {
+      _getCurrentLocation();
+    });
   }
 
   _loadSymbols(double lat, double long, int toiletId) async {
@@ -191,9 +192,8 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
           controller.removeSource('way' + DirectionMapFrame.countLineway.toString());
 
           DirectionMapFrame.isOnThisPage = false;
-          Navigator.pushNamed(context, Routes.homeMainScreen);
           if (status! == "Not available") {
-            //Navigator.pushNamed(context, Routes.homeMainScreen);
+            Navigator.pushNamed(context, Routes.homeMainScreen);
             Navigator.pop(context);
             AwesomeDialog(
               context: context,
@@ -364,6 +364,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                 myLocationEnabled: true,
                                 myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
                                 minMaxZoomPreference: const MinMaxZoomPreference(15, 18),
+
                               ),
                             ),
                             Positioned(
@@ -419,7 +420,8 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                             child: const Text('Xác nhận'),
                                                             onPressed: () {
                                                               isSeeking = false;
-                                                              Navigator.of(context).pop();
+                                                              DirectionMapFrame.isOnThisPage = false;
+                                                              Navigator.pushNamed(context, Routes.homeMainScreen);
                                                             },
                                                           ),
                                                         ],
@@ -464,8 +466,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                               borderRadius: BorderRadius.circular(10.r))),
                                       onPressed: () async {
                                         DirectionMapFrame.isOnThisPage = false;
-                                        //Navigator.pushNamed(context, Routes.homeMainScreen);
-                                        Navigator.pop(context);
+                                        Navigator.pushNamed(context, Routes.homeMainScreen);
                                       },
                                       child: Text("Hoàn tất", style: AppText.primary1Text20,)
                                   ),

@@ -119,7 +119,7 @@ class _LocationReportDialogState extends State<LocationReportDialog> {
               children: [
                 RichText(
                   text: TextSpan(
-                      text: 'Có vẻ nhà vệ sinh đang đầy. Thời gian chờ ước tính là ',
+                      text: 'Nhà vệ sinh đang đầy. Vui lòng chờ trong ',
                       style: TextStyle(fontSize: 16.sp, color: Colors.black),
                       children: <TextSpan>[
                         TextSpan(

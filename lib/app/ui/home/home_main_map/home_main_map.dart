@@ -64,25 +64,6 @@ class _HomeMainMapState extends State<HomeMainMap> {
   }
 
   _symbolClick(Symbol symbol) async {
-    /*showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Chú ý'),
-          content: Text(symbol.data!['id'].toString()),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Xác nhận'),
-              onPressed: () {
-                _createPolyline(symbol.data!['lat'], symbol.data!['long']);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );*/
-
     showModalBottomSheet(
       shape: AppShapeBorder.shapeBorder2,
         context: context,
@@ -108,34 +89,6 @@ class _HomeMainMapState extends State<HomeMainMap> {
           'long': long
         }
     );
-  }
-
-  _createPolyline(double lat, double long) async {
-    count += 1;
-    var polyline = await MapRepository().getDirection(currentLatLng.latitude, currentLatLng.longitude, lat, long);
-
-    var fills = await {
-      "type": "FeatureCollection",
-      "features": [
-        {
-          'type': 'Feature',
-          'properties': {},
-          'geometry': {
-            'type': 'LineString',
-            'coordinates': polyline,
-          },
-        },
-      ],
-    };
-    print("fills: " + fills.toString());
-
-    await controller.addSource("way${count}", GeojsonSourceProperties(data: fills));
-    await controller.addLineLayer("way${count}", "line${count}", LineLayerProperties(
-      lineColor:'#007AFF',
-      lineCap: "round",
-      lineJoin: "round",
-      lineWidth: 3,
-    ),);
   }
 
   _getCurrentLocation() {
