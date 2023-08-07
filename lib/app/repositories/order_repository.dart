@@ -71,4 +71,34 @@ class OrderRepository {
     print("get failed");
     return null;
   }
+
+  Future<Order?> postOrder(int comboId) async {
+    int? accountId = await SharedPreferencesRepository().getAccountId();
+    String? accessToken = await SharedPreferencesRepository().getAccessToken();
+    String method = "Số dư";
+
+    var response = await http.post(
+        Uri.parse("${AppDomain.appDomain1}/api/orders"),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+          HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+        },
+        body:
+        jsonEncode({
+          "accountId": accountId,
+          "comboId": comboId,
+          "paymentMethod": "Số dư",
+        })
+    );
+    print('response ne 234: ' + response.body);
+    if (response.statusCode == 201) {
+      print('order successfully');
+      final responseJson = jsonDecode(response.body);
+      BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
+      Order order = Order.fromJson(baseResponse.data);
+      return order;
+    } else {
+      return null;
+    }
+  }
 }

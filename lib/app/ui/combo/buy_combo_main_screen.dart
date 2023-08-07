@@ -3,10 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:group_button/group_button.dart';
 import 'package:intl/intl.dart';
 import 'package:toiletmap/app/repositories/combo_repository.dart';
+import 'package:toiletmap/app/repositories/order_repository.dart';
 import 'package:toiletmap/app/utils/constants.dart';
+import 'package:toiletmap/app/utils/routes.dart';
 
 import '../../models/combo/combo.dart';
 import '../../models/combo/comboArgument.dart';
+import '../../models/order/order.dart';
 
 class BuyComboMainScreen extends StatefulWidget {
   ComboArgument comboArgument;
@@ -21,6 +24,7 @@ class _BuyComboMainScreenState extends State<BuyComboMainScreen> {
   late int money = 0;
   late TextEditingController _controller;
   late int _value = 1;
+  late int comboId = 0;
 
   @override
   void initState() {
@@ -87,7 +91,51 @@ class _BuyComboMainScreenState extends State<BuyComboMainScreen> {
                 width: double.infinity,
                 height: 60.h,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (comboId != 0) {
+                      print("comboId: " + comboId.toString());
+                      Order? order = await OrderRepository().postOrder(comboId);
+                      if (order == null) {
+                        showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Chú ý'),
+                              content: const Text('Mua gói thất bại!'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Xác nhận'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                      await Navigator.pushNamed(context, Routes.homeMainScreen);
+                    } else {
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Chú ý'),
+                            content: const Text('Vui lòng chọn gói mua!'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('Xác nhận'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+
+                    }
+                  },
                   child: Text("Mua gói", style: AppText.white100Text20,),
                 ),
               )
@@ -118,8 +166,10 @@ class _BuyComboMainScreenState extends State<BuyComboMainScreen> {
                               (money == priceList[index]) ?
                               setState(() {
                                 money = 0;
+                                comboId = 0;
                               }) : setState(() {
                                 money = priceList[index];
+                                comboId = index + 1;
                               });
                             },
                             maxSelected: 1,
