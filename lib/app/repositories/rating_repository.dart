@@ -10,16 +10,28 @@ import '../models/rating/rating_response.dart';
 import '../utils/constants.dart';
 
 class RatingRepository {
-  Future<List<RatingResponse>?> getRatingsByToiletId(int id, int page) async {
+  Future<List<RatingResponse>?> getRatingsByToiletId(int id, int page, int star) async {
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
 
-    final response = await http.get(
-        Uri.parse('${AppDomain.appDomain1}/api/ratings?toilet-id=${id}&pageIndex=${page}&pageSize=10'),
-        headers: {
-          HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
-          HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
-        }
-    );
+    final response;
+    if (star == 0) {
+      response = await http.get(
+          Uri.parse('${AppDomain.appDomain1}/api/ratings?toilet-id=${id}&pageIndex=${page}&pageSize=10'),
+          headers: {
+            HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+            HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+          }
+      );
+    } else {
+      response = await http.get(
+          Uri.parse('${AppDomain.appDomain1}/api/ratings/filter-rating-by-star?toilet-id=${id}&star=${star}&pageIndex=${page}&pageSize=10'),
+          headers: {
+            HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+            HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+          }
+      );
+    }
+
 
     if (response.statusCode == 200) {
       print('hihi');

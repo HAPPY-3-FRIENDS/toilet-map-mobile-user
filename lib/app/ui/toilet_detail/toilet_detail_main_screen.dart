@@ -35,7 +35,7 @@ class _ToiletDetailMainScreenState extends State<ToiletDetailMainScreen> {
   void initState() {
     // TODO: implement initState
     _future = RatingRepository().countRatingsByToiletId(widget.toiletArgument.id);
-    _future2 = RatingRepository().getRatingsByToiletId(widget.toiletArgument.id, 1);
+    _future2 = RatingRepository().getRatingsByToiletId(widget.toiletArgument.id, 1, 0);
     super.initState();
   }
 

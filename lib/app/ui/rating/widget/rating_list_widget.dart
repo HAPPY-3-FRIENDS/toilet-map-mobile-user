@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:toiletmap/app/repositories/checkin_repository.dart';
-import 'package:toiletmap/app/ui/history/widget/history_checkin.dart';
-import 'package:toiletmap/app/utils/constants.dart';
+import 'package:toiletmap/app/repositories/rating_repository.dart';
+import 'package:toiletmap/app/ui/rating/widget/rating_frame_widget.dart';
+import 'package:toiletmap/app/models/toilet/toiletArgument2.dart';
 
-import '../../../models/checkin/checkin.dart';
+import '../../../models/rating/rating_response.dart';
+import '../../../utils/constants.dart';
 
-class HistoryCheckinList extends StatefulWidget {
-  int checkin;
+class RatingListWidget extends StatefulWidget {
+  ToiletArgument2 toiletArgument2;
+  int star;
 
-  HistoryCheckinList({Key? key, required this.checkin}) : super(key: key);
+  RatingListWidget({Key? key, required this.toiletArgument2, required this.star}) : super(key: key);
 
   @override
-  State<HistoryCheckinList> createState() => _HistoryCheckinListState();
+  State<RatingListWidget> createState() => _RatingListWidgetState();
 }
 
-class _HistoryCheckinListState extends State<HistoryCheckinList> {
+class _RatingListWidgetState extends State<RatingListWidget> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
   GlobalKey<RefreshIndicatorState>();
   final scrollController = ScrollController();
@@ -30,11 +33,11 @@ class _HistoryCheckinListState extends State<HistoryCheckinList> {
     scrollController.addListener(_scrollListener);
     _fetchPosts(page);
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    return (widget.checkin != 0)
-    ? RefreshIndicator(
+    return (widget.toiletArgument2.ratingCount != 0)
+        ? RefreshIndicator(
         key: _refreshIndicatorKey,
         color: AppColor.primaryColor1,
         backgroundColor: Colors.white,
@@ -49,17 +52,19 @@ class _HistoryCheckinListState extends State<HistoryCheckinList> {
         },
         // Pull from top to show refresh indicator.
         child: Container(
-          padding: EdgeInsets.only(top: 5.h),
           child: ListView.builder(
-            controller: scrollController,
+            shrinkWrap: true,
+            physics: ClampingScrollPhysics(),
             itemCount: isLoadingMore ? posts.length + 1 : posts.length,
+            controller: scrollController,
             itemBuilder: (BuildContext context, int index) {
               if (index < posts.length) {
-                Checkin checkin = posts[index];
-                return Container(
-                  height: 100.h,
-                  margin: EdgeInsets.symmetric(vertical: 3.h),
-                  child: HistoryCheckin(checkin: checkin,),
+                RatingResponse rating = posts[index];
+                return Column(
+                  children: [
+                    Container(height: 2.h, color: Color(0xFFF1F1F1),),
+                    RatingFrameWidget(rating: rating,),
+                  ],
                 );
               } else {
                 return Center(child: CircularProgressIndicator());
@@ -68,28 +73,28 @@ class _HistoryCheckinListState extends State<HistoryCheckinList> {
           ),
         )
     )
-    : Container(
-      color: Colors.white,
+        : Container(
       child: Column(
         children: [
           SizedBox(height: 10.h,),
           SizedBox(height: 200.w, width: 200.w,
             child: Image(image: AssetImage('assets/images/no-data.gif'),),),
           SizedBox(height: 10.h,),
-          Text('Bạn chưa có lịch sử nào', style: AppText.detailText2)
+          Text('Chưa có đánh giá nào', style: AppText.detailText2)
         ],
       ),
     );
   }
 
   Future<void> _fetchPosts(int page) async {
-    List<Checkin>? set = await CheckinRepository().getCheckinsByAccountId(page);
+    List<RatingResponse>? set = await RatingRepository().getRatingsByToiletId(widget.toiletArgument2.id, page, widget.star);
     setState(() {
       posts = posts + set!;
     });
   }
 
   Future<void> _scrollListener() async {
+    print("position reating list: "  + scrollController.position.pixels.toString());
     if (isLoadingMore) return;
     if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
       setState(() {
@@ -103,3 +108,4 @@ class _HistoryCheckinListState extends State<HistoryCheckinList> {
     }
   }
 }
+
