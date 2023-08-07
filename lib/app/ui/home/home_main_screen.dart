@@ -25,7 +25,9 @@ import 'home_main_bottom_panel/widget/panel_widget.dart';
 class HomeMainScreen extends StatefulWidget {
   static int newCheckins = 0;
   static bool activeWebSocket = false;
-  static String lastIp = 'http://192.168.137.1:8081';
+  static late StompClient client;
+  static late StompClient client2;
+  static late int lastCheckinId;
 
   const HomeMainScreen({Key? key}) : super(key: key);
 
@@ -34,15 +36,12 @@ class HomeMainScreen extends StatefulWidget {
 }
 
 class _HomeMainScreenState extends State<HomeMainScreen> {
-  late StompClient client;
-  late StompClient client2;
-  late int lastCheckinId;
 
   _initRatingNew() async {
     int? num = await CheckinRepository().countCheckinsNotRatingByAccountId();
     setState(() {
       HomeMainScreen.newCheckins = num!;
-      lastCheckinId = 0;
+      HomeMainScreen.lastCheckinId = 0;
     });
   }
 
@@ -50,13 +49,18 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
 
     if (HomeMainScreen.activeWebSocket == false) {
-      if (HomeMainScreen.lastIp != AppString.appDomain) {
-        client.deactivate();
-        client2.deactivate();
+      try {
+        if (HomeMainScreen.client.isActive) {
+          HomeMainScreen.client.deactivate();
+        }
+        if (HomeMainScreen.client2.isActive) {
+          HomeMainScreen.client2.deactivate();
+        }
+      } catch (e) {
+        print(e);
       }
-
       setState(() {
-        client = StompClient(
+        HomeMainScreen.client = StompClient(
             config: StompConfig.SockJS(
               url: '${AppString.appDomain}/ws-message',
               onConnect: onConnect,
@@ -65,7 +69,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
               webSocketConnectHeaders: {'Authorization': 'Bearer ${accessToken}'},
             )
         );
-        client2 = StompClient(
+        HomeMainScreen.client2 = StompClient(
             config: StompConfig.SockJS(
               url: '${AppString.appDomain}/ws-message',
               onConnect: onConnect2,
@@ -77,8 +81,8 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
         HomeMainScreen.activeWebSocket = true;
       });
 
-      client.activate();
-      client2.activate();
+      HomeMainScreen.client.activate();
+      HomeMainScreen.client2.activate();
     }
   }
 
@@ -86,14 +90,14 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     String? phone = await SharedPreferencesRepository().getUsername();
 
     print("connect websocket oke");
-    client.subscribe(
+    HomeMainScreen.client.subscribe(
         destination: '/topic/check-in',
         callback: (StompFrame frame) async {
           Map<String, dynamic> result = json.decode(frame.body!);
           Checkin checkin = Checkin.fromJson(result);
-          if (checkin.id != lastCheckinId && checkin.username == phone) await {
+          if (checkin.id != HomeMainScreen.lastCheckinId && checkin.username == phone) await {
             setState(() {
-              lastCheckinId = checkin.id;
+              HomeMainScreen.lastCheckinId = checkin.id;
               HomeMainScreen.newCheckins += 1;
               print("Có in ko + " + QRCodeBuilder.qrCode.toString());
               if (QRCodeBuilder.qrCode == true) {
@@ -144,7 +148,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     String? phone = await SharedPreferencesRepository().getUsername();
 
     print("connect websocket oke");
-    client.subscribe(
+    HomeMainScreen.client.subscribe(
         destination: '/topic/payment',
         callback: (StompFrame frame) async {
           Map<String, dynamic> result = json.decode(frame.body!);

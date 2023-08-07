@@ -49,7 +49,7 @@ class _SearchMapScreenState extends State<SearchMapScreen> {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                      Navigator.pushNamed(context, Routes.homeMainScreen);
                     },
                     icon: Icon(
                       Icons.home_rounded,

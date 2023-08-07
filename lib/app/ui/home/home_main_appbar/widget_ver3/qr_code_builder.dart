@@ -62,6 +62,7 @@ class _QRCodeBuilderState extends State<QRCodeBuilder> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppNumber.h60)),
         content: Container(
           height: 380.h,
+          width: 250.w,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -69,7 +70,7 @@ class _QRCodeBuilderState extends State<QRCodeBuilder> {
                 data: '${widget.accountId} - ${widget.data} - $date',
                 version: QrVersions.auto,
                 gapless: true,
-                size: 280.w,
+                size: 200.w, //Phuong phone 280
                 padding: EdgeInsets.zero,
               ),
               Text('Mã sẽ biến mất sau $time giây', style: AppText.detailText2,),

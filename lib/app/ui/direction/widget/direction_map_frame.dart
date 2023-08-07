@@ -31,6 +31,9 @@ class DirectionMapFrame extends StatefulWidget {
 
   DirectionMapFrame({required this.toilet,Key? key}) : super(key: key);
 
+  static bool isOnThisPage = true;
+  static int countLineway = 0;
+
   @override
   State<DirectionMapFrame> createState() => _DirectionMapFrameState();
 }
@@ -39,11 +42,9 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
   List<Prediction> data = [];
   bool isSearch = false;
   bool isSeeking = false;
-  bool isOnThisPage = true;
   late CameraPosition _initialCameraPosition;
   late MapboxMapController controller;
   late LatLng currentLatLng;
-  static int count = 0;
 
   late Timer timer;
   bool isPopup = false;
@@ -121,10 +122,10 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
   }
 
   _createPolyline(double firstLat, double firstLng) async {
-    count +=1;
+    DirectionMapFrame.countLineway +=1;
 
-    String way = 'way' + count.toString();
-    String line = 'line' + count.toString();
+    String way = 'way' + DirectionMapFrame.countLineway.toString();
+    String line = 'line' + DirectionMapFrame.countLineway.toString();
     print('wayline: ' + way + ' ' + line);
     var polyline = await MapRepository().getDirection(firstLat, firstLng, widget.toilet.latitude, widget.toilet.longitude);
 
@@ -171,7 +172,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
     String? status = await ToiletRepository().getToiletStatus(widget.toilet.id);
     int? waitTime = await ToiletRepository().getToiletWaitTime(widget.toilet.id);
 
-    if (isSearch == false && isOnThisPage == true) {
+    if (isSearch == false && DirectionMapFrame.isOnThisPage == true) {
       controller.animateCamera(
           CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLatLng.latitude, currentLatLng.longitude))));
 
@@ -183,16 +184,17 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
       setState(() {
         if (sum >= 0.1) {
           _createPolyline(currentLatLng.latitude, currentLatLng.longitude);
-          controller.removeLayer('line' + (count-1).toString());
-          controller.removeSource('way' + (count-1).toString());
+          controller.removeLayer('line' + (DirectionMapFrame.countLineway-1).toString());
+          controller.removeSource('way' + (DirectionMapFrame.countLineway-1).toString());
         } else if (isSeeking == false) {
-          controller.removeLayer('line' + count.toString());
-          controller.removeSource('way' + count.toString());
+          controller.removeLayer('line' + DirectionMapFrame.countLineway.toString());
+          controller.removeSource('way' + DirectionMapFrame.countLineway.toString());
 
-          isOnThisPage = false;
+          DirectionMapFrame.isOnThisPage = false;
           Navigator.pushNamed(context, Routes.homeMainScreen);
           if (status! == "Not available") {
-            Navigator.pushNamed(context, Routes.homeMainScreen);
+            //Navigator.pushNamed(context, Routes.homeMainScreen);
+            Navigator.pop(context);
             AwesomeDialog(
               context: context,
               dialogType: DialogType.noHeader,
@@ -202,6 +204,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
               body: LocationReportDialog(id: widget.toilet.id, waitTime: waitTime!),
             )..show();
           } else {
+            //note
             Navigator.pushNamed(context, Routes.homeMainScreen);
             AwesomeDialog(
               context: context,
@@ -268,8 +271,8 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                               data = [],
                                               updateList(value),
                                               if (isSearch == true) {
-                                                controller.removeLayer('line' + count.toString()),
-                                                controller.removeSource('way' + count.toString()),
+                                                controller.removeLayer('line' + DirectionMapFrame.countLineway.toString()),
+                                                controller.removeSource('way' + DirectionMapFrame.countLineway.toString()),
                                                 _createPolyline(currentLatLng.latitude, currentLatLng.longitude),
                                                 isSearch = false
                                               }
@@ -333,8 +336,8 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                     setState(() {
                                       isSearch = true;
                                     });
-                                    await controller.removeLayer('line' + count.toString());
-                                    await controller.removeSource('way' + count.toString());
+                                    await controller.removeLayer('line' + DirectionMapFrame.countLineway.toString());
+                                    await controller.removeSource('way' + DirectionMapFrame.countLineway.toString());
                                     await _createPolyline(detail!.result!.geometry.location.lat, detail!.result!.geometry.location.lng);
                                     await controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(detail!.result!.geometry.location.lat, detail!.result!.geometry.location.lng))));
                                     FocusManager.instance.primaryFocus?.unfocus();
@@ -349,7 +352,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                         Stack(
                           children: [
                             Container(
-                              height: 640.h,
+                              height: 630.h,  //Phuong phone 640
                               width: 360.w,
                               child: MapboxMap(
                                 //Link goong -> user goong map
@@ -424,7 +427,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                     },
                                                   );
                                                 } else {
-                                                  Navigator.pushReplacementNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
+                                                  Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
                                                 }
                                               },
                                               child: Text("Tới NVS khác", style: AppText.white100Text20,)
@@ -440,8 +443,8 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius: BorderRadius.circular(10.r))),
                                               onPressed: () async {
-                                                isOnThisPage = false;
-                                                Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                                                DirectionMapFrame.isOnThisPage = false;
+                                                Navigator.pushNamed(context, Routes.homeMainScreen);
                                               },
                                               child: Text("Ngừng chỉ đường", style: AppText.primary1Text20,)
                                           ),
@@ -460,8 +463,9 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                           shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(10.r))),
                                       onPressed: () async {
-                                        isOnThisPage = false;
-                                        Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                                        DirectionMapFrame.isOnThisPage = false;
+                                        //Navigator.pushNamed(context, Routes.homeMainScreen);
+                                        Navigator.pop(context);
                                       },
                                       child: Text("Hoàn tất", style: AppText.primary1Text20,)
                                   ),

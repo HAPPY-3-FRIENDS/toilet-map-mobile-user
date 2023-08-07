@@ -133,7 +133,7 @@ class _LocationReportContentFrameState extends State<LocationReportContentFrame>
                 onPressed: () async {
                   String? string = await ReportRepository().postLocationReport(widget.toiletId, reportContent);
 
-                  Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                  Navigator.pushNamed(context, Routes.homeMainScreen);
                   QuickAlert.show(
                     context: context,
                     type: QuickAlertType.success,

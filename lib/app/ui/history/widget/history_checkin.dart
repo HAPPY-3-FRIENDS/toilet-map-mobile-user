@@ -70,7 +70,7 @@ class _HistoryCheckinState extends State<HistoryCheckin> {
                 Text((widget.checkin.turn != null)
                     ? '- ${widget.checkin.turn} lượt'
                     : '- ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(widget.checkin.balance) + " VNĐ"
-                  , style: AppText.listText3,),
+                  , style: AppText.listText32,),
               ],
             ),),
         ],

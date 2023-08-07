@@ -101,7 +101,7 @@ class _ActionFrameState extends State<ActionFrame> {
                                       },
                                       icon: Icon(Icons.login, size: 20.w, color: Colors.white,),
                                       label: Text("Nạp tiền", style: TextStyle(
-                                          fontSize: 16.sp
+                                          fontSize: 14.sp //Phuong phone 16
                                       ),),
                                       style: ElevatedButton.styleFrom(
                                         shape: new RoundedRectangleBorder(
@@ -132,7 +132,7 @@ class _ActionFrameState extends State<ActionFrame> {
                                       },
                                       icon: Icon(Icons.add_shopping_cart, size: 20.w, color: Colors.white,),
                                       label: Text("Mua lượt", style: TextStyle(
-                                          fontSize: 16.sp
+                                          fontSize: 14.sp //Phuong phone 16
                                       ),),
                                       style: ElevatedButton.styleFrom(
                                         shape: new RoundedRectangleBorder(
@@ -214,7 +214,7 @@ class _ActionFrameState extends State<ActionFrame> {
                                       },
                                       icon: Icon(Icons.login, size: 20.w, color: Colors.white,),
                                       label: Text("Nạp tiền", style: TextStyle(
-                                          fontSize: 16.sp
+                                          fontSize: 14.sp //Phuong phone 16
                                       ),),
                                       style: ElevatedButton.styleFrom(
                                         shape: new RoundedRectangleBorder(
@@ -245,7 +245,7 @@ class _ActionFrameState extends State<ActionFrame> {
                                       },
                                       icon: Icon(Icons.add_shopping_cart, size: 20.w, color: Colors.white,),
                                       label: Text("Mua lượt", style: TextStyle(
-                                          fontSize: 16.sp
+                                          fontSize: 14.sp // Phuong phone 16
                                       ),),
                                       style: ElevatedButton.styleFrom(
                                         shape: new RoundedRectangleBorder(

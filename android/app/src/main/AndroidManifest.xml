@@ -10,9 +10,11 @@
 
    <application
 
-        android:label="Toilet Map"
-        android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+       android:label="Toilet Map"
+       android:name="${applicationName}"
+       android:icon="@mipmap/ic_launcher"
+       android:usesCleartextTraffic="true"
+       >
 
         <activity
             android:name=".MainActivity"

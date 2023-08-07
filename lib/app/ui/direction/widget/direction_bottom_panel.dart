@@ -138,7 +138,7 @@ class DirectionBottomPanel extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.r))),
                           onPressed: () async {
-                            Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                            Navigator.pushNamed(context, Routes.homeMainScreen);
 
                             QuickAlert.show(
                               context: context,

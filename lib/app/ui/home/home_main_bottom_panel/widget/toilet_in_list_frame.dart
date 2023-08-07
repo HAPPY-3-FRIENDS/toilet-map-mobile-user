@@ -214,17 +214,14 @@ class ToiletInListFrame extends StatelessWidget {
                                       : null,
                                 ),
 
-                                Container(
-                                  child: (disabilityRoom != 0)
-                                      ? Row(
-                                    children: [
-                                      FaIcon(FontAwesomeIcons.wheelchair, size: 10.w),
-                                      //SizedBox(width: AppNumber.h400,),
-                                      Text('${disabilityRoom} phòng', style: AppText.detailText3, overflow: TextOverflow.fade),
-                                    ],
-                                  )
-                                      : null,
-                                ),
+                                (disabilityRoom != 0) ? FaIcon(FontAwesomeIcons.wheelchair, size: 10.w) : Container(),
+                                (disabilityRoom != 0) ?
+                                Expanded(
+                                  child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 4.w),
+                                      child: Text('${disabilityRoom} phòng', style: AppText.detailText3, overflow: TextOverflow.ellipsis, maxLines: 1,)
+                                  ),
+                                ) : Container(),
                               ],
                             ),
                             Row(
@@ -388,7 +385,15 @@ class ToiletInListFrame extends StatelessWidget {
                                     : null,
                               ),
 
-                              Container(
+                              (disabilityRoom != 0) ? FaIcon(FontAwesomeIcons.wheelchair, size: 10.w) : Container(),
+                              (disabilityRoom != 0) ?
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 4.w),
+                                  child: Text('${disabilityRoom} phòng', style: AppText.detailText3, overflow: TextOverflow.ellipsis, maxLines: 1,)
+                                ),
+                              ) : Container(),
+                              /*Container(
                                 child: (disabilityRoom != 0)
                                     ? Row(
                                   children: [
@@ -398,7 +403,7 @@ class ToiletInListFrame extends StatelessWidget {
                                   ],
                                 )
                                     : null,
-                              ),
+                              ),*/
                             ],
                           ),
                           Row(

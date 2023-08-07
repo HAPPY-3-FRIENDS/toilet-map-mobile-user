@@ -106,7 +106,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
 
           print('cho nay in ra token: ' + token!);
           if (token != null) {
-            Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+            Navigator.pushNamed(context, Routes.homeMainScreen);
           } else {
             Navigator.pop(context);
           }
@@ -310,6 +310,25 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                                   },
                                   icon: Icon(Icons.arrow_forward_ios_outlined, color: AppColor.primaryColor1, size: 25.w, )),
                             ],
+                          ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.all(20.w),
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 60.h,
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.transparent,
+                                    shadowColor: Colors.transparent,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20.r))),
+                                onPressed: () async {
+                                  Navigator.pushNamed(context, Routes.configScreen);
+                                },
+                                child: Text("Đăng nhập", style: TextStyle(color: Colors.transparent),)
+                            ),
                           ),
                         ),
 

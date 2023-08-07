@@ -166,17 +166,6 @@ class _BuyComboMainScreenState extends State<BuyComboMainScreen> {
                                 });
                               },),
                               SizedBox(width: 10.w,),
-                              Text('VNPAY', style: AppText.blackText18,),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Radio(value: 2, groupValue: _value, onChanged: (value) {
-                                setState(() {
-                                  _value = 2;
-                                });
-                              },),
-                              SizedBox(width: 10.w,),
                               Text('Tổng tiền còn dư (${NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(widget.comboArgument.currentMoney) + " VNĐ"})', style: AppText.blackText18,),
                             ],
                           ),

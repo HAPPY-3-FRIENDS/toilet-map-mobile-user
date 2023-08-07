@@ -23,7 +23,7 @@ class HomeAppbarQRCodeFrame extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Mã thanh toán', style: AppText.appbarQRButtonText1,),
+          Text('Mã thanh toán', style: AppText.appbarQRButtonText2,),
           Container(
             height: 120.h,
             padding: EdgeInsets.all(3.w),

@@ -53,7 +53,6 @@ class _VNPayScreenState extends State<VNPayScreen> {
                       dialogType: DialogType.success,
                       animType: AnimType.topSlide,
                       dismissOnBackKeyPress: true,
-                      autoDismiss: true,
                       dismissOnTouchOutside: true,
                       showCloseIcon: true,
                       body: Container(

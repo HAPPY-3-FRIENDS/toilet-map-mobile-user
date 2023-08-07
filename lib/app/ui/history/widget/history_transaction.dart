@@ -37,7 +37,7 @@ class _HistoryTransactionState extends State<HistoryTransaction> {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('- ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(widget.total) + " VNĐ", style: AppText.listText3),
+              Text('+ ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(widget.total) + " VNĐ", style: AppText.listText3),
             ],
           )
         ],

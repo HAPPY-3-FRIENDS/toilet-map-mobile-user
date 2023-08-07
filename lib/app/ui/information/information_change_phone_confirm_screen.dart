@@ -127,7 +127,7 @@ class _InformationChangePhoneConfirmScreenState extends State<InformationChangeP
                         if (accessToken == null ) {
                           Navigator.pushNamed(context, Routes.createAccountScreen);
                         } else {
-                          Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                          Navigator.pushNamed(context, Routes.homeMainScreen);
                         }
                       } catch (e) {
                         showDialog<void>(

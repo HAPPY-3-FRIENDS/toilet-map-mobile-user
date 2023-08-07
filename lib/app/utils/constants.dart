@@ -177,7 +177,7 @@ class AppText {
 
   static var titleText1 = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: 22.sp,
+    fontSize: 18.sp,
     color: Colors.white,
   );
 
@@ -231,6 +231,13 @@ class AppText {
     color: Colors.white,
   );
 
+  //Fake for Phuong phone appbarQRButtonText1
+  static var appbarQRButtonText2 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 16.sp,
+    color: Colors.white,
+  );
+
   static var appbarTitleText1 = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 30.sp,
@@ -272,6 +279,13 @@ class AppText {
   static var listText3 = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 22.sp,
+    color: Colors.black,
+  );
+
+  //Phuong phone listText3
+  static var listText32 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 18.sp,
     color: Colors.black,
   );
 

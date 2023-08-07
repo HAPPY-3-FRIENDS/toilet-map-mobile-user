@@ -381,7 +381,7 @@ class _RatingMainRatingFrameState extends State<RatingMainRatingFrame> {
                     Rating? rating = await RatingRepository().postRating(widget.checkin.toiletId, star, comment, widget.checkin.id, imageSources, ratingCommonComments);
                       if (rating != null) {
                         print("rating nef nef: " + rating.toJson().toString());
-                        Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                        Navigator.pushNamed(context, Routes.homeMainScreen);
                       } else {
                         showDialog<void>(
                           context: context,
