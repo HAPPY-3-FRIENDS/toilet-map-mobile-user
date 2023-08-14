@@ -102,7 +102,7 @@ class _RatingListScreenState extends State<RatingListScreen> {
                             child: Padding(padding: EdgeInsets.only(left: 1.w),
                                 child: Wrap(
                                   children: [
-                                    Text('${widget.toiletArgument2.toiletName}', style: AppText.blackText20Bold, maxLines: 2, overflow: TextOverflow.ellipsis),
+                                    Text('${widget.toiletArgument2.toiletName}', style: AppText.blackText20Bold, maxLines: 1, overflow: TextOverflow.ellipsis),
                                   ],
                                 )
                             ),

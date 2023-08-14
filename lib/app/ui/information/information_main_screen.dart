@@ -245,6 +245,7 @@ class _InformationMainScreenState extends State<InformationMainScreen> {
                                         context: context,
                                         type: QuickAlertType.loading,
                                         title: 'Đang tải dữ liệu',
+                                          barrierDismissible: false
                                       );
                                       int? checkin = await CheckinRepository().countCheckinsByAccountId();
                                       int? order = await OrderRepository().countOrdersByAccountId();

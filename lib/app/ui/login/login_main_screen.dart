@@ -83,6 +83,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
         context: context,
         type: QuickAlertType.loading,
         title: 'Đang tải dữ liệu',
+          barrierDismissible: false
       );
 
         final prefs = await SharedPreferences.getInstance();
@@ -266,6 +267,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                                         context: context,
                                         type: QuickAlertType.loading,
                                         title: 'Đang tải dữ liệu',
+                                          barrierDismissible: false
                                       );
 
                                       if (phone[0] == '0') {

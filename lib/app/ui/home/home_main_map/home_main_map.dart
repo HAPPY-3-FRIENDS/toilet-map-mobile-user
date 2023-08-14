@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/main.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:toiletmap/app/repositories/map_repository.dart';
+import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/repositories/toilet_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_map/widget/bottom_sheet_toilet_info.dart';
 import 'package:toiletmap/app/utils/constants.dart';
@@ -15,7 +16,10 @@ import '../../../models/toilet/toilet.dart';
 import '../../../utils/routes.dart';
 
 class HomeMainMap extends StatefulWidget {
+
   const HomeMainMap({Key? key}) : super(key: key);
+
+  static bool isPermissionLocation = false;
 
   @override
   State<HomeMainMap> createState() => _HomeMainMapState();
@@ -25,7 +29,6 @@ class _HomeMainMapState extends State<HomeMainMap> {
   late CameraPosition _initialCameraPosition;
   late MapboxMapController controller;
   late LatLng currentLatLng;
-  static int count = 0;
 
   @override
   void initState() {
@@ -35,26 +38,31 @@ class _HomeMainMapState extends State<HomeMainMap> {
   }
 
   Future<CameraPosition> initializeLocationAndSave() async {
-    Location _location = Location();
-    bool? _serviceEnabled;
-    PermissionStatus? _permissionGranted;
-    sharedPreferences = await SharedPreferences.getInstance();
+    if (HomeMainMap.isPermissionLocation == false) {
+      Location _location = Location();
+      bool? _serviceEnabled;
+      PermissionStatus? _permissionGranted;
+      sharedPreferences = await SharedPreferences.getInstance();
 
-    _serviceEnabled = await _location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await _location.requestService();
+      _serviceEnabled = await _location.serviceEnabled();
+      if (!_serviceEnabled) {
+        _serviceEnabled = await _location.requestService();
+      }
+
+      _permissionGranted = await _location.hasPermission();
+      if (_permissionGranted == PermissionStatus.denied) {
+        _permissionGranted = await _location.requestPermission();
+      }
+
+      LocationData _locationData = await _location.getLocation();
+      currentLatLng = LatLng(_locationData.latitude!, _locationData.longitude!);
+      await SharedPreferencesRepository().setCurrentLatLong(_locationData.latitude!, _locationData.longitude!);
+
+      HomeMainMap.isPermissionLocation = true;
+    } else {
+      List<double?> list = await SharedPreferencesRepository().getCurrentLatLong();
+      currentLatLng = LatLng(list[0]!, list[1]!);
     }
-
-    _permissionGranted = await _location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await _location.requestPermission();
-    }
-
-    LocationData _locationData = await _location.getLocation();
-    currentLatLng = LatLng(_locationData.latitude!, _locationData.longitude!);
-
-    sharedPreferences.setDouble('latitude', _locationData.latitude!);
-    sharedPreferences.setDouble('longtitude', _locationData.longitude!);
 
     return CameraPosition(target: currentLatLng, zoom: 16);
   }
@@ -91,13 +99,15 @@ class _HomeMainMapState extends State<HomeMainMap> {
     );
   }
 
-  _getCurrentLocation() {
+  _getCurrentLocation() async {
     Location location = Location();
     location.getLocation().then(
         (location) {
           currentLatLng = LatLng(location.latitude!, location.longitude!);
         }
     );
+
+    SharedPreferencesRepository().setCurrentLatLong(currentLatLng.latitude, currentLatLng.longitude);
 
     location.onLocationChanged.listen((event) {
       currentLatLng = LatLng(event.latitude!, event.longitude!);
@@ -214,9 +224,11 @@ class _HomeMainMapState extends State<HomeMainMap> {
                                     context: context,
                                     type: QuickAlertType.loading,
                                     title: 'Đang tải dữ liệu',
+                                      barrierDismissible: false
                                   );
 
                                   Toilet? toilet = await ToiletRepository().getNearestToilet();
+                                  Navigator.pop(context);
                                   if (toilet == null) {
                                     showDialog<void>(
                                       context: context,
@@ -236,7 +248,6 @@ class _HomeMainMapState extends State<HomeMainMap> {
                                       },
                                     );
                                   }
-                                  Navigator.pop(context);
                                   Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
                                 },
                                 child: Text('Khẩn cấp', style: AppText.titleText1),

@@ -2,8 +2,11 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
+import '../../../models/toilet/toilet.dart';
+import '../../../repositories/toilet_repository.dart';
 import '../../../utils/routes.dart';
 
 class LocationReportDialog extends StatefulWidget {
@@ -23,11 +26,11 @@ class _LocationReportDialogState extends State<LocationReportDialog> {
   Widget build(BuildContext context) {
     print("check wait time: " + widget.waitTime.toString());
 
-    return Container(
+    return (widget.waitTime == 0)
+      ? Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       height: (choose != 1) ? 250.h : 320.h,
-      child: (widget.waitTime == 0)
-      ? Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -63,7 +66,7 @@ class _LocationReportDialogState extends State<LocationReportDialog> {
             ],
           ),
           (choose == 1)
-          ? Container(
+              ? Container(
             height: 100.h,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -105,17 +108,21 @@ class _LocationReportDialogState extends State<LocationReportDialog> {
               ],
             ),
           )
-          : Container(),
+              : Container(),
         ],
-      )
-      : Column(
+      ))
+      : Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      height: (choose != 1) ? 330.h : 400.h,
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text("Hoàn tất chỉ đường", style: AppText.primary1Text28,),
           Container(
-            height: 50.h,
+            height: 120.h,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RichText(
                   text: TextSpan(
@@ -133,7 +140,53 @@ class _LocationReportDialogState extends State<LocationReportDialog> {
                       ]
                   ),
                 ),
-                SizedBox(height: 1.h,),
+                SizedBox(height: 15.h,),
+                Text("Tìm nhà vệ sinh gần nhất:", style: AppText.blackText18,),
+                SizedBox(
+                  height: 35.h,
+                  width: 80.w,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      elevation: 1,
+                      backgroundColor: AppColor.primaryColor1,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                    ),
+                    onPressed: () async {
+                      QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.loading,
+                          title: 'Đang tải dữ liệu',
+                          barrierDismissible: false
+                      );
+
+                      Toilet? toilet1 = await ToiletRepository().getNearestToilet();
+                      Navigator.pop(context);
+                      if (toilet1 == null) {
+                        showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Chú ý'),
+                              content: const Text('Không tìm thấy nhà vệ sinh phù hợp!'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Xác nhận'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet1!.id);
+                      }
+                    },
+                    child: Text('Khẩn cấp', style: AppText.titleText1),
+                  ),
+                ),
               ],
             ),
           ),
@@ -212,7 +265,6 @@ class _LocationReportDialogState extends State<LocationReportDialog> {
           )
               : Container(),
         ],
-      ),
-    );
+      ));
   }
 }

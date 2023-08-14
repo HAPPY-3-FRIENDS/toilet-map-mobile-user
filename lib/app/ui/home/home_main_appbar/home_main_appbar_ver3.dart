@@ -72,6 +72,7 @@ class _HomeMainAppbarVer3State extends State<HomeMainAppbarVer3> {
                 context: context,
                 type: QuickAlertType.loading,
                 title: 'Đang tải dữ liệu',
+                barrierDismissible: false
               );
               int? checkin = await CheckinRepository().countCheckinsByAccountId();
               int? order = await OrderRepository().countOrdersByAccountId();

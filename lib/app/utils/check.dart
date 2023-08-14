@@ -1,3 +1,4 @@
+/*
 import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -12,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/main.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:toiletmap/app/repositories/map_repository.dart';
-import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/repositories/toilet_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_map/widget/bottom_sheet_toilet_info.dart';
 import 'package:toiletmap/app/ui/home/home_main_screen.dart';
@@ -30,43 +30,36 @@ import '../../location_report/widget/location_report_dialog.dart';
 class DirectionMapFrame extends StatefulWidget {
   Toilet toilet;
 
-  DirectionMapFrame({required this.toilet, Key? key}) : super(key: key);
+  DirectionMapFrame({required this.toilet,Key? key}) : super(key: key);
 
   @override
   State<DirectionMapFrame> createState() => _DirectionMapFrameState();
 }
 
 class _DirectionMapFrameState extends State<DirectionMapFrame> {
-  bool isOnThisPage = true;
-  static int countLineway = 0;
-
   List<Prediction> data = [];
   bool isSearch = false;
   bool isSeeking = false;
+  bool isOnThisPage = true;
   late CameraPosition _initialCameraPosition;
   late MapboxMapController controller;
   late LatLng currentLatLng;
+  static int count = 0;
 
-  late Timer timer1;
-  late Timer timer2;
+  late Timer timer;
   bool isPopup = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    timer1 = Timer.periodic(Duration(seconds: 15), (Timer t) {
+    _getCurrentLocation();
+    Timer.periodic(Duration(seconds: 15), (Timer t) {
       _getPopup();
     });
-    isOnThisPage = true;
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    timer1.cancel();
-    timer2.cancel();
-    super.dispose();
+    Timer.periodic(Duration(seconds: 5), (Timer t) {
+      _getCurrentLocation();
+    });
   }
 
   void _getPopup() async {
@@ -83,18 +76,32 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
   }
 
   Future<CameraPosition> initializeLocationAndSave() async {
-    List<double?> list = await SharedPreferencesRepository().getCurrentLatLong();
-    currentLatLng = LatLng(list[0]!, list[1]!);
+    Location _location = Location();
+    bool? _serviceEnabled;
+    PermissionStatus? _permissionGranted;
+    sharedPreferences = await SharedPreferences.getInstance();
+
+    _serviceEnabled = await _location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await _location.requestService();
+    }
+
+    _permissionGranted = await _location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await _location.requestPermission();
+    }
+
+    LocationData _locationData = await _location.getLocation();
+    currentLatLng = LatLng(_locationData.latitude!, _locationData.longitude!);
+
+    sharedPreferences.setDouble('latitude', _locationData.latitude!);
+    sharedPreferences.setDouble('longtitude', _locationData.longitude!);
 
     return CameraPosition(target: currentLatLng, zoom: 16);
   }
 
   _onMapCreated(MapboxMapController controller) async {
     this.controller = controller;
-
-    timer2 = Timer.periodic(Duration(seconds: 3), (Timer t) {
-      _getCurrentLocation();
-    });
   }
 
   _loadSymbols(double lat, double long, int toiletId) async {
@@ -115,10 +122,10 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
   }
 
   _createPolyline(double firstLat, double firstLng) async {
-    countLineway +=1;
+    count +=1;
 
-    String way = 'way' + countLineway.toString();
-    String line = 'line' + countLineway.toString();
+    String way = 'way' + count.toString();
+    String line = 'line' + count.toString();
     print('wayline: ' + way + ' ' + line);
     var polyline = await MapRepository().getDirection(firstLat, firstLng, widget.toilet.latitude, widget.toilet.longitude);
 
@@ -165,8 +172,6 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
     String? status = await ToiletRepository().getToiletStatus(widget.toilet.id);
     int? waitTime = await ToiletRepository().getToiletWaitTime(widget.toilet.id);
 
-    SharedPreferencesRepository().setCurrentLatLong(currentLatLng.latitude, currentLatLng.longitude);
-
     if (isSearch == false && isOnThisPage == true) {
       controller.animateCamera(
           CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentLatLng.latitude, currentLatLng.longitude))));
@@ -179,17 +184,16 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
       setState(() {
         if (sum >= 0.1) {
           _createPolyline(currentLatLng.latitude, currentLatLng.longitude);
-          controller.removeLayer('line' + (countLineway-1).toString());
-          controller.removeSource('way' + (countLineway-1).toString());
+          controller.removeLayer('line' + (count-1).toString());
+          controller.removeSource('way' + (count-1).toString());
         } else if (isSeeking == false) {
-          controller.removeLayer('line' + countLineway.toString());
-          controller.removeSource('way' + countLineway.toString());
+          controller.removeLayer('line' + count.toString());
+          controller.removeSource('way' + count.toString());
 
           isOnThisPage = false;
-
+          Navigator.pushNamed(context, Routes.homeMainScreen);
           if (status! == "Not available") {
             Navigator.pushNamed(context, Routes.homeMainScreen);
-            //Navigator.pop(context);
             AwesomeDialog(
               context: context,
               dialogType: DialogType.noHeader,
@@ -199,7 +203,6 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
               body: LocationReportDialog(id: widget.toilet.id, waitTime: waitTime!),
             )..show();
           } else {
-            //note
             Navigator.pushNamed(context, Routes.homeMainScreen);
             AwesomeDialog(
               context: context,
@@ -266,8 +269,8 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                               data = [],
                                               updateList(value),
                                               if (isSearch == true) {
-                                                controller.removeLayer('line' + countLineway.toString()),
-                                                controller.removeSource('way' + countLineway.toString()),
+                                                controller.removeLayer('line' + count.toString()),
+                                                controller.removeSource('way' + count.toString()),
                                                 _createPolyline(currentLatLng.latitude, currentLatLng.longitude),
                                                 isSearch = false
                                               }
@@ -320,7 +323,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                             )
                         ),
                         (data.length != 0)
-                        ? Container(
+                            ? Container(
                           height: 400.h,
                           child: Expanded(
                             child: ListView.builder(
@@ -331,23 +334,23 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                     setState(() {
                                       isSearch = true;
                                     });
-                                    await controller.removeLayer('line' + countLineway.toString());
-                                    await controller.removeSource('way' + countLineway.toString());
+                                    await controller.removeLayer('line' + count.toString());
+                                    await controller.removeSource('way' + count.toString());
                                     await _createPolyline(detail!.result!.geometry.location.lat, detail!.result!.geometry.location.lng);
                                     await controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(detail!.result!.geometry.location.lat, detail!.result!.geometry.location.lng))));
                                     FocusManager.instance.primaryFocus?.unfocus();
                                     setState(() {
                                       data = [];
                                     });
-                                    },
+                                  },
                                   title: Text(data[index].description),
                                 )),
                           ),)
-                        : Container(),
+                            : Container(),
                         Stack(
                           children: [
                             Container(
-                              height: 630.h,  //Phuong phone 640
+                              height: 640.h,
                               width: 360.w,
                               child: MapboxMap(
                                 //Link goong -> user goong map
@@ -359,7 +362,6 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                 myLocationEnabled: true,
                                 myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
                                 minMaxZoomPreference: const MinMaxZoomPreference(15, 18),
-
                               ),
                             ),
                             Positioned(
@@ -373,100 +375,98 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                               ),
                             ),
                             Padding(
-                                padding: (isPopup)
-                                    ? EdgeInsets.only(left: 20.w, right: 20.w, top: 500.h)
-                                    : EdgeInsets.only(left: 30.w, right: 30.w, top: 550.h),
-                                child: (isPopup)
-                                    ? Column(
-                                  children: [
-                                    Text('Nhà vệ sinh có thể đang quá tải, bạn có muốn được chỉ đường tới nhà vệ sinh khác gần đây không?', style: AppText.blackText18Bold,),
-                                    SizedBox(height: 10.h,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                          width: 145.w,
-                                          height: 50.h,
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  primary: AppColor.primaryColor1,
-                                                  elevation: 1,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(10.r))),
-                                              onPressed: () async {
-                                                isSeeking = true;
+                              padding: (isPopup)
+                                  ? EdgeInsets.only(left: 20.w, right: 20.w, top: 500.h)
+                                  : EdgeInsets.only(left: 30.w, right: 30.w, top: 550.h),
+                              child: (isPopup)
+                                  ? Column(
+                                children: [
+                                  Text('Nhà vệ sinh có thể đang quá tải, bạn có muốn được chỉ đường tới nhà vệ sinh khác gần đây không?', style: AppText.blackText18Bold,),
+                                  SizedBox(height: 10.h,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: 145.w,
+                                        height: 50.h,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                primary: AppColor.primaryColor1,
+                                                elevation: 1,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(10.r))),
+                                            onPressed: () async {
+                                              isSeeking = true;
 
-                                                QuickAlert.show(
+                                              QuickAlert.show(
+                                                context: context,
+                                                type: QuickAlertType.loading,
+                                                title: 'Đang tải dữ liệu',
+                                              );
+
+                                              Toilet? toilet = await ToiletRepository().getNearestToilet();
+                                              if (toilet == null) {
+                                                showDialog<void>(
                                                   context: context,
-                                                  type: QuickAlertType.loading,
-                                                  title: 'Đang tải dữ liệu',
-                                                  barrierDismissible: false
+                                                  builder: (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: const Text('Chú ý'),
+                                                      content: const Text('Không tìm thấy nhà vệ sinh phù hợp!'),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          child: const Text('Xác nhận'),
+                                                          onPressed: () {
+                                                            isSeeking = false;
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
                                                 );
-
-                                                Toilet? toilet = await ToiletRepository().getNearestToilet();
-                                                if (toilet == null) {
-                                                  showDialog<void>(
-                                                    context: context,
-                                                    builder: (BuildContext context) {
-                                                      return AlertDialog(
-                                                        title: const Text('Chú ý'),
-                                                        content: const Text('Không tìm thấy nhà vệ sinh phù hợp!'),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                            child: const Text('Xác nhận'),
-                                                            onPressed: () {
-                                                              isSeeking = false;
-                                                              isOnThisPage = false;
-                                                              Navigator.pushNamed(context, Routes.homeMainScreen);
-                                                            },
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  );
-                                                } else {
-                                                  Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
-                                                }
-                                              },
-                                              child: Text("Tới NVS khác", style: AppText.white100Text20,)
-                                          ),
+                                              } else {
+                                                Navigator.pushReplacementNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
+                                              }
+                                            },
+                                            child: Text("Tới NVS khác", style: AppText.white100Text20,)
                                         ),
-                                        SizedBox(
-                                          width: 145.w,
-                                          height: 50.h,
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  primary: Colors.white,
-                                                  elevation: 1,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(10.r))),
-                                              onPressed: () async {
-                                                isOnThisPage = false;
-                                                Navigator.pushNamed(context, Routes.homeMainScreen);
-                                              },
-                                              child: Text("Ngừng chỉ đường", style: AppText.primary1Text20,)
-                                          ),
+                                      ),
+                                      SizedBox(
+                                        width: 145.w,
+                                        height: 50.h,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                primary: Colors.white,
+                                                elevation: 1,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(10.r))),
+                                            onPressed: () async {
+                                              isOnThisPage = false;
+                                              Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                                            },
+                                            child: Text("Ngừng chỉ đường", style: AppText.primary1Text20,)
                                         ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                                    : SizedBox(
-                                  width: double.infinity,
-                                  height: 50.h,
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: Colors.white,
-                                          elevation: 1,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(10.r))),
-                                      onPressed: () async {
-                                        isOnThisPage = false;
-                                        Navigator.pushNamed(context, Routes.homeMainScreen);
-                                      },
-                                      child: Text("Hoàn tất", style: AppText.primary1Text20,)
-                                  ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )
+                                  : SizedBox(
+                                width: double.infinity,
+                                height: 50.h,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        elevation: 1,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.r))),
+                                    onPressed: () async {
+                                      isOnThisPage = false;
+                                      Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                                    },
+                                    child: Text("Hoàn tất", style: AppText.primary1Text20,)
                                 ),
+                              ),
                             )
                           ],
                         ),
@@ -502,3 +502,4 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
 }
 
 
+*/

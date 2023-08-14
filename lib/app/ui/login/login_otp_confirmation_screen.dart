@@ -122,6 +122,7 @@ class _LoginOTPConfirmationScreenState extends State<LoginOTPConfirmationScreen>
                             context: context,
                             type: QuickAlertType.loading,
                             title: 'Đang tải dữ liệu',
+                              barrierDismissible: false
                           );
                           //open 2 code to build apk
                           PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: LoginMainScreen.verify, smsCode: code);
