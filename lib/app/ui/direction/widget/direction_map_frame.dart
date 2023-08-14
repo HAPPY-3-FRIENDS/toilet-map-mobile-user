@@ -92,7 +92,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
   _onMapCreated(MapboxMapController controller) async {
     this.controller = controller;
 
-    timer2 = Timer.periodic(Duration(seconds: 3), (Timer t) {
+    timer2 = Timer.periodic(Duration(seconds: 8), (Timer t) {
       _getCurrentLocation();
     });
   }
@@ -120,6 +120,11 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
     String way = 'way' + countLineway.toString();
     String line = 'line' + countLineway.toString();
     print('wayline: ' + way + ' ' + line);
+    print("this is check for latlong: " + firstLat.toString());
+    print("this is check for latlong: " + firstLng.toString());
+    print("this is check for latlong: " + widget.toilet.latitude.toString());
+    print("this is check for latlong: " + widget.toilet.longitude.toString());
+
     var polyline = await MapRepository().getDirection(firstLat, firstLng, widget.toilet.latitude, widget.toilet.longitude);
 
     var fills = await {

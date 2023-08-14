@@ -12,6 +12,7 @@ class AppDomain {
   static String apiKey = 'OnwCCr1HHOeOCqofMVaXBaf9t82lC25Vqsm6iJJa';
   static const String apiKey1 = 'OnwCCr1HHOeOCqofMVaXBaf9t82lC25Vqsm6iJJa';
   static const String apiKey2 = 'AbbqpehNgoWQ49P9hjoVNBOGcMEsP9FeNa4i9kfv';
+  static const String apiKey3 = 'mzd7gQKio5kfmWwb5GObNLAPwPorelBIHNarCAN3';
 }
 
 //App color

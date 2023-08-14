@@ -109,6 +109,11 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                 choose = 2;
                               });
                               break;
+                            case 2:
+                              setState(() {
+                                choose = 3;
+                              });
+                              break;
                           }
                         },
                         isRadio: true,
@@ -127,7 +132,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                           selectedShadow: []
                         ),
 
-                        buttons: ['Goong 1','Goong 2'],
+                        buttons: ['Goong 1','Goong 2', 'Goong 3'],
                       ),
                     ],
                   ),
@@ -145,8 +150,11 @@ class _ConfigScreenState extends State<ConfigScreen> {
                             if (choose == 0 || choose == 1) {
                               AppDomain.apiKey = AppDomain.apiKey1;
                               AppString.styleString = 'https://tiles.goong.io/assets/goong_light_v2.json?api_key=Rx4uWeCguGjTpjupmAlqdMUJV9iKW1rLiiGLtfdt';
-                            } else {
+                            } else if (choose == 2) {
                               AppDomain.apiKey = AppDomain.apiKey2;
+                              AppString.styleString = 'https://tiles.goong.io/assets/goong_light_v2.json?api_key=7c1L0Na5HyTqjoBruzEoJo9EaGWyVaG2pXxsUr66';
+                            } else if (choose == 3) {
+                              AppDomain.apiKey = AppDomain.apiKey3;
                               AppString.styleString = 'https://tiles.goong.io/assets/goong_light_v2.json?api_key=7c1L0Na5HyTqjoBruzEoJo9EaGWyVaG2pXxsUr66';
                             }
                             print("API xai: " + AppDomain.apiKey);
