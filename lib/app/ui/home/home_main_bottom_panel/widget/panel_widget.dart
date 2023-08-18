@@ -74,8 +74,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                             },
                             child: Row(
                               children: [
-                                Icon(Icons.filter_alt, color: Colors.black, size: 18.w,),
-                                Text('Lọc', style: AppText.detailText2,),
+                                Container(),
                               ],
                             ),
                           ),

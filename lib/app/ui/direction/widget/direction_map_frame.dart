@@ -92,6 +92,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
   _onMapCreated(MapboxMapController controller) async {
     this.controller = controller;
 
+    _getCurrentLocation();
     timer2 = Timer.periodic(Duration(seconds: 8), (Timer t) {
       _getCurrentLocation();
     });
@@ -191,7 +192,9 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
           controller.removeSource('way' + countLineway.toString());
 
           isOnThisPage = false;
+          Navigator.pushNamed(context, Routes.homeMainScreen);
 
+          //Hide for Enterprise
           if (status! == "Not available") {
             Navigator.pushNamed(context, Routes.homeMainScreen);
             //Navigator.pop(context);

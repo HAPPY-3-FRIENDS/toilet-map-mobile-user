@@ -7,15 +7,22 @@ import 'package:intl/intl.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
+import 'package:toiletmap/app/main.dart';
 import 'package:toiletmap/app/models/checkin/checkin.dart';
+import 'package:toiletmap/app/models/checkin/checkin_argument.dart';
 import 'package:toiletmap/app/repositories/checkin_repository.dart';
 import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
+import 'package:toiletmap/app/repositories/user_info_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_appbar/home_main_appbar_ver3.dart';
 import 'package:toiletmap/app/ui/home/home_main_bottom_panel/home_main_bottom_panel.dart';
 import 'package:toiletmap/app/ui/home/home_main_map/home_main_map.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
+import '../../models/combo/combo.dart';
+import '../../models/combo/comboArgument.dart';
 import '../../models/transaction/transaction.dart';
+import '../../models/userInfo/user_info.dart';
+import '../../repositories/combo_repository.dart';
 import '../../utils/routes.dart';
 import 'home_main_appbar/home_main_appbar.dart';
 import 'home_main_appbar/home_main_appbar_ver2.dart';
@@ -94,53 +101,127 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
         destination: '/topic/check-in',
         callback: (StompFrame frame) async {
           Map<String, dynamic> result = json.decode(frame.body!);
-          Checkin checkin = Checkin.fromJson(result);
-          if (checkin.id != HomeMainScreen.lastCheckinId && checkin.username == phone) await {
-            setState(() {
-              HomeMainScreen.lastCheckinId = checkin.id;
-              HomeMainScreen.newCheckins += 1;
-              print("Có in ko + " + QRCodeBuilder.qrCode.toString());
-              if (QRCodeBuilder.qrCode == true) {
-                Navigator.pop(context);
-              }
-              print(QRCodeBuilder.qrCode);
-              AwesomeDialog(
-                  context: context,
-                  dialogType: DialogType.success,
-                  animType: AnimType.topSlide,
-                  btnOkText: 'Đánh giá ngay',
-                  //btnOkColor: AppColor.primaryColor1,
-                  showCloseIcon: true,
-                  body: Container(
-                      height: 120.h,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.all(20.w),
-                        child: RichText(
-                          text: TextSpan(
-                              text: 'Cảm ơn bạn đã sử dụng dịch vụ tại ',
-                              style: TextStyle(fontSize: 18.sp, color: Colors.black),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: checkin.toiletName,
-                                  style: TextStyle(
-                                    fontSize: 20.sp,
-                                    color: AppColor.primaryColor1,
-                                    fontWeight: FontWeight.bold,
+          try {
+            Checkin checkin = Checkin.fromJson(result);
+            if (checkin.id != HomeMainScreen.lastCheckinId && checkin.username == phone) await {
+              setState(() {
+                HomeMainScreen.lastCheckinId = checkin.id;
+                HomeMainScreen.newCheckins += 1;
+                print("Có in ko + " + QRCodeBuilder.qrCode.toString());
+                if (QRCodeBuilder.qrCode == true) {
+                  Navigator.pop(context);
+                }
+                print(QRCodeBuilder.qrCode);
+                AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.success,
+                    animType: AnimType.topSlide,
+                    btnOkText: 'Đánh giá ngay',
+                    //btnOkColor: AppColor.primaryColor1,
+                    showCloseIcon: true,
+                    body: Container(
+                        height: 120.h,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: EdgeInsets.all(20.w),
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Cảm ơn bạn đã sử dụng dịch vụ tại ',
+                                style: TextStyle(fontSize: 18.sp, color: Colors.black),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: checkin.toiletName,
+                                    style: TextStyle(
+                                      fontSize: 20.sp,
+                                      color: AppColor.primaryColor1,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                              ]
+                                ]
+                            ),
                           ),
-                        ),
-                      )
-                  ),
-                  btnOkOnPress: () async {
-                    Navigator.pushNamed(context, Routes.ratingMainScreen, arguments: checkin).then((_) => setState(() {}));
-                  }
-              ).show();
-            })
-          };
-          print('id ne ' + checkin.id.toString());
+                        )
+                    ),
+                    btnOkOnPress: () async {
+                      Navigator.pushNamed(context, Routes.ratingMainScreen, arguments: checkin).then((_) => setState(() {}));
+                    }
+                ).show();
+              })
+            };
+            print('id ne ' + checkin.id.toString());
+          } catch (e) {
+            print('Account is run out of money: ' + e.toString());
+            CheckinArgument checkinArgument = CheckinArgument.fromJson(result);
+            print('This is checkin argument: ' + checkinArgument.accountId.toString());
+            print('This is checkin argument: ' + checkinArgument.isAccountTurnNotEnough!);
+            int? account = await SharedPreferencesRepository().getAccountId();
+            if (checkinArgument.accountId == account) {
+              setState(() {
+                print("Có in ko + " + QRCodeBuilder.qrCode.toString());
+                if (QRCodeBuilder.qrCode == true) {
+                  Navigator.pop(context);
+                }
+                AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.error,
+                    animType: AnimType.topSlide,
+                    btnOkText: (checkinArgument.isAccountTurnNotEnough! == "true") ? 'Mua lượt ngay' : 'Nạp tiền ngay',
+                    //btnOkColor: AppColor.primaryColor1,
+                    showCloseIcon: true,
+                    body: Container(
+                        height: 120.h,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: EdgeInsets.all(20.w),
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Tài khoản của quý khách đã hết ',
+                                style: TextStyle(fontSize: 18.sp, color: Colors.black),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: (checkinArgument.isAccountTurnNotEnough! == "true")
+                                    ? "lượt. " : "tiền. ",
+                                    style: TextStyle(
+                                      fontSize: 20.sp,
+                                      color: AppColor.primaryColor1,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: 'Vui lòng nạp thêm hoặc đổi phương thức thanh toán!',
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ]
+                            ),
+                          ),
+                        )
+                    ),
+                    btnOkColor: Colors.orangeAccent,
+                    btnOkOnPress: () async {
+                      if (checkinArgument.isAccountTurnNotEnough!  == "true") {
+                        UserInfo? userInfo = await UserInfoRepository().getUserInfo();
+
+                        List<String> buttonList = [];
+                        List<int> priceList = [];
+                        List<Combo>? combo = await ComboRepository().getCombos();
+
+                        combo!.forEach((element) {
+                          buttonList.add(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(element.price) + " VNĐ/" + element.totalTurn.toString() + " lượt");
+                          priceList.add(element.price);
+                        });
+
+                        ComboArgument comboArgument = ComboArgument(buttonList, priceList, userInfo!.accountBalance);
+                        await Navigator.pushNamed(context, Routes.buyComboMainScreen, arguments: comboArgument);
+                      } else
+                        Navigator.pushNamed(context, Routes.topUpMoneyMainScreen);
+                    }
+                ).show();
+              });
+            }
+          }
         });
   }
 

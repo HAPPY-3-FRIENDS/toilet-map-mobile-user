@@ -147,7 +147,7 @@ class _HomeMainMapState extends State<HomeMainMap> {
                   return Stack(
                     children: [
                       Container(
-                        height: 700.h,
+                        height: 680.h,
                         width: 360.w,
                         child: MapboxMap(
                           //Link goong -> user goong map
