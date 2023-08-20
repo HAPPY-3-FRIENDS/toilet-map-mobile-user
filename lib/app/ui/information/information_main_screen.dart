@@ -358,10 +358,7 @@ class _InformationMainScreenState extends State<InformationMainScreen> {
                         try {
                           final prefs = await SharedPreferences.getInstance();
                           await prefs.clear();
-                          Navigator.of(context).pushAndRemoveUntil(
-                            //change Route to build apk
-                              MaterialPageRoute(builder: (context) => const LoginMainScreen()), (
-                              route) => false);
+                          Navigator.of(context).pushNamed(Routes.homeMainScreen);
                         } catch (error) {
                           print(error);
                         }

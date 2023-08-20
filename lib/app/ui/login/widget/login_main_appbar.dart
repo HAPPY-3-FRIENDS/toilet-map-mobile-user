@@ -17,6 +17,7 @@ class LoginAppbar extends StatelessWidget {
           child: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
+            automaticallyImplyLeading: false,
             shape: AppShapeBorder.shapeBorder3
           ),
         ),

@@ -142,199 +142,201 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
     return SafeArea(
         top: true,
         bottom: true,
-        child: Scaffold(
-            body: Stack(
-              children: [
-                FadeTransition(
-                  opacity: _animation1,
-                  child: FadeTransition(
-                    opacity: _animation2,
-                    child: Center(
-                      child: AnimatedContainer(
-                        child: Container(
-                          width: 170.w,
-                          height: 170.w,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/logo.png"),
-                              fit: BoxFit.cover,
+        child: WillPopScope(
+          onWillPop: () async => false,
+          child: Scaffold(
+              body: Stack(
+                children: [
+                  FadeTransition(
+                    opacity: _animation1,
+                    child: FadeTransition(
+                      opacity: _animation2,
+                      child: Center(
+                        child: AnimatedContainer(
+                          child: Container(
+                            width: 170.w,
+                            height: 170.w,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage("assets/logo.png"),
+                                fit: BoxFit.cover,
+                              ),
+                              borderRadius: BorderRadius.all( Radius.circular(85.w)),
                             ),
-                            borderRadius: BorderRadius.all( Radius.circular(85.w)),
                           ),
+                          duration: Duration(milliseconds: 2500),
+                          alignment: Alignment(boxX, boxY),
                         ),
-                        duration: Duration(milliseconds: 2500),
-                        alignment: Alignment(boxX, boxY),
                       ),
                     ),
                   ),
-                ),
-                FadeTransition(opacity: _animation3,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        LoginAppbar(),
-                        SizedBox(
-                            height: 80.h
-                        ),
-                        Text(
-                          "Đăng nhập / Đăng ký bằng số điện thoại",
-                          style: AppText.blackText22Bold,
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(
-                            height: 60.h
-                        ),
-                        Container(
-                          height: 60.h,
-                          margin: EdgeInsets.only(left: 25.w, right: 5.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10.r),
-                                        color: AppColor.primaryColor2
-                                    ),
+                  FadeTransition(opacity: _animation3,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          LoginAppbar(),
+                          SizedBox(
+                              height: 80.h
+                          ),
+                          Text(
+                            "Đăng nhập / Đăng ký bằng số điện thoại",
+                            style: AppText.blackText22Bold,
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                              height: 60.h
+                          ),
+                          Container(
+                            height: 60.h,
+                            margin: EdgeInsets.only(left: 25.w, right: 5.w),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10.r),
+                                          color: AppColor.primaryColor2
+                                      ),
 
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                            width: 20.w
-                                        ),
-                                        SizedBox(
-                                          width: 35.w,
-                                          child: TextField(
-                                            readOnly: true,
-                                            controller: countryController,
-                                            keyboardType: TextInputType.number,
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                            ),
-                                            style: TextStyle(
-                                                fontSize: 20.sp
-                                            ),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                              width: 20.w
                                           ),
-                                        ),
-                                        Text(
-                                          "|",
-                                          style: TextStyle(fontSize: 20.h, color: Colors.grey),
-                                        ),
-                                        SizedBox(
-                                            width: 15.w
-                                        ),
-                                        Expanded(
+                                          SizedBox(
+                                            width: 35.w,
                                             child: TextField(
-                                              onChanged: (value) {
-                                                phone = value;
-                                              },
-                                              keyboardType: TextInputType.phone,
+                                              readOnly: true,
+                                              controller: countryController,
+                                              keyboardType: TextInputType.number,
                                               decoration: InputDecoration(
                                                 border: InputBorder.none,
-                                                hintText: "Nhập số điện thoại",
                                               ),
-                                            ))
-                                      ],
-                                    ),
-                                  )
-                              ),
-                              IconButton(
-                                  onPressed: () async {
-                                    if (phone == "") {
-                                      showDialog<void>(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: const Text('Lỗi'),
-                                            content: const Text('Vui lòng nhập số điện thoại'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                child: const Text('Xác nhận'),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
+                                              style: TextStyle(
+                                                  fontSize: 20.sp
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            "|",
+                                            style: TextStyle(fontSize: 20.h, color: Colors.grey),
+                                          ),
+                                          SizedBox(
+                                              width: 15.w
+                                          ),
+                                          Expanded(
+                                              child: TextField(
+                                                onChanged: (value) {
+                                                  phone = value;
                                                 },
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    } else {
-                                      sharedPreferences = await SharedPreferences.getInstance();
+                                                keyboardType: TextInputType.phone,
+                                                decoration: InputDecoration(
+                                                  border: InputBorder.none,
+                                                  hintText: "Nhập số điện thoại",
+                                                ),
+                                              ))
+                                        ],
+                                      ),
+                                    )
+                                ),
+                                IconButton(
+                                    onPressed: () async {
+                                      if (phone == "") {
+                                        showDialog<void>(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text('Lỗi'),
+                                              content: const Text('Vui lòng nhập số điện thoại'),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  child: const Text('Xác nhận'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        sharedPreferences = await SharedPreferences.getInstance();
 
-                                      QuickAlert.show(
-                                        context: context,
-                                        type: QuickAlertType.loading,
-                                        title: 'Đang tải dữ liệu',
-                                          barrierDismissible: false
-                                      );
-
-                                      if (phone[0] == '0') {
-                                        phone = phone.substring(1);
-                                      }
-
-                                      await FirebaseAuth.instance.verifyPhoneNumber(
-                                        phoneNumber: '${countryController.text + phone}',
-                                        verificationCompleted: (PhoneAuthCredential credential) {},
-                                        verificationFailed: (FirebaseAuthException e) {
-                                          showDialog<void>(
+                                        QuickAlert.show(
                                             context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: const Text('Lỗi'),
-                                                content: Text('Số điện thoại không hợp lệ ${phone}'),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                    child: const Text('Xác nhận'),
-                                                    onPressed: () {
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        },
-                                        codeSent: (String verificationId, int? resendToken) {
-                                          LoginMainScreen.verify = verificationId;
-                                          if (phone[0] != '0') {
-                                            phone = '0' + phone;
-                                          }
-                                          sharedPreferences.setString("username", phone);
-                                          print('loginmain ' +phone);
-                                          Navigator.of(context).pop();
-                                          Navigator.pushNamed(context, Routes.loginOTPConfirmationScreen);
-                                        },
-                                        codeAutoRetrievalTimeout: (String verificationId) {},
-                                      );
-                                    }
-                                  },
-                                  icon: Icon(Icons.arrow_forward_ios_outlined, color: AppColor.primaryColor1, size: 25.w, )),
-                            ],
-                          ),
-                        ),
+                                            type: QuickAlertType.loading,
+                                            title: 'Đang tải dữ liệu',
+                                            barrierDismissible: false
+                                        );
 
-                        Padding(
-                          padding: EdgeInsets.all(20.w),
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 60.h,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Colors.transparent,
-                                    shadowColor: Colors.transparent,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20.r))),
-                                onPressed: () async {
-                                  Navigator.pushNamed(context, Routes.configScreen);
-                                },
-                                child: Text("Đăng nhập", style: TextStyle(color: Colors.transparent),)
+                                        if (phone[0] == '0') {
+                                          phone = phone.substring(1);
+                                        }
+
+                                        await FirebaseAuth.instance.verifyPhoneNumber(
+                                          phoneNumber: '${countryController.text + phone}',
+                                          verificationCompleted: (PhoneAuthCredential credential) {},
+                                          verificationFailed: (FirebaseAuthException e) {
+                                            showDialog<void>(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: const Text('Lỗi'),
+                                                  content: Text('Số điện thoại không hợp lệ ${phone}'),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child: const Text('Xác nhận'),
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          },
+                                          codeSent: (String verificationId, int? resendToken) {
+                                            LoginMainScreen.verify = verificationId;
+                                            if (phone[0] != '0') {
+                                              phone = '0' + phone;
+                                            }
+                                            sharedPreferences.setString("username", phone);
+                                            print('loginmain ' +phone);
+                                            Navigator.of(context).pop();
+                                            Navigator.pushNamed(context, Routes.loginOTPConfirmationScreen);
+                                          },
+                                          codeAutoRetrievalTimeout: (String verificationId) {},
+                                        );
+                                      }
+                                    },
+                                    icon: Icon(Icons.arrow_forward_ios_outlined, color: AppColor.primaryColor1, size: 25.w, )),
+                              ],
                             ),
                           ),
-                        ),
 
-                        /*SizedBox(
+                          Padding(
+                            padding: EdgeInsets.all(20.w),
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 60.h,
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.transparent,
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20.r))),
+                                  onPressed: () async {
+                                    Navigator.pushNamed(context, Routes.configScreen);
+                                  },
+                                  child: Text("Đăng nhập", style: TextStyle(color: Colors.transparent),)
+                              ),
+                            ),
+                          ),
+
+                          /*SizedBox(
                             height: 60.h
                         ),
                         Container(
@@ -372,12 +374,13 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                         SizedBox(
                             height: 20.h
                         ),*/
-                        //IconButton(iconSize: 20.w ,onPressed: () {}, icon: Image.asset('assets/images/google-logo.png'),)
-                      ],
-                    ),
-                  ),),
-              ],
-            )
+                          //IconButton(iconSize: 20.w ,onPressed: () {}, icon: Image.asset('assets/images/google-logo.png'),)
+                        ],
+                      ),
+                    ),),
+                ],
+              )
+          ),
         )
     );
   }
