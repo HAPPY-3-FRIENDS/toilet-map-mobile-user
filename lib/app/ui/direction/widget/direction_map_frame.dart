@@ -204,7 +204,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
               showCloseIcon: true,
               dismissOnTouchOutside: true,
               animType: AnimType.topSlide,
-              body: LocationReportDialog(id: widget.toilet.id, waitTime: waitTime!),
+              body: LocationReportDialog(toilet: widget.toilet, waitTime: waitTime!),
             )..show();
           } else {
             //note
@@ -215,7 +215,7 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
               dialogType: DialogType.noHeader,
               showCloseIcon: true,
               animType: AnimType.topSlide,
-              body: LocationReportDialog(id: widget.toilet.id, waitTime: 0),
+              body: LocationReportDialog(toilet: widget.toilet, waitTime: 0),
             )..show();
           }
         }

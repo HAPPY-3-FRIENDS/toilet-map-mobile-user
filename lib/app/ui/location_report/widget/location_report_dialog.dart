@@ -10,10 +10,10 @@ import '../../../repositories/toilet_repository.dart';
 import '../../../utils/routes.dart';
 
 class LocationReportDialog extends StatefulWidget {
-  int id;
+  Toilet toilet;
   int waitTime;
 
-  LocationReportDialog({Key? key, required this.id, required this.waitTime}) : super(key: key);
+  LocationReportDialog({Key? key, required this.toilet, required this.waitTime}) : super(key: key);
 
   @override
   State<LocationReportDialog> createState() => _LocationReportDialogState();
@@ -21,6 +21,12 @@ class LocationReportDialog extends StatefulWidget {
 
 class _LocationReportDialogState extends State<LocationReportDialog> {
   int choose = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +97,7 @@ class _LocationReportDialogState extends State<LocationReportDialog> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, Routes.locationReportMainScreen, arguments: widget.id);
+                        Navigator.pushNamed(context, Routes.locationReportMainScreen, arguments: widget.toilet.id);
                       },
                       child: Container(
                         height: 45.h,
@@ -113,14 +119,14 @@ class _LocationReportDialogState extends State<LocationReportDialog> {
       ))
       : Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
-      height: (choose != 1) ? 330.h : 400.h,
+      height: (choose != 1) ? (((widget.toilet!.nearBy != null) ? 380.h : 300.h)) : (((widget.toilet!.nearBy != null) ? 450.h : 370.h)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text("Hoàn tất chỉ đường", style: AppText.primary1Text28,),
           Container(
-            height: 120.h,
+            height: 90.h,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -141,55 +147,85 @@ class _LocationReportDialogState extends State<LocationReportDialog> {
                   ),
                 ),
                 SizedBox(height: 15.h,),
-                Text("Tìm nhà vệ sinh gần nhất:", style: AppText.blackText18,),
-                SizedBox(
-                  height: 35.h,
-                  width: 80.w,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      elevation: 1,
-                      backgroundColor: AppColor.primaryColor1,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
-                    ),
-                    onPressed: () async {
-                      QuickAlert.show(
-                          context: context,
-                          type: QuickAlertType.loading,
-                          title: 'Đang tải dữ liệu',
-                          barrierDismissible: false
-                      );
+                Row(
+                  children: [
+                    Text("Tìm nhà vệ sinh gần nhất: ", style: AppText.blackText18,),
+                    SizedBox(
+                      height: 35.h,
+                      width: 80.w,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          elevation: 1,
+                          backgroundColor: AppColor.primaryColor1,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                        ),
+                        onPressed: () async {
+                          QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.loading,
+                              title: 'Đang tải dữ liệu',
+                              barrierDismissible: false
+                          );
 
-                      Toilet? toilet1 = await ToiletRepository().getNearestToilet();
-                      Navigator.pop(context);
-                      if (toilet1 == null) {
-                        showDialog<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Chú ý'),
-                              content: const Text('Không tìm thấy nhà vệ sinh phù hợp!'),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: const Text('Xác nhận'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
+                          Toilet? toilet1 = await ToiletRepository().getNearestToilet();
+                          Navigator.pop(context);
+                          if (toilet1 == null) {
+                            showDialog<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Chú ý'),
+                                  content: const Text('Không tìm thấy nhà vệ sinh phù hợp!'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text('Xác nhận'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
                             );
-                          },
-                        );
-                      } else {
-                        Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet1!.id);
-                      }
-                    },
-                    child: Text('Khẩn cấp', style: AppText.titleText1),
-                  ),
+                          } else {
+                            Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet1!.id);
+                          }
+                        },
+                        child: Text('Khẩn cấp', style: AppText.titleText1),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
+          (widget.toilet!.nearBy != null)
+              ? Container(
+            height: 80.h,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                  text: TextSpan(
+                      text: 'Các dịch vụ khác gần đây: ',
+                      style: TextStyle(fontSize: 16.sp, color: Colors.black),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: widget.toilet!.nearBy!,
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ]
+                  ),
+                ),
+              ],
+            ),
+          )
+              : Container(),
           Text("Bạn hài lòng với hệ thống chỉ đường/định vị chứ?", style: AppText.blackText16Bold,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -246,7 +282,7 @@ class _LocationReportDialogState extends State<LocationReportDialog> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, Routes.locationReportMainScreen, arguments: widget.id);
+                        Navigator.pushNamed(context, Routes.locationReportMainScreen, arguments: widget.toilet.id);
                       },
                       child: Container(
                         height: 45.h,

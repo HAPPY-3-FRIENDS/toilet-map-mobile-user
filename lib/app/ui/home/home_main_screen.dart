@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:stomp_dart_client/stomp_frame.dart';
 import 'package:toiletmap/app/main.dart';
 import 'package:toiletmap/app/models/checkin/checkin.dart';
 import 'package:toiletmap/app/models/checkin/checkin_argument.dart';
+import 'package:toiletmap/app/models/service/service.dart';
 import 'package:toiletmap/app/repositories/checkin_repository.dart';
 import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/repositories/user_info_repository.dart';
@@ -23,6 +25,7 @@ import '../../models/combo/comboArgument.dart';
 import '../../models/transaction/transaction.dart';
 import '../../models/userInfo/user_info.dart';
 import '../../repositories/combo_repository.dart';
+import '../../repositories/service_repository.dart';
 import '../../utils/routes.dart';
 import 'home_main_appbar/home_main_appbar.dart';
 import 'home_main_appbar/home_main_appbar_ver2.dart';
@@ -43,6 +46,7 @@ class HomeMainScreen extends StatefulWidget {
 }
 
 class _HomeMainScreenState extends State<HomeMainScreen> {
+  late List<Service>? services;
 
   _initRatingNew() async {
     int? num = await CheckinRepository().countCheckinsNotRatingByAccountId();
@@ -55,7 +59,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
   _initClient() async {
     String? accessToken = await SharedPreferencesRepository().getAccessToken();
 
-    if (HomeMainScreen.activeWebSocket == false) {
+     {
       try {
         if (HomeMainScreen.client.isActive) {
           HomeMainScreen.client.deactivate();
@@ -101,7 +105,54 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
         destination: '/topic/check-in',
         callback: (StompFrame frame) async {
           Map<String, dynamic> result = json.decode(frame.body!);
-          try {
+          Checkin checkin = Checkin.fromJson(result);
+          if (checkin.id != HomeMainScreen.lastCheckinId && checkin.username == phone) {
+            setState(() {
+              HomeMainScreen.lastCheckinId = checkin.id;
+              HomeMainScreen.newCheckins += 1;
+              print("Có in ko + " + QRCodeBuilder.qrCode.toString());
+              if (QRCodeBuilder.qrCode == true) {
+                Navigator.pop(context);
+              }
+              print(QRCodeBuilder.qrCode);
+              AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.success,
+                  animType: AnimType.topSlide,
+                  btnOkText: 'Đánh giá ngay',
+                  //btnOkColor: AppColor.primaryColor1,
+                  showCloseIcon: true,
+                  body: Container(
+                      height: 120.h,
+                      color: Colors.white,
+                      child: Padding(
+                        padding: EdgeInsets.all(20.w),
+                        child: RichText(
+                          text: TextSpan(
+                              text: 'Cảm ơn bạn đã sử dụng dịch vụ tại ',
+                              style: TextStyle(fontSize: 18.sp, color: Colors.black),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: checkin.toiletName,
+                                  style: TextStyle(
+                                    fontSize: 20.sp,
+                                    color: AppColor.primaryColor1,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ]
+                          ),
+                        ),
+                      )
+                  ),
+                  btnOkOnPress: () async {
+                    Navigator.pushNamed(context, Routes.ratingMainScreen, arguments: checkin).then((_) => setState(() {}));
+                  }
+              ).show();
+            });
+          };
+          print('id ne ' + checkin.id.toString());
+          /*try {
             Checkin checkin = Checkin.fromJson(result);
             if (checkin.id != HomeMainScreen.lastCheckinId && checkin.username == phone) await {
               setState(() {
@@ -150,10 +201,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
             };
             print('id ne ' + checkin.id.toString());
           } catch (e) {
-            print('Account is run out of money: ' + e.toString());
             CheckinArgument checkinArgument = CheckinArgument.fromJson(result);
-            print('This is checkin argument: ' + checkinArgument.accountId.toString());
-            print('This is checkin argument: ' + checkinArgument.isAccountTurnNotEnough!);
             int? account = await SharedPreferencesRepository().getAccountId();
             if (checkinArgument.accountId == account) {
               setState(() {
@@ -221,12 +269,13 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                 ).show();
               });
             }
-          }
+          }*/
         });
   }
 
   void onConnect2(StompFrame connectFrame) async {
     String? phone = await SharedPreferencesRepository().getUsername();
+    int? accountId = await SharedPreferencesRepository().getAccountId();
 
     print("connect websocket oke");
     HomeMainScreen.client.subscribe(
@@ -234,8 +283,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
         callback: (StompFrame frame) async {
           Map<String, dynamic> result = json.decode(frame.body!);
           Transaction transaction = Transaction.fromJson(result);
-          if (transaction.accountId == await SharedPreferencesRepository().getAccountId())
-          {
+          if (transaction.accountId == accountId) {
             setState(() {
               if (QRCodeBuilder.qrCode == true) {
                 Navigator.pop(context);
