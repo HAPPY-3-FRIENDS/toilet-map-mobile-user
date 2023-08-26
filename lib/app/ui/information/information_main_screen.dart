@@ -358,7 +358,7 @@ class _InformationMainScreenState extends State<InformationMainScreen> {
                         try {
                           final prefs = await SharedPreferences.getInstance();
                           await prefs.clear();
-                          Navigator.of(context).pushNamed(Routes.homeMainScreen);
+                          Navigator.of(context).pushNamed(Routes.loginMainScreen);
                         } catch (error) {
                           print(error);
                         }

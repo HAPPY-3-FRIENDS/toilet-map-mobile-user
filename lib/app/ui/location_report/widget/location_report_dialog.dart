@@ -5,7 +5,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
+import '../../../models/direction/route/leg/distance/distance.dart';
 import '../../../models/toilet/toilet.dart';
+import '../../../repositories/map_repository.dart';
+import '../../../repositories/shared_preferences_repository.dart';
 import '../../../repositories/toilet_repository.dart';
 import '../../../utils/routes.dart';
 

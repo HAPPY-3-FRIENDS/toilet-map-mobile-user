@@ -18,6 +18,7 @@ import 'package:toiletmap/app/ui/home/home_main_map/widget/bottom_sheet_toilet_i
 import 'package:toiletmap/app/ui/home/home_main_screen.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
+import '../../../models/direction/route/leg/distance/distance.dart';
 import '../../../models/place/place.dart';
 import '../../../models/place/prediction/prediction.dart';
 import '../../../models/placeDetail/place_detail.dart';
@@ -434,6 +435,51 @@ class _DirectionMapFrameState extends State<DirectionMapFrame> {
                                                   );
                                                 } else {
                                                   Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
+                                                  /*QuickAlert.show(
+                                                      context: context,
+                                                      type: QuickAlertType.loading,
+                                                      title: 'Đang tải dữ liệu',
+                                                      barrierDismissible: false
+                                                  );
+                                                  List<double?> latlong = await SharedPreferencesRepository().getCurrentLatLong();
+                                                  Distance? distance = await MapRepository().getDistanceFromToilet(latlong[0]!, latlong[1]!, toilet!.latitude, toilet!.longitude);
+                                                  int longDistance = await MapRepository().getLongDistance();
+                                                  Navigator.pop(context);
+
+                                                  if (distance!.value < longDistance) {
+                                                    Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
+                                                  } else {
+                                                    AwesomeDialog(
+                                                      //Ban Tien se config cho ban Quan
+                                                        context: context,
+                                                        dialogType: DialogType.warning,
+                                                        showCloseIcon: true,
+                                                        dismissOnTouchOutside: true,
+                                                        animType: AnimType.topSlide,
+                                                        btnCancelText: 'Hủy',
+                                                        btnCancelOnPress: () {
+                                                        },
+
+                                                        btnOkColor: AppColor.primaryColor1,
+                                                        btnOkText: 'Xác nhận',
+                                                        btnOkOnPress: () {
+                                                          Navigator.pushNamed(context, Routes.directionMainScreen, arguments: toilet!.id);
+                                                        },
+                                                        body: Padding(
+                                                          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                              text: 'Nhà vệ sinh cách vị trí hiện tại ',
+                                                              style: AppText.blackText18,
+                                                              children: <TextSpan>[
+                                                                TextSpan(text: distance.text, style: TextStyle(fontWeight: FontWeight.bold)),
+                                                                TextSpan(text: ". Bạn có xác nhận chỉ đường tới nhà vệ sinh không?"),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        )
+                                                    )..show();
+                                                  }*/
                                                 }
                                               },
                                               child: Text("Tới NVS khác", style: AppText.white100Text20,)

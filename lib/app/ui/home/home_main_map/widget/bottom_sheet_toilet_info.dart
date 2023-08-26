@@ -1,6 +1,13 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:toiletmap/app/models/direction/direction.dart';
+import 'package:toiletmap/app/models/direction/route/leg/distance/distance.dart';
+import 'package:toiletmap/app/repositories/map_repository.dart';
+import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/repositories/toilet_repository.dart';
 import 'package:toiletmap/app/ui/home/home_main_map/widget/images_frame.dart';
 
@@ -174,7 +181,51 @@ class BottomSheetToiletInfo extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.r))),
                         onPressed: () async {
-                          Navigator.pushNamed(context, Routes.directionMainScreen, arguments: id);
+                          QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.loading,
+                              title: 'Đang tải dữ liệu',
+                              barrierDismissible: false
+                          );
+                          List<double?> latlong = await SharedPreferencesRepository().getCurrentLatLong();
+                          Distance? distance = await MapRepository().getDistanceFromToilet(latlong[0]!, latlong[1]!, snapshot.data!.latitude, snapshot.data!.longitude);
+                          int longDistance = await MapRepository().getLongDistance();
+                          Navigator.pop(context);
+
+                          if (distance!.value < longDistance) {
+                            Navigator.pushNamed(context, Routes.directionMainScreen, arguments: id);
+                          } else {
+                            AwesomeDialog(
+                              //Ban Tien se config cho ban Quan
+                              context: context,
+                              dialogType: DialogType.warning,
+                              showCloseIcon: true,
+                              dismissOnTouchOutside: true,
+                              animType: AnimType.topSlide,
+                              btnCancelText: 'Hủy',
+                              btnCancelOnPress: () {
+                              },
+
+                              btnOkColor: AppColor.primaryColor1,
+                              btnOkText: 'Xác nhận',
+                              btnOkOnPress: () {
+                                Navigator.pushNamed(context, Routes.directionMainScreen, arguments: id);
+                              },
+                              body: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: 'Nhà vệ sinh cách vị trí hiện tại ',
+                                    style: AppText.blackText18,
+                                    children: <TextSpan>[
+                                      TextSpan(text: distance.text, style: TextStyle(fontWeight: FontWeight.bold)),
+                                      TextSpan(text: ". Bạn có xác nhận chỉ đường tới nhà vệ sinh không?"),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            )..show();
+                          }
                         },
                         child: Text("Đến nhà vệ sinh", style: AppText.bottomSheetToiletInfo2,)
                     ),

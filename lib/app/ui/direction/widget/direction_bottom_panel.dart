@@ -143,7 +143,7 @@ class DirectionBottomPanel extends StatelessWidget {
                             QuickAlert.show(
                               context: context,
                               type: QuickAlertType.info,
-                              text: 'Buy two, get one free',
+                              text: ' ',
                               title: 'Hệ thống chỉ đường',
                               onConfirmBtnTap: () {
                                 print('toilet id:: ' + id.toString());

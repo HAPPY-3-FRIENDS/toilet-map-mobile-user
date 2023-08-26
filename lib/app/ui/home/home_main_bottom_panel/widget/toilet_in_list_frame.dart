@@ -58,7 +58,7 @@ class ToiletInListFrame extends StatelessWidget {
       facilitiesString += lastFacility.facilityName;
     }
 
-    if (nearBy != null) {
+    if (nearBy != null && nearBy != "") {
       return InkWell(
           onTap: () => {
             Navigator.pushNamed(context, Routes.toiletDetailMainScreen,

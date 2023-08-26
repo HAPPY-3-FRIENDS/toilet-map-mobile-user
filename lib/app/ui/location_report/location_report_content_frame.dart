@@ -131,19 +131,36 @@ class _LocationReportContentFrameState extends State<LocationReportContentFrame>
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.r))),
                 onPressed: () async {
-                  String? string = await ReportRepository().postLocationReport(widget.toiletId, reportContent);
-
-                  Navigator.pushNamed(context, Routes.homeMainScreen);
-                  QuickAlert.show(
-                    context: context,
-                    type: QuickAlertType.success,
-                    title: "Cảm ơn bạn đã báo cáo!",
-                    confirmBtnColor: AppColor.primaryColor1,
-                    confirmBtnText: "Đóng",
-                    barrierDismissible: true,
-                    autoCloseDuration: Duration(seconds: 5),
-                    text: 'Cảm ơn bạn đã báo cáo! Báo cáo này sẽ giúp chúng tôi nâng cấp chất lượng hệ thống hơn!',
-                  );
+                  if (reportContent == '') {
+                    showDialog<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Chú ý'),
+                          content: const Text('Vui lòng chọn mục báo cáo!'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('Xác nhận'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    String? string = await ReportRepository().postLocationReport(widget.toiletId, reportContent);
+                    QuickAlert.show(
+                      context: context,
+                      type: QuickAlertType.success,
+                      title: "Cảm ơn bạn đã báo cáo!",
+                      confirmBtnColor: AppColor.primaryColor1,
+                      confirmBtnText: "Đóng",
+                      barrierDismissible: true,
+                      text: 'Cảm ơn bạn đã báo cáo! Báo cáo này sẽ giúp chúng tôi nâng cấp chất lượng hệ thống hơn!',
+                    ).then((value) => Navigator.pushNamed(context, Routes.homeMainScreen));
+                  }
                 },
                 child: Text("Gửi", style: TextStyle(color: Colors.black),)
             ),
