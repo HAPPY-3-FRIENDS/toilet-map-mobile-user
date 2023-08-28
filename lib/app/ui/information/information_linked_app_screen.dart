@@ -534,7 +534,7 @@ class InformationLinkedAppScreen extends StatelessWidget {
                                   width: 60.w,
                                 ),
                                 SizedBox(height: 5.h,),
-                                Text('Phục Vụ Vệ Sinh Sự Kiện Lễ Hội', textAlign: TextAlign.center, style: TextStyle(
+                                Text('Vệ Sinh Sự Kiện', textAlign: TextAlign.center, style: TextStyle(
                                     color: Colors.green, fontSize: 18.sp
                                 ),),
                               ],
@@ -690,7 +690,7 @@ class InformationLinkedAppScreen extends StatelessWidget {
                                   width: 60.w,
                                 ),
                                 SizedBox(height: 5.h,),
-                                Text('Kinh Doanh Thùng Rác Composite', textAlign: TextAlign.center, style: TextStyle(
+                                Text('Kinh Doanh Thùng Rác', textAlign: TextAlign.center, style: TextStyle(
                                     color: Colors.green, fontSize: 18.sp
                                 ),),
                               ],
@@ -742,7 +742,7 @@ class InformationLinkedAppScreen extends StatelessWidget {
                                   width: 60.w,
                                 ),
                                 SizedBox(height: 5.h,),
-                                Text('Thu Tiền Rác Sinh Hoạt & Tiền Nhà SHNN', textAlign: TextAlign.center, style: TextStyle(
+                                Text('Thu Tiền Rác & Tiền Nhà', textAlign: TextAlign.center, style: TextStyle(
                                     color: Colors.green, fontSize: 18.sp
                                 ),),
                               ],

@@ -86,9 +86,11 @@ class MapRepository {
     );
 
     if (response.statusCode == 200) {
+      print('chay dc ne');
       final responseJson = jsonDecode(response.body);
       BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
       Configurationn configuration = Configurationn.fromJson(baseResponse.data);
+      print('long distance: ' + configuration.value.toString());
       return configuration.value;
     } else {
       return 0;

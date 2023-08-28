@@ -190,6 +190,7 @@ class BottomSheetToiletInfo extends StatelessWidget {
                           List<double?> latlong = await SharedPreferencesRepository().getCurrentLatLong();
                           Distance? distance = await MapRepository().getDistanceFromToilet(latlong[0]!, latlong[1]!, snapshot.data!.latitude, snapshot.data!.longitude);
                           int longDistance = await MapRepository().getLongDistance();
+                          print('long distance ne: ' + longDistance.toString());
                           Navigator.pop(context);
 
                           if (distance!.value < longDistance) {

@@ -196,26 +196,54 @@ class _PanelWidgetState extends State<PanelWidget> {
                                 Container(height: 10.h, color: AppColor.appBackground,),
                               ],
                             );
+                          } else {
+                            if (index == snapshot!.data!.length-1) {
+                              return Column(
+                                children: [
+                                  ToiletInListFrame(
+                                    toiletId: toilet.id,
+                                    time: toilet.openTime + " - " + toilet.closeTime,
+                                    toiletImagesList: toilet.toiletImageSources,
+                                    toiletName: toilet.toiletName,
+                                    address: toilet.address + ", " + toilet.ward + ", " + toilet.district + ", " + toilet.province,
+                                    price: (toilet.free == false)
+                                        ? '${toilet.minPrice} - ${toilet.maxPrice} VND/lượt'
+                                        : 'Miễn phí',
+                                    toiletImage: toilet.toiletImageSources[0],
+                                    star: toilet.ratingStar,
+                                    nearBy: toilet.nearBy,
+                                    showerRoom: showerRoom,
+                                    normalRoom: normalRoom,
+                                    disabilityRoom: disabilityRoom,
+                                    facilities: list,
+                                    duration: toilet.duration!,
+                                    distance: toilet.distance!,
+                                  ),
+                                  Container(height: 100.h, color: AppColor.appBackground,),
+                                ],
+                              );
+                            } else {
+                              return ToiletInListFrame(
+                                toiletId: toilet.id,
+                                time: toilet.openTime + " - " + toilet.closeTime,
+                                toiletImagesList: toilet.toiletImageSources,
+                                toiletName: toilet.toiletName,
+                                address: toilet.address + ", " + toilet.ward + ", " + toilet.district + ", " + toilet.province,
+                                price: (toilet.free == false)
+                                    ? '${toilet.minPrice} - ${toilet.maxPrice} VND/lượt'
+                                    : 'Miễn phí',
+                                toiletImage: toilet.toiletImageSources[0],
+                                star: toilet.ratingStar,
+                                nearBy: toilet.nearBy,
+                                showerRoom: showerRoom,
+                                normalRoom: normalRoom,
+                                disabilityRoom: disabilityRoom,
+                                facilities: list,
+                                duration: toilet.duration!,
+                                distance: toilet.distance!,
+                              );
+                            }
                           }
-                          return ToiletInListFrame(
-                            toiletId: toilet.id,
-                            time: toilet.openTime + " - " + toilet.closeTime,
-                            toiletImagesList: toilet.toiletImageSources,
-                            toiletName: toilet.toiletName,
-                            address: toilet.address + ", " + toilet.ward + ", " + toilet.district + ", " + toilet.province,
-                            price: (toilet.free == false)
-                                ? '${toilet.minPrice} - ${toilet.maxPrice} VND/lượt'
-                                : 'Miễn phí',
-                            toiletImage: toilet.toiletImageSources[0],
-                            star: toilet.ratingStar,
-                            nearBy: toilet.nearBy,
-                            showerRoom: showerRoom,
-                            normalRoom: normalRoom,
-                            disabilityRoom: disabilityRoom,
-                            facilities: list,
-                            duration: toilet.duration!,
-                            distance: toilet.distance!,
-                          );
                         },
                       );
                     }

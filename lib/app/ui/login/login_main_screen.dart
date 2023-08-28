@@ -7,10 +7,12 @@ import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap/app/models/jwt/jwt.dart';
 import 'package:toiletmap/app/repositories/auth_repository.dart';
+import 'package:toiletmap/app/repositories/shared_preferences_repository.dart';
 import 'package:toiletmap/app/ui/login/widget/login_main_appbar.dart';
 import 'package:toiletmap/app/utils/constants.dart';
 
 import '../../main.dart';
+import '../../models/accessToken/access_token.dart';
 import '../../utils/routes.dart';
 
 class LoginMainScreen extends StatefulWidget {
@@ -264,6 +266,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                                         );
                                       } else {
                                         sharedPreferences = await SharedPreferences.getInstance();
+                                        sharedPreferences.clear();
 
                                         QuickAlert.show(
                                             context: context,
@@ -335,7 +338,32 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                               ),
                             ),
                           ),
-
+                          Padding(
+                            padding: EdgeInsets.all(20.w),
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 60.h,
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.transparent,
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20.r))),
+                                  onPressed: () async {
+                                    QuickAlert.show(
+                                        context: context,
+                                        type: QuickAlertType.loading,
+                                        title: 'Đang tải dữ liệu',
+                                        barrierDismissible: false
+                                    );
+                                    sharedPreferences.setString("username", '0834101001');
+                                    AccessToken? accessToken = await AuthRepository().authPhoneLogin();
+                                    Navigator.pushNamed(context, Routes.homeMainScreen);
+                                  },
+                                  child: Text("Đăng nhập", style: TextStyle(color: Colors.transparent),)
+                              ),
+                            ),
+                          ),
                           /*SizedBox(
                             height: 60.h
                         ),

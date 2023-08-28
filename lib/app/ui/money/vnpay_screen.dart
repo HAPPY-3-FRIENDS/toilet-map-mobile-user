@@ -47,12 +47,11 @@ class _VNPayScreenState extends State<VNPayScreen> {
                 print("vnPayJson status: " + vnPayJson.status.toString());
 
                 if (vnPayJson.status == 200) {
-                  Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                  Navigator.pushNamed(context, Routes.homeMainScreen);
                   AwesomeDialog(
                       context: context,
                       dialogType: DialogType.success,
                       animType: AnimType.topSlide,
-                      dismissOnBackKeyPress: true,
                       dismissOnTouchOutside: true,
                       showCloseIcon: true,
                       body: Container(
@@ -80,7 +79,7 @@ class _VNPayScreenState extends State<VNPayScreen> {
                       ),
                   ).show();
                 } else {
-                  Navigator.pushReplacementNamed(context, Routes.homeMainScreen);
+                  Navigator.pushNamed(context, Routes.homeMainScreen);
                   showDialog<void>(
                     context: context,
                     builder: (BuildContext context) {
