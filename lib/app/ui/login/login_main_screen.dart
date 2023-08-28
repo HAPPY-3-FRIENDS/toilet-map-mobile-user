@@ -356,6 +356,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> with TickerProviderSt
                                         title: 'Đang tải dữ liệu',
                                         barrierDismissible: false
                                     );
+                                    sharedPreferences = await SharedPreferences.getInstance();
                                     sharedPreferences.setString("username", '0834101001');
                                     AccessToken? accessToken = await AuthRepository().authPhoneLogin();
                                     Navigator.pushNamed(context, Routes.homeMainScreen);

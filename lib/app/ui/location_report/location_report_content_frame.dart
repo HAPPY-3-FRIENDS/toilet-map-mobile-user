@@ -22,7 +22,7 @@ class _LocationReportContentFrameState extends State<LocationReportContentFrame>
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 620.h,
+      height: 610.h,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

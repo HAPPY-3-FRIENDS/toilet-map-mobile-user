@@ -30,7 +30,7 @@ class HomeMainMap extends StatefulWidget {
 class _HomeMainMapState extends State<HomeMainMap> {
   late CameraPosition _initialCameraPosition;
   late MapboxMapController controller;
-  late LatLng currentLatLng;
+  late LatLng currentLatLng = LatLng(10.841435255999551, 106.80993501016043);
 
   @override
   void initState() {

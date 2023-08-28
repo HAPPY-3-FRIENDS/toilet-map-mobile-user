@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "875327965926",
-    "project_id": "toilet-map-phone-firebase",
-    "storage_bucket": "toilet-map-phone-firebase.appspot.com"
+    "project_number": "274502224727",
+    "project_id": "presentation-toilet-map",
+    "storage_bucket": "presentation-toilet-map.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:875327965926:android:778ab8690fadc3aeb0c927",
+        "mobilesdk_app_id": "1:274502224727:android:b5610d662a41140fb4cc12",
         "android_client_info": {
           "package_name": "com.example.toiletmap"
         }
       },
       "oauth_client": [
         {
-          "client_id": "875327965926-trg1isvrml9eqq3up4hm5ev4akhvniiv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.toiletmap",
-            "certificate_hash": "24e3f72a5020d72e23f78062b95e5c75892400a4"
-          }
-        },
-        {
-          "client_id": "875327965926-qslr305k7rnastmsg91tjbm2i9a40u56.apps.googleusercontent.com",
+          "client_id": "274502224727-ircr16ntbb6q4mov2f8nqf7dkohqp3ip.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAQkBQ0VXKGt3YQudAoQYSnt7YyfT0RMvg"
+          "current_key": "AIzaSyBdXrnsCqDZ2RDzb8PRRwKab5NhlZiPem0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "875327965926-qslr305k7rnastmsg91tjbm2i9a40u56.apps.googleusercontent.com",
+              "client_id": "274502224727-ircr16ntbb6q4mov2f8nqf7dkohqp3ip.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
